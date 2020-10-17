@@ -109,7 +109,8 @@ export default {
 
         this.$swal({
           icon: "success",
-          title: "เข้าสู่ระบบ"
+          title: "เข้าสู่ระบบ",
+          text: `ยินดีต้อนรับผู้สมัครหมายเลข ${this.form.id}`
         }).then(() => {
           this.$router.push({
             name: "SDashboard"

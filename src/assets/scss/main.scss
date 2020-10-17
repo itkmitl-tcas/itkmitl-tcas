@@ -1,13 +1,22 @@
 
-@import 'helper';
 @import 'colors';
 @import 'font';
 @import 'custom';
-@import 'transition';
+
 
 /* -------------------------------- Bootstrap ------------------------------- */
 @import "node_modules/bootstrap/scss/bootstrap";
 @import "node_modules/bootstrap/scss/mixins/_breakpoints";
 
+
 /* ---------------------------------- Views --------------------------------- */
 @import "views/login";
+
+
+/* -------------------------------- Component ------------------------------- */
+@import "components/progress";
+
+
+/* ---------------------------------- Other --------------------------------- */
+@import 'helper';
+@import 'transition';

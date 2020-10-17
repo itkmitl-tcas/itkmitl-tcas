@@ -1,7 +1,7 @@
 <template>
   <div class="body-container bg-deep">
     <Header />
-    <router-view />
+    <router-view class="position-relative" style="z-index: 1" />
     <img src="@images/footer.svg" class="w-100" />
   </div>
 </template>
