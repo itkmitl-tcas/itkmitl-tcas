@@ -1,0 +1,19 @@
+.login-container,
+.container {
+  min-height: calc(100vh - 70px);
+}
+
+.login-container .container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  padding-bottom: 5vw;
+
+  form {
+    min-width: 400px;
+    @include media-breakpoint-down(md) {
+      min-width: 30vw;
+    }
+  }
+}
