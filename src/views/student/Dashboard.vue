@@ -3,9 +3,7 @@
     <div class="container">
       <Progress class="" />
       <div class="content bg-white mt-3">
-        <div class="px-2 px-sm-3">
-          HIHI
-        </div>
+        <router-view class="px-2 px-sm-3 mt-2" />
       </div>
     </div>
   </div>
@@ -22,7 +20,7 @@ export default {
 };
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 .content {
   padding: 1rem;
   border-radius: 10px;

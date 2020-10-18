@@ -35,9 +35,11 @@
         b {
           font-weight: bold;
           color: $gray-900;
+          transition: color 1s ease-out;
         }
         span {
           color: $gray-700;
+          transition: color 1s ease-out;
         }
       }
     }

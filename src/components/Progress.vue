@@ -10,7 +10,7 @@
         :key="`step-${key}`"
       >
         <div class="d-flex align-items-center flex-row">
-          <div class="circle mr-3" :class="{ active: step.active }">
+          <div class="circle mr-3" :class="{ active: currentStep == key + 1 }">
             <span v-if="step.checked" class="h2 m-0">
               <b-icon-check-2></b-icon-check-2>
             </span>
@@ -20,7 +20,7 @@
           </div>
           <div
             class="text d-flex flex-column"
-            :class="{ active: step.active || step.checked }"
+            :class="{ active: currentStep == key + 1 || step.checked }"
           >
             <b>ขั้นที่ {{ key + 1 }}</b>
             <span>{{ step.text }}</span>
@@ -36,20 +36,21 @@ export default {
   name: "Progress",
   data() {
     return {
+      currentStep: 1,
       steps: [
         {
           active: false,
-          checked: true,
+          checked: false,
           text: "ข้อมูลผู้สมัคร"
         },
         {
           active: false,
-          checked: true,
+          checked: false,
           text: "อัปโหลดเอกสาร"
         },
         {
-          active: true,
-          checked: true,
+          active: false,
+          checked: false,
           text: "อัปโหลดผลงาน"
         },
         {
@@ -59,6 +60,22 @@ export default {
         }
       ]
     };
+  },
+  mounted() {
+    // init current step in first visit
+    this.setCurrentStep(this.$router.currentRoute);
+  },
+  methods: {
+    setCurrentStep(route) {
+      const step = route.matched.filter(record => record.meta.step);
+      this.currentStep = step[0] ? step[0].meta.step : 1;
+    }
+  },
+  watch: {
+    // update current step when route update
+    $route(to) {
+      this.setCurrentStep(to);
+    }
   }
 };
 </script>

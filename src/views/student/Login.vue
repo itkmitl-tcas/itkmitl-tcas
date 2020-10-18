@@ -113,7 +113,7 @@ export default {
           text: `ยินดีต้อนรับผู้สมัครหมายเลข ${this.form.id}`
         }).then(() => {
           this.$router.push({
-            name: "SDashboard"
+            name: "Step1"
           });
         });
       });

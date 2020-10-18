@@ -19,7 +19,34 @@ const routes: Array<RouteConfig> = [
             path: "dashboard",
             name: "SDashboard",
             alias: "",
-            component: () => import("@views/student/Dashboard.vue")
+            component: () => import("@views/student/Dashboard.vue"),
+            children: [
+              {
+                path: "step1",
+                name: "Step1",
+                alias: "",
+                component: () => import("@views/student/steps/Step1.vue"),
+                meta: { step: 1 }
+              },
+              {
+                path: "step2",
+                name: "Step2",
+                component: () => import("@views/student/steps/Step2.vue"),
+                meta: { step: 2 }
+              },
+              {
+                path: "step3",
+                name: "Step3",
+                component: () => import("@views/student/steps/Step3.vue"),
+                meta: { step: 3 }
+              },
+              {
+                path: "step4",
+                name: "Step4",
+                component: () => import("@views/student/steps/Step4.vue"),
+                meta: { step: 4 }
+              }
+            ]
           },
           {
             path: "login",
