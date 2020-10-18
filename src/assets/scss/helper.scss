@@ -38,10 +38,6 @@
   color: $gray-700
 }
 
-.field {
-  margin-bottom: 2rem;
-  display: flex;
-  flex-direction: row;
-  align-self:stretch;
-  justify-content: space-around;
+.field-wrapper > div {
+  margin-bottom: 1.5rem;
 }

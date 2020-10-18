@@ -6,8 +6,11 @@ import {
   ButtonPlugin,
   VBTogglePlugin,
   CollapsePlugin,
+  BFormRadioGroup,
+  ToastPlugin,
   BootstrapVueIcons
 } from "bootstrap-vue";
+import PortalVue from "portal-vue";
 import VueLazyload from "vue-lazyload";
 import VueSweetalert2 from "vue-sweetalert2";
 
@@ -18,7 +21,11 @@ Vue.use(VBTogglePlugin);
 Vue.use(CollapsePlugin);
 Vue.use(BootstrapVueIcons);
 Vue.use(VueLazyload);
+Vue.use(PortalVue);
+Vue.use(ToastPlugin);
 Vue.use(VueSweetalert2);
+
+Vue.component("b-form-radio-group", BFormRadioGroup);
 
 new Vue({
   router,

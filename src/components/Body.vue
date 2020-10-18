@@ -3,6 +3,7 @@
     <Header />
     <router-view class="position-relative" style="z-index: 1" />
     <img src="@images/footer.svg" class="w-100" />
+    susu
   </div>
 </template>
 

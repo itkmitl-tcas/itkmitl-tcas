@@ -3,7 +3,9 @@
     <div class="container">
       <Progress class="" />
       <div class="content bg-white mt-3">
-        <router-view class="px-2 px-sm-3 mt-2" />
+        <transition name="fade" mode="out-in">
+          <router-view class="px-2 px-sm-3 mt-2" key="steps" />
+        </transition>
       </div>
     </div>
   </div>
@@ -24,5 +26,6 @@ export default {
 .content {
   padding: 1rem;
   border-radius: 10px;
+  margin-bottom: 5rem;
 }
 </style>
