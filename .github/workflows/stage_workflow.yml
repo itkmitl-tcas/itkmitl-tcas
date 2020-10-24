@@ -1,0 +1,77 @@
+name: Deploy Staging Workflow
+
+on:
+  push:
+    branches:
+      - dev
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+
+      # Checkout
+      - name: Checkout code
+        uses: actions/checkout@master
+        with:
+          ref: dev
+
+      # Setup node
+      - name: Setup node
+        uses: actions/setup-node@v1
+        with:
+          node-version: "12.x"
+
+      # Get cache directory
+      - name: Get yarn cache directory path
+        id: yarn-cache-dir-path
+        run: echo "::set-output name=dir::$(yarn cache dir)"
+
+        # Cache yarn
+      - name: Cache yarn
+        id: cache-yarn
+        uses: actions/cache@v2
+        with:
+          path: |
+            ${{ steps.yarn-cache-dir-path.outputs.dir }}
+            **/node_modules
+          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-yarn-
+
+      # Install dependencies
+      - name: Install Dependencies
+        if: steps.cache-yarn.outputs.cache-hit != 'true'
+        run: yarn install
+
+      # Build static
+      - name: Build static
+        run: yarn run build
+        env:
+          NODE_ENV: staging
+
+      # Copy project
+      - name: Copy project
+        uses: appleboy/scp-action@master
+        with:
+          host: ${{ secrets.SERVER_HOST }}
+          username: ${{ secrets.SERVER_USER }}
+          key : ${{ secrets.SERVER_KEY }}
+          source: ./
+          target: ./${{ github.event.repository.name }}
+          rm: true
+
+      # Deploy project
+      - name: Deploy project
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.SERVER_HOST }}
+          username: ${{ secrets.SERVER_USER }}
+          key: ${{ secrets.SERVER_KEY }}
+          script: |
+            export BACK_HOST=${{ secrets.STAG_FRONT_HOST }}
+            export BACK_PORT=${{ secrets.STAG_FRONT_PORT }}
+            cd /home/reg/${{ github.event.repository.name }}/nginx/front-stag
+            docker-compose up -d --no-deps
+            cd /home/reg/${{ github.event.repository.name }}/nginx/reverse-proxy
+            docker-compose up -d --build

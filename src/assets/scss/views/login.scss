@@ -1,9 +1,5 @@
-.login-container,
-.login-contianer .container {
-  min-height: calc(100vh - 70px);
-}
-
 .login-container .container {
+  min-height: calc(100vh - 85px);
   display: flex;
   justify-content: center;
   align-items: center;

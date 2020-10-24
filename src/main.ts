@@ -13,6 +13,9 @@ import {
 import PortalVue from "portal-vue";
 import VueLazyload from "vue-lazyload";
 import VueSweetalert2 from "vue-sweetalert2";
+import VueCookies from "vue-cookies";
+import axios from "axios";
+import env from "./environment";
 
 Vue.config.productionTip = process.env.NODE_ENV == "production" ? false : true;
 
@@ -24,8 +27,13 @@ Vue.use(VueLazyload);
 Vue.use(PortalVue);
 Vue.use(ToastPlugin);
 Vue.use(VueSweetalert2);
+Vue.use(VueCookies);
 
 Vue.component("b-form-radio-group", BFormRadioGroup);
+
+axios.defaults.withCredentials = true;
+Vue.prototype.$env = env;
+Vue.prototype.$axios = axios;
 
 new Vue({
   router,

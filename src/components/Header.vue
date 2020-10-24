@@ -11,10 +11,37 @@
             King Mongkut's Institute of Technology Ladkrabang
           </div>
         </div>
+        <a
+          href="#"
+          @click="signOut()"
+          class="title text-white-50 flex-grow-1 text-right"
+        >
+          Sign Out
+        </a>
       </div>
     </div>
   </div>
 </template>
+
+<script>
+import axios from "axios";
+export default {
+  name: "Header",
+  methods: {
+    signOut() {
+      axios.post("http://localhost:3000/auth/signout").then(() => {
+        localStorage.removeItem("token");
+        delete axios.defaults.headers.common["Authorization"];
+        this.$swal("success", "ออกจากระบบ").then(() =>
+          this.$router.push({
+            name: "SLogin"
+          })
+        );
+      });
+    }
+  }
+};
+</script>
 
 <style lang="scss" scoped>
 .header-container {
