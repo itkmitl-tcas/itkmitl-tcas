@@ -5,8 +5,8 @@
 // }
 
 const environment = {
-  BACK_HOST: process.env.FRONT_HOST || "http://localhost",
-  BACK_PORT: process.env.FRONT_PORT || "3000"
+  BACK_HOST: process.env.BACK_HOST || "http://localhost",
+  BACK_PORT: process.env.BACK_PORT || "3000"
 };
 
 export default environment;
