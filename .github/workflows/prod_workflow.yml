@@ -1,0 +1,89 @@
+name: Deploy Production Workflow
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  Build-Test-Production:
+    runs-on: ubuntu-latest
+
+    steps:
+      # Checkout and setup node.js
+      - name: Checkout code
+        uses: actions/checkout@master
+        with:
+          ref: ${{ github.ref }}
+
+      - name: Setup node
+        uses: actions/setup-node@v1
+        with:
+          node-version: "12.x"
+
+      # Get cache directory
+      - name: Get yarn cache directory path
+        id: yarn-cache-dir-path
+        run: echo "::set-output name=dir::$(yarn cache dir)"
+
+      # Cache yarn
+      - name: Cache yarn
+        id: cache-yarn
+        uses: actions/cache@v2
+        with:
+          path: |
+            ${{ steps.yarn-cache-dir-path.outputs.dir }}
+            ${{ steps.cypress-cache-dir-path.outputs.dir }}
+            **/node_modules
+          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-yarn-
+
+      # Install dependencies
+      - name: Install Dependencies
+        if: steps.cache-yarn.outputs.cache-hit != 'true'
+        run: |
+          echo "//npm.pkg.github.com/:_authToken=${{ secrets.NPM_TOKEN }}" > ~/.npmrc
+          yarn config set //npm.pkg.github.com/:_header:Authorization "Token ${{ secrets.NPM_TOKEN }}"
+          yarn install --frozen-lockfile
+
+      # Build and upload artifact
+      - name: Build static
+        run: yarn build
+
+      - name: Pack
+        run: tar -czf dist.tar.gz dist/
+
+      - name: Upload distribution artifact
+        uses: actions/upload-artifact@v1
+        with:
+          name: dist
+          path: dist.tar.gz
+
+  Release:
+    runs-on: ubuntu-latest
+    needs: [Build-Test-Production]
+    env:
+      DIST_ZIP_PATH: ""
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@master
+        with:
+          ref: ${{ github.ref }}
+
+      - name: Download distribution artifact
+        uses: actions/download-artifact@v1
+        with:
+          name: dist
+
+      - name: Semantic Release
+        uses: cycjimmy/semantic-release-action@v2
+        env:
+          GH_TOKEN: ${{ secrets.GH_TOKEN }}
+          DIST_TAR_PATH: dist/dist.tar.gz
+        with:
+          extra_plugins: |
+            @semantic-release/git@7.0.18
+            @semantic-release/exec@3.3.8
+            @semantic-release/changelog@3.0.0
