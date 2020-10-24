@@ -58,8 +58,7 @@ jobs:
           username: ${{ secrets.SERVER_USER }}
           key : ${{ secrets.SERVER_KEY }}
           source: ./
-          target: ./${{ github.event.repository.name }}
-          rm: true
+          target: ./${{ github.event.repository.name }}_stag
 
       # Deploy project
       - name: Deploy project
