@@ -49,7 +49,7 @@ jobs:
         run: yarn run build
         env:
           NODE_ENV: staging
-          BACK_URI: ${{ secret.STAG_BACK_URI }}
+          BACK_URI: ${{ secrets.STAG_BACK_URI }}
 
       # Copy project
       - name: Copy project

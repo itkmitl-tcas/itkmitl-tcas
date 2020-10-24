@@ -49,7 +49,7 @@ jobs:
         run: yarn run build
         env:
           NODE_ENV: production
-          BACK_URI: ${{ secret.PROD_BACK_URI }}
+          BACK_URI: ${{ secrets.PROD_BACK_URI }}
 
       # Copy project
       - name: Copy project
