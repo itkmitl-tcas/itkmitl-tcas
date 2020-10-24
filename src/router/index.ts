@@ -19,7 +19,6 @@ const routes: Array<RouteConfig> = [
           {
             path: "dashboard",
             name: "SDashboard",
-            alias: "",
             component: () => import("@views/student/Dashboard.vue"),
             meta: {
               requiresAuth: 1
@@ -53,7 +52,7 @@ const routes: Array<RouteConfig> = [
             ]
           },
           {
-            path: "login",
+            path: "",
             name: "SLogin",
             component: () => import("@views/student/Login.vue"),
             meta: {
