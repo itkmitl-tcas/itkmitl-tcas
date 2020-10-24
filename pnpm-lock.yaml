@@ -1,8 +1,10 @@
 dependencies:
+  '@types/node': 14.14.2
   axios: 0.20.0
   bootstrap: 4.5.3
   bootstrap-vue: 2.17.3_vue@2.6.12
   core-js: 3.6.5
+  node: 15.0.1
   portal-vue: 2.1.7_vue@2.6.12
   regenerator-runtime: 0.13.7
   vee-validate: 3.4.2_vue@2.6.12
@@ -1424,6 +1426,10 @@ packages:
     dev: true
     resolution:
       integrity: sha512-yV1nWZPlMFpoXyoknm4S56y2nlTAuFYaJuQtYRAOU7xA/FJ9RY0Xm7QOkaYMMmr8ESdHIuUb6oQgR/0+2NqlyA==
+  /@types/node/14.14.2:
+    dev: false
+    resolution:
+      integrity: sha512-jeYJU2kl7hL9U5xuI/BhKPZ4vqGM/OmK6whiFAXVhlstzZhVamWhDSmHyGLIp+RVyuF9/d0dqr2P85aFj4BvJg==
   /@types/normalize-package-data/2.4.0:
     dev: true
     resolution:
@@ -8200,6 +8206,10 @@ packages:
     dev: true
     resolution:
       integrity: sha512-+D4s2HCnxPd5PjjI0STKwncjXTUKKqm74MDMz9OPXavjsGmjkvwgLtA5yoxJUdmpj52+2u+RrXgPipahKczMKg==
+  /node-bin-setup/1.0.6:
+    dev: false
+    resolution:
+      integrity: sha512-uPIxXNis1CRbv1DwqAxkgBk5NFV3s7cMN/Gf556jSw6jBvV7ca4F9lRL/8cALcZecRibeqU+5dFYqFFmzv5a0Q==
   /node-cache/4.2.1:
     dependencies:
       clone: 2.1.2
@@ -8329,6 +8339,16 @@ packages:
     requiresBuild: true
     resolution:
       integrity: sha512-sjCuOlvGyCJS40R8BscF5vhVlQjNN069NtQ1gSxyK1u9iqvn6tf7O1R4GNowVZfiZUCRt5MmMs1xd+4V/7Yr0g==
+  /node/15.0.1:
+    dependencies:
+      node-bin-setup: 1.0.6
+    dev: false
+    engines:
+      npm: '>=5.0.0'
+    hasBin: true
+    requiresBuild: true
+    resolution:
+      integrity: sha512-1H+cBZRGVVU8df/pxanHE9gjxjEzupMfvMw43/79dvPfIvNQJR1T0uxeHfXFIYWH86JthQbu8zes7vtttP+99g==
   /noop-logger/0.1.1:
     dev: true
     resolution:
@@ -12480,6 +12500,7 @@ packages:
       integrity: sha512-jcKpkthap6x63MB4TxwCyuIGkV0oYP/YRyuQU5UO0Yz/E/ZAu+653/uov+phdmO54n6BcvFRyyt0RRrWdN2mpw==
 specifiers:
   '@types/jest': ^24.0.19
+  '@types/node': ^14.14.2
   '@typescript-eslint/eslint-plugin': ^2.33.0
   '@typescript-eslint/parser': ^2.33.0
   '@vue/cli-plugin-babel': ~4.5.0
@@ -12503,6 +12524,7 @@ specifiers:
   eslint-plugin-vue: ^6.2.2
   husky: ^4.3.0
   lint-staged: ^10.4.2
+  node: ^15.0.1
   node-sass: ^4.12.0
   portal-vue: ^2.1.7
   prerender-spa-plugin: ^3.4.0
