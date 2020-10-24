@@ -39,7 +39,7 @@ jobs:
 
       # Install dependencies
       - name: Install Dependencies
-        if: steps.cache-yarn.outputs.cache-hit != 'true'
+        if: steps.yarn-cache.outputs.cache-hit != 'true'
         run: yarn install
 
       # Build static
