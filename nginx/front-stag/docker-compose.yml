@@ -3,8 +3,6 @@ services:
   front-stag:
     container_name: front-stag
     image: nginx:1.12
-    environment:
-      BACK_URI: ${BACK_URI}
     volumes:
       - ../../dist:/usr/share/nginx/html/
       - ./default.conf:/etc/nginx/conf.d/default.conf

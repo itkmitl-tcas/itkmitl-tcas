@@ -5,7 +5,7 @@
 // }
 
 const environment = {
-  BACK_URI: process.env.BACK_URI || "http://localhost:3000"
+  BACK_URI: process.env.VUE_APP_BACK_URI || "http://localhost:3000"
 };
 
 export default environment;
