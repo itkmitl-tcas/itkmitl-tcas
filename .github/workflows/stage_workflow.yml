@@ -68,8 +68,7 @@ jobs:
           username: ${{ secrets.SERVER_USER }}
           key: ${{ secrets.SERVER_KEY }}
           script: |
-            export BACK_HOST=${{ secrets.STAG_FRONT_HOST }}
-            export BACK_PORT=${{ secrets.STAG_FRONT_PORT }}
+            export BACK_URI=${{ secrets.STAG_BACK_URI }}
             cd /home/reg/${{ github.event.repository.name }}_stag/nginx/front-stag
             docker-compose up -d --no-deps
             cd /home/reg/${{ github.event.repository.name }}_stag/nginx/reverse-proxy

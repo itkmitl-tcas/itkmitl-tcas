@@ -108,7 +108,7 @@ export default {
         if (!success) return;
 
         const result = await this.$axios.post(
-          `${this.$env.BACK_HOST}:${this.$env.BACK_PORT}/auth/signin`,
+          `${this.$env.BACK_URI}/auth/signin`,
           {
             apply_id: this.form.id,
             name: this.form.name,

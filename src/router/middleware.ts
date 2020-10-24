@@ -11,7 +11,7 @@ export function authMiddleware(router: any) {
     ) {
       // verify token
       await Vue.prototype.$axios
-        .post(`${env.BACK_HOST}:${env.BACK_PORT}/auth`)
+        .post(`${env.BACK_URI}/auth`)
         .then(() => {
           // verify successed
           next();
