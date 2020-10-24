@@ -70,7 +70,7 @@ jobs:
           script: |
             export BACK_HOST=${{ secrets.STAG_FRONT_HOST }}
             export BACK_PORT=${{ secrets.STAG_FRONT_PORT }}
-            cd /home/reg/${{ github.event.repository.name }}/nginx/front-prod
+            cd /home/reg/${{ github.event.repository.name }}_prod/nginx/front-prod
             docker-compose up -d --no-deps
-            cd /home/reg/${{ github.event.repository.name }}/nginx/reverse-proxy
+            cd /home/reg/${{ github.event.repository.name }}_prod/nginx/reverse-proxy
             docker-compose up -d --build
