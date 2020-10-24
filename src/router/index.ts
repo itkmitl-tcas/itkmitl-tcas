@@ -1,5 +1,6 @@
 import Vue from "vue";
 import VueRouter, { RouteConfig } from "vue-router";
+import { authMiddleware } from "./middleware";
 
 Vue.use(VueRouter);
 
@@ -20,6 +21,9 @@ const routes: Array<RouteConfig> = [
             name: "SDashboard",
             alias: "",
             component: () => import("@views/student/Dashboard.vue"),
+            meta: {
+              requiresAuth: 1
+            },
             children: [
               {
                 path: "step1",
@@ -51,7 +55,10 @@ const routes: Array<RouteConfig> = [
           {
             path: "login",
             name: "SLogin",
-            component: () => import("@views/student/Login.vue")
+            component: () => import("@views/student/Login.vue"),
+            meta: {
+              requiresAuth: 0
+            }
           }
         ]
       },
@@ -82,5 +89,7 @@ const router = new VueRouter({
   base: process.env.BASE_URL,
   routes
 });
+
+authMiddleware(router);
 
 export default router;

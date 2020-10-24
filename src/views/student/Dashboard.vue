@@ -1,5 +1,5 @@
 <template>
-  <div class="dashboard-container">
+  <div class="dashboard-container d-flex">
     <div class="container">
       <Progress class="" />
       <div class="content bg-white mt-3">

@@ -13,7 +13,7 @@
             เข้าสู่ระบบ เพื่อยื่นข้อมูลการสมัครรอบผลงาน
           </div>
           <div class="form-group mt-4">
-            <ValidationProvider rules="required|digits:8" v-slot="{ errors }">
+            <ValidationProvider rules="required|digits:9" v-slot="{ errors }">
               <input
                 type="text"
                 v-model="form.id"
@@ -31,9 +31,9 @@
             <ValidationProvider rules="required|prefix" v-slot="{ errors }">
               <input
                 type="text"
-                v-model="form.firstname"
+                v-model="form.name"
                 class="form-control"
-                id="firstname"
+                id="name"
                 placeholder="ชื่อ (ไม่ต้องมีคำนำหน้า)"
               />
               <small class="form-text text-warning">{{ errors[0] }}</small>
@@ -92,9 +92,9 @@ export default {
   data() {
     return {
       form: {
-        id: 60070157,
-        firstname: "วศิน",
-        surname: "เสริมสัมพันธ์"
+        id: 631001130,
+        name: "?????",
+        surname: "???????"
       }
     };
   },
@@ -104,18 +104,30 @@ export default {
   },
   methods: {
     onSubmit() {
-      this.$refs.form.validate().then(success => {
+      this.$refs.form.validate().then(async success => {
         if (!success) return;
 
-        this.$swal({
-          icon: "success",
-          title: "เข้าสู่ระบบ",
-          text: `ยินดีต้อนรับผู้สมัครหมายเลข ${this.form.id}`
-        }).then(() => {
-          this.$router.push({
-            name: "Step1"
+        const result = await this.$axios.post(
+          `${this.$env.BACK_HOST}:${this.$env.BACK_PORT}/auth/signin`,
+          {
+            apply_id: this.form.id,
+            name: this.form.name,
+            surname: this.form.surname
+          }
+        );
+
+        if (result.status == 200) {
+          // sign in message
+          this.$swal({
+            icon: "success",
+            title: "เข้าสู่ระบบ",
+            text: `ยินดีต้อนรับผู้สมัครหมายเลข ${this.form.id}`
+          }).then(() => {
+            this.$router.push({
+              name: "Step1"
+            });
           });
-        });
+        }
       });
     }
   }
