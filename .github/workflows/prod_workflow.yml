@@ -42,13 +42,13 @@ jobs:
       # Install dependencies
       - name: Install Dependencies
         if: steps.cache-yarn.outputs.cache-hit != 'true'
-        run: yarn install
+        run: yarn install --frozen-lockfile
 
       # Build static
       - name: Build static
-        run: yarn run build
+        run: yarn run build --mode production
         env:
-          NODE_ENV: production
+          NODE_ENV: staging
           BACK_URI: ${{ secrets.PROD_BACK_URI }}
 
       # Copy project
