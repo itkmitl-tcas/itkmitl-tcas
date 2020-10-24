@@ -25,21 +25,23 @@ jobs:
       # Get cache directory
       - name: Get yarn cache directory path
         id: yarn-cache-dir-path
-        run: echo "::set-output name=dir::$(yarn config get cacheFolder)"
+        run: echo "::set-output name=dir::$(yarn cache dir)"
 
         # Cache yarn
       - name: Cache yarn
-        id: yarn-cache
+        id: cache-yarn
         uses: actions/cache@v2
         with:
-          path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
+          path: |
+            ${{ steps.yarn-cache-dir-path.outputs.dir }}
+            **/node_modules
           key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
           restore-keys: |
             ${{ runner.os }}-yarn-
 
       # Install dependencies
       - name: Install Dependencies
-        if: steps.yarn-cache.outputs.cache-hit != 'true'
+        if: steps.cache-yarn.outputs.cache-hit != 'true'
         run: yarn install
 
       # Build static
