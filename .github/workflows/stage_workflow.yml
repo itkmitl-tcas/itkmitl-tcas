@@ -71,7 +71,7 @@ jobs:
           script: |
             export BACK_HOST=${{ secrets.STAG_FRONT_HOST }}
             export BACK_PORT=${{ secrets.STAG_FRONT_PORT }}
-            cd $home/${{ github.event.repository.name }}/nginx/font-stag
+            cd $home/${{ github.event.repository.name }}/nginx/front-stag
             docker-compose up -d --no-deps
-            cd ../reverse-proxy
+            cd $home/${{ github.event.repository.name }}/nginx/reverse-proxy
             docker-compose up -d --build
