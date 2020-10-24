@@ -49,6 +49,7 @@ jobs:
         run: yarn run build
         env:
           NODE_ENV: production
+          BACK_URI: ${{ secret.PROD_BACK_URI }}
 
       # Copy project
       - name: Copy project
@@ -68,7 +69,6 @@ jobs:
           username: ${{ secrets.SERVER_USER }}
           key: ${{ secrets.SERVER_KEY }}
           script: |
-            export BACK_URI=${{ secrets.PROD_BACK_URI }}
             cd /home/reg/${{ github.event.repository.name }}_prod/nginx/front-prod
             docker-compose up -d --no-deps
             cd /home/reg/${{ github.event.repository.name }}_prod/nginx/reverse-proxy
