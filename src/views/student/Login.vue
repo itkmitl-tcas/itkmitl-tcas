@@ -52,7 +52,17 @@
             </ValidationProvider>
           </div>
           <button type="submit" class="btn btn-primary w-100 mt-4">
-            เข้าสู่ระบบ
+            <div
+              class="spinner-border"
+              style="height: 24px; width: 24px"
+              role="status"
+              v-if="loading"
+            >
+              <span class="sr-only">Loading...</span>
+            </div>
+            <span v-else>
+              เข้าสู่ระบบ
+            </span>
           </button>
         </form>
       </ValidationObserver>
@@ -95,7 +105,8 @@ export default {
         id: 631001130,
         name: "?????",
         surname: "???????"
-      }
+      },
+      loading: false
     };
   },
   components: {
@@ -107,27 +118,34 @@ export default {
       this.$refs.form.validate().then(async success => {
         if (!success) return;
 
-        const result = await this.$axios.post(
-          `${this.$env.BACK_URI}/auth/signin`,
-          {
+        this.loading = true;
+
+        await this.$axios
+          .post(`${this.$env.BACK_URI}/auth/signin`, {
             apply_id: this.form.id,
             name: this.form.name,
             surname: this.form.surname
-          }
-        );
-
-        if (result.status == 200) {
-          // sign in message
-          this.$swal({
-            icon: "success",
-            title: "เข้าสู่ระบบ",
-            text: `ยินดีต้อนรับผู้สมัครหมายเลข ${this.form.id}`
-          }).then(() => {
-            this.$router.push({
-              name: "Step1"
+          })
+          .then(() => {
+            this.$swal({
+              icon: "success",
+              title: "เข้าสู่ระบบ",
+              text: `ยินดีต้อนรับผู้สมัครหมายเลข ${this.form.id}`
+            }).then(() => {
+              this.$router.push({
+                name: "Step1"
+              });
+            });
+          })
+          .catch(err => {
+            this.$swal({
+              icon: "error",
+              title: "ไม่สามารถเข้าสู่ระบบได้",
+              text: err.message
             });
           });
-        }
+
+        this.loading = false;
       });
     }
   }
