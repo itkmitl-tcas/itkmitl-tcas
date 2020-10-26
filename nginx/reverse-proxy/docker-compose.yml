@@ -2,7 +2,7 @@ version: '3'
 services:
   reverse-proxy:
     container_name: reverse-proxy
-    restart: on-failure:10
+    restart: alway
     build: ./
     networks:
       - application-prod-network
