@@ -7,3 +7,30 @@ $form-group-margin-bottom: 1.5rem;
 .container {
   transition: all 0.3s ease-out
 }
+
+.custom-file {
+  width: auto !important;
+  min-width: 20vw;
+  
+  
+  label {
+    cursor: pointer;
+    background: $blue;
+    border-color: none;
+    border: none;
+    transition: 0.3s opacity ease-out;
+    
+    span {
+      color: #f8f9fa;
+    }
+
+    &:hover {
+      opacity: 0.8;
+    }
+  }
+}
+
+.custom-file-label::after {
+  display: none !important;
+  // content: ""
+}
