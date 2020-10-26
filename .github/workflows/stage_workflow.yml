@@ -58,7 +58,7 @@ jobs:
           host: ${{ secrets.SERVER_HOST }}
           username: ${{ secrets.SERVER_USER }}
           key : ${{ secrets.SERVER_KEY }}
-          source: "dist, nginx"
+          source: "./, !./node_modules"
           target: ./${{ github.event.repository.name }}_stag
 
       # Deploy project
