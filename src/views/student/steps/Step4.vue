@@ -22,83 +22,35 @@
             </div>
             <div class="col-12 col-md-6">
               <label class="subtitle font-weight-bold">ชื่อจริง:</label>
-              <input
-                type="text"
-                v-model="form.firstname"
-                class="form-control"
-                placeholder=""
-                disabled
-              />
+              <input type="text" v-model="form.firstname" class="form-control" placeholder="" disabled />
             </div>
             <div class="col-12 col-md-6">
               <label class="subtitle font-weight-bold">นามสกุล:</label>
-              <input
-                type="text"
-                v-model="form.surname"
-                class="form-control"
-                placeholder=""
-                disabled
-              />
+              <input type="text" v-model="form.surname" class="form-control" placeholder="" disabled />
             </div>
             <div class="col-12 col-md-6">
               <label class="subtitle font-weight-bold">เบอร์โทรติดต่อ:</label>
-              <input
-                type="text"
-                v-model="form.tel"
-                class="form-control"
-                placeholder=""
-                disabled
-              />
+              <input type="text" v-model="form.tel" class="form-control" placeholder="" disabled />
             </div>
             <div class="col-12 col-md-6">
               <label class="subtitle font-weight-bold">อีเมลล์:</label>
-              <input
-                type="text"
-                v-model="form.email"
-                class="form-control"
-                placeholder=""
-                disabled
-              />
+              <input type="text" v-model="form.email" class="form-control" placeholder="" disabled />
             </div>
             <div class="col-12 col-md-6">
               <label class="subtitle font-weight-bold">โรงเรียน:</label>
-              <input
-                type="text"
-                v-model="form.school"
-                class="form-control"
-                placeholder=""
-                disabled
-              />
+              <input type="text" v-model="form.school" class="form-control" placeholder="" disabled />
             </div>
             <div class="col-12 col-md-6">
-              <label class="subtitle font-weight-bold"
-                >แผนการเรียน สาขาวิชา:</label
-              >
-              <input
-                type="text"
-                v-model="form.field"
-                class="form-control"
-                placeholder="แผนการเรียน หรือสาขาวิชา"
-              />
+              <label class="subtitle font-weight-bold">แผนการเรียน สาขาวิชา:</label>
+              <input type="text" v-model="form.field" class="form-control" placeholder="แผนการเรียน หรือสาขาวิชา" />
             </div>
             <div class="col-12 col-md-6">
               <label class="subtitle font-weight-bold">เกรดรวม GPAX:</label>
-              <input
-                type="text"
-                v-model="form.gpax"
-                class="form-control"
-                placeholder=""
-                disabled
-              />
+              <input type="text" v-model="form.gpax" class="form-control" placeholder="" disabled />
             </div>
             <div class="col-12 col-md-6">
-              <ValidationProvider
-                rules="required|double|between:0,4"
-                v-slot="{ errors }"
-              >
-                <label class="subtitle font-weight-bold"
-                  >เกรดรวมวิชาคณิตศาสตร์:</label
-                >
+              <ValidationProvider rules="required|double|between:0,4" v-slot="{ errors }">
+                <label class="subtitle font-weight-bold">เกรดรวมวิชาคณิตศาสตร์:</label>
                 <input
                   type="text"
                   v-model="form.mGpax"
@@ -109,13 +61,8 @@
               </ValidationProvider>
             </div>
             <div class="col-12 col-md-6">
-              <ValidationProvider
-                rules="required|double|between:0,4"
-                v-slot="{ errors }"
-              >
-                <label class="subtitle font-weight-bold"
-                  >เกรดรวมวิชาภาษาต่างประเทศ:</label
-                >
+              <ValidationProvider rules="required|double|between:0,4" v-slot="{ errors }">
+                <label class="subtitle font-weight-bold">เกรดรวมวิชาภาษาต่างประเทศ:</label>
                 <input
                   type="text"
                   v-model="form.eGpax"
@@ -126,13 +73,8 @@
               </ValidationProvider>
             </div>
             <div class="col-12 col-md-6">
-              <ValidationProvider
-                rules="required|double|between:0,4"
-                v-slot="{ errors }"
-              >
-                <label class="subtitle font-weight-bold"
-                  >เกรดรวมวิชาคอมพิวเตอร์:</label
-                >
+              <ValidationProvider rules="required|double|between:0,4" v-slot="{ errors }">
+                <label class="subtitle font-weight-bold">เกรดรวมวิชาคอมพิวเตอร์:</label>
                 <input
                   type="text"
                   v-model="form.cGpax"
@@ -155,26 +97,26 @@
 </template>
 
 <script>
-import { ValidationProvider, ValidationObserver } from "vee-validate";
-import { extend } from "vee-validate";
+import { ValidationProvider, ValidationObserver } from 'vee-validate';
+import { extend } from 'vee-validate';
 import {
   required,
   // digits,
   double,
   between
-} from "vee-validate/dist/rules";
+} from 'vee-validate/dist/rules';
 
-extend("required", {
+extend('required', {
   ...required,
-  message: "ค่าต้องไม่ว่างเปล่า"
+  message: 'ค่าต้องไม่ว่างเปล่า'
 });
-extend("double", {
+extend('double', {
   ...double,
-  message: "ค่าต้องเป็นตัวเลขทศนิยมเท่านั้น"
+  message: 'ค่าต้องเป็นตัวเลขทศนิยมเท่านั้น'
 });
-extend("between", {
+extend('between', {
   ...between,
-  message: "ค่าต้องอยู่ระหว่าง {min} ถึง {max} เท่านั้น"
+  message: 'ค่าต้องอยู่ระหว่าง {min} ถึง {max} เท่านั้น'
 });
 // extend("digits", {
 //   ...digits,
@@ -182,7 +124,7 @@ extend("between", {
 // });
 
 export default {
-  name: "Step1",
+  name: 'Step1',
   components: {
     ValidationProvider,
     ValidationObserver
@@ -190,14 +132,14 @@ export default {
   data() {
     return {
       form: {
-        prefix: "นาย",
+        prefix: 'นาย',
         id: 60070157,
-        firstname: "วศิน",
-        surname: "เสริมสัมพันธ์",
-        tel: "0924644891",
-        email: "dev.vasin@gmail.com",
-        school: "โรงเรียนนวมินทราชินูทิศเบญจมราชาลัย",
-        field: "วิทย์-คณิต",
+        firstname: 'วศิน',
+        surname: 'เสริมสัมพันธ์',
+        tel: '0924644891',
+        email: 'dev.vasin@gmail.com',
+        school: 'โรงเรียนนวมินทราชินูทิศเบญจมราชาลัย',
+        field: 'วิทย์-คณิต',
         gpax: 2.86,
         mGpax: 2.9,
         eGpax: 3.5,
@@ -205,18 +147,18 @@ export default {
       },
       prefix: [
         {
-          text: "นาย",
-          value: "นาย",
+          text: 'นาย',
+          value: 'นาย',
           disabled: true
         },
         {
-          text: "นาง",
-          value: "นาง",
+          text: 'นาง',
+          value: 'นาง',
           disabled: true
         },
         {
-          text: "นางสาว",
-          value: "นางสาว",
+          text: 'นางสาว',
+          value: 'นางสาว',
           disabled: true
         }
       ]
@@ -224,16 +166,16 @@ export default {
   },
   methods: {
     onSubmit() {
-      this.$refs.form.validate().then(success => {
+      this.$refs.form.validate().then((success) => {
         if (!success) return;
 
         this.$swal({
-          icon: "success",
-          title: "เข้าสู่ระบบ",
+          icon: 'success',
+          title: 'เข้าสู่ระบบ',
           text: `ยินดีต้อนรับผู้สมัครหมายเลข ${this.form.id}`
         }).then(() => {
           this.$router.push({
-            name: "Step1"
+            name: 'Step1'
           });
         });
       });

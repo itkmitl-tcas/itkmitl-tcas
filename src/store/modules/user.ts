@@ -1,12 +1,12 @@
-import Vue from "vue";
-import env from "@/environment";
-import { User, IUser } from "@/type";
-import { Module, VuexModule, Mutation, Action } from "vuex-module-decorators";
-import { AxiosError, AxiosResponse } from "axios";
+import Vue from 'vue';
+import env from '@/environment';
+import { User, IUser } from '@/type';
+import { Module, VuexModule, Mutation, Action } from 'vuex-module-decorators';
+import { AxiosError, AxiosResponse } from 'axios';
 
 // https://github.com/championswimmer/vuex-module-decorators
 @Module({
-  name: "user",
+  name: 'user',
   namespaced: true,
   stateFactory: true
 })
@@ -18,8 +18,8 @@ export default class UserStore extends VuexModule {
     this.user = user;
   }
   @Mutation
-  RESET_USER(user: IUser = new User) {
-    this.user = user
+  RESET_USER(user: IUser = new User()) {
+    this.user = user;
   }
 
   @Action
@@ -30,11 +30,11 @@ export default class UserStore extends VuexModule {
           .post(`${env.BACK_URI}/user/get`, { apply_id: this.user.apply_id })
           .then((resp: AxiosResponse) => {
             const user: IUser = resp.data.DATA;
-            this.context.commit("UPDATE_USER", user);
+            this.context.commit('UPDATE_USER', user);
             resolve(user);
           })
           .catch((err: AxiosError) => {
-            this.context.commit("UPDATE_USER", new User());
+            this.context.commit('UPDATE_USER', new User());
             reject(err);
           });
       }

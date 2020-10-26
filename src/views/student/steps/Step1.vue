@@ -23,43 +23,19 @@
 
             <div class="col-12 col-md-6">
               <label class="subtitle font-weight-bold">ชื่อจริง:</label>
-              <input
-                type="text"
-                v-model="form.name"
-                class="form-control"
-                placeholder=""
-                disabled
-              />
+              <input type="text" v-model="form.name" class="form-control" placeholder="" disabled />
             </div>
             <div class="col-12 col-md-6">
               <label class="subtitle font-weight-bold">นามสกุล:</label>
-              <input
-                type="text"
-                v-model="form.surname"
-                class="form-control"
-                placeholder=""
-                disabled
-              />
+              <input type="text" v-model="form.surname" class="form-control" placeholder="" disabled />
             </div>
             <div class="col-12 col-md-6">
               <label class="subtitle font-weight-bold">เบอร์โทรติดต่อ:</label>
-              <input
-                type="text"
-                v-model="form.mobile"
-                class="form-control"
-                placeholder=""
-                disabled
-              />
+              <input type="text" v-model="form.mobile" class="form-control" placeholder="" disabled />
             </div>
             <div class="col-12 col-md-6">
               <label class="subtitle font-weight-bold">อีเมลล์:</label>
-              <input
-                type="text"
-                v-model="form.email"
-                class="form-control"
-                placeholder=""
-                disabled
-              />
+              <input type="text" v-model="form.email" class="form-control" placeholder="" disabled />
             </div>
             <div class="col-12 col-md-6">
               <label class="subtitle font-weight-bold">โรงเรียน:</label>
@@ -73,18 +49,10 @@
             </div>
             <div class="col-12 col-md-6">
               <label class="subtitle font-weight-bold">ประเภทการสมัคร:</label>
-              <input
-                type="text"
-                v-model="form.apply_type"
-                class="form-control"
-                placeholder="ประเภทการสมัคร"
-                disabled
-              />
+              <input type="text" v-model="form.apply_type" class="form-control" placeholder="ประเภทการสมัคร" disabled />
             </div>
             <div class="col-12 col-md-6">
-              <label class="subtitle font-weight-bold"
-                >แผนการเรียน สาขาวิชา:</label
-              >
+              <label class="subtitle font-weight-bold">แผนการเรียน สาขาวิชา:</label>
               <input
                 type="text"
                 v-model="form.study_field"
@@ -94,22 +62,11 @@
             </div>
             <div class="col-12 col-md-6">
               <label class="subtitle font-weight-bold">GPAX รวม:</label>
-              <input
-                type="text"
-                v-model="form.gpax"
-                class="form-control"
-                placeholder=""
-                disabled
-              />
+              <input type="text" v-model="form.gpax" class="form-control" placeholder="" disabled />
             </div>
             <div class="col-12 col-md-6">
-              <ValidationProvider
-                rules="required|between:0,4"
-                v-slot="{ errors }"
-              >
-                <label class="subtitle font-weight-bold"
-                  >GPAX วิชาคณิตศาสตร์:</label
-                >
+              <ValidationProvider rules="required|between:0,4" v-slot="{ errors }">
+                <label class="subtitle font-weight-bold">GPAX วิชาคณิตศาสตร์:</label>
                 <input
                   type="text"
                   v-model="form.gpax_match"
@@ -120,13 +77,8 @@
               </ValidationProvider>
             </div>
             <div class="col-12 col-md-6">
-              <ValidationProvider
-                rules="required|between:0,4"
-                v-slot="{ errors }"
-              >
-                <label class="subtitle font-weight-bold"
-                  >GPAX วิชาภาษาต่างประเทศ:</label
-                >
+              <ValidationProvider rules="required|between:0,4" v-slot="{ errors }">
+                <label class="subtitle font-weight-bold">GPAX วิชาภาษาต่างประเทศ:</label>
                 <input
                   type="text"
                   v-model="form.gpax_eng"
@@ -137,13 +89,8 @@
               </ValidationProvider>
             </div>
             <div class="col-12 col-md-6">
-              <ValidationProvider
-                rules="required|between:0,4"
-                v-slot="{ errors }"
-              >
-                <label class="subtitle font-weight-bold"
-                  >GPAX วิชาคอมพิวเตอร์:</label
-                >
+              <ValidationProvider rules="required|between:0,4" v-slot="{ errors }">
+                <label class="subtitle font-weight-bold">GPAX วิชาคอมพิวเตอร์:</label>
                 <input
                   type="text"
                   v-model="form.gpax_com"
@@ -156,12 +103,7 @@
             <div class="col-12 text-center">
               <hr />
               <button type="submit" class="btn btn-primary mt-4 px-5">
-                <div
-                  class="spinner-border"
-                  style="height: 24px; width: 24px"
-                  role="status"
-                  v-if="loading"
-                >
+                <div class="spinner-border" style="height: 24px; width: 24px" role="status" v-if="loading">
                   <span class="sr-only">Loading...</span>
                 </div>
                 <span v-else>
@@ -177,27 +119,27 @@
 </template>
 
 <script lang="ts">
-import { IUser, User } from "@/type";
-import { extend } from "vee-validate";
-import { required, between } from "vee-validate/dist/rules";
-import { Component, Vue, Watch } from "vue-property-decorator";
-import SDashboard from "../Dashboard.vue";
+import { IUser, User } from '@/type';
+import { extend } from 'vee-validate';
+import { required, between } from 'vee-validate/dist/rules';
+import { Component, Vue, Watch } from 'vue-property-decorator';
+import SDashboard from '../Dashboard.vue';
 
-extend("required", {
+extend('required', {
   ...required,
-  message: "ค่าต้องไม่ว่างเปล่า"
+  message: 'ค่าต้องไม่ว่างเปล่า'
 });
-extend("between", {
+extend('between', {
   ...between,
-  message: "ค่าต้องอยู่ระหว่าง {min} ถึง {max} เท่านั้น"
+  message: 'ค่าต้องอยู่ระหว่าง {min} ถึง {max} เท่านั้น'
 });
-import { mapGetters } from "vuex";
-import env from "@/environment";
-import { AxiosError, AxiosResponse } from "axios";
-import Store, { userStore } from "@/store";
+import { mapGetters } from 'vuex';
+import env from '@/environment';
+import { AxiosError, AxiosResponse } from 'axios';
+import Store, { userStore } from '@/store';
 
 @Component({
-  name: "Step1",
+  name: 'Step1',
   computed: {
     DATA_USER: () => userStore.DATA_USER
   }
@@ -210,23 +152,23 @@ export default class Step1 extends SDashboard {
   loading = false;
   prename = [
     {
-      text: "นาย",
-      value: "นาย",
+      text: 'นาย',
+      value: 'นาย',
       disabled: true
     },
     {
-      text: "นาง",
-      value: "นาง",
+      text: 'นาง',
+      value: 'นาง',
       disabled: true
     },
     {
-      text: "นางสาว",
-      value: "นางสาว",
+      text: 'นางสาว',
+      value: 'นางสาว',
       disabled: true
     }
   ];
 
-  @Watch("DATA_USER", {
+  @Watch('DATA_USER', {
     immediate: true,
     deep: true
   })
@@ -248,19 +190,19 @@ export default class Step1 extends SDashboard {
       .patch(`${this.$env.BACK_URI}/user`, this.form)
       .then((resp: AxiosResponse) => {
         this.$swal({
-          icon: "success",
-          title: "บันทึก",
-          text: "ระบบได้ทำการบันทึกข้อมูลผู้สมัครแล้ว"
+          icon: 'success',
+          title: 'บันทึก',
+          text: 'ระบบได้ทำการบันทึกข้อมูลผู้สมัครแล้ว'
         }).then(() =>
           this.$router.push({
-            name: "Step2"
+            name: 'Step2'
           })
         );
       })
       .catch((err: AxiosError) => {
         this.$swal({
-          icon: "error",
-          title: "ไม่สามารถบันทึก",
+          icon: 'error',
+          title: 'ไม่สามารถบันทึก',
           text: `ไม่สามารถบันทึกข้อมูลผู้สมัครได้ กรุณาลองใหม่อีกครั้ง \n ${err.message}`
         }).then(() => this.$router.go(0));
       });

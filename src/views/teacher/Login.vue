@@ -14,13 +14,7 @@
           </div>
           <div class="form-group mt-4">
             <ValidationProvider rules="required|digits:8" v-slot="{ errors }">
-              <input
-                type="text"
-                v-model="form.id"
-                class="form-control"
-                id="id"
-                placeholder="ID"
-              />
+              <input type="text" v-model="form.id" class="form-control" id="id" placeholder="ID" />
               <small class="form-text text-warning">{{ errors[0] }}</small>
             </ValidationProvider>
           </div>
@@ -46,17 +40,17 @@
 </template>
 
 <script>
-import { ValidationProvider, ValidationObserver } from "vee-validate";
-import { extend } from "vee-validate";
-import { required, digits } from "vee-validate/dist/rules";
+import { ValidationProvider, ValidationObserver } from 'vee-validate';
+import { extend } from 'vee-validate';
+import { required, digits } from 'vee-validate/dist/rules';
 
-extend("required", {
+extend('required', {
   ...required,
-  message: "ค่าต้องไม่ว่างเปล่า"
+  message: 'ค่าต้องไม่ว่างเปล่า'
 });
-extend("digits", {
+extend('digits', {
   ...digits,
-  message: "ค่าต้องเป็นตัวเลขจำนวน {length} ตัวเท่านั้น"
+  message: 'ค่าต้องเป็นตัวเลขจำนวน {length} ตัวเท่านั้น'
 });
 
 export default {
@@ -74,10 +68,10 @@ export default {
   },
   methods: {
     onSubmit() {
-      this.$refs.form.validate().then(success => {
+      this.$refs.form.validate().then((success) => {
         if (!success) return;
         this.$router.push({
-          name: "TDashboard"
+          name: 'TDashboard'
         });
       });
     }

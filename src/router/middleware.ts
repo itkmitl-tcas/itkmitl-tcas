@@ -1,9 +1,9 @@
 // import { RouteRecord  } from 'vue-router';
-import { RouteRecord } from "vue-router";
-import Vue from "vue";
-import env from "../environment";
-import { AxiosResponse } from "axios";
-import Store, { userStore } from "@/store";
+import { RouteRecord } from 'vue-router';
+import Vue from 'vue';
+import env from '../environment';
+import { AxiosResponse } from 'axios';
+import Store, { userStore } from '@/store';
 
 export function authMiddleware(router: any) {
   router.beforeEach(async (to: any, from: any, next: any) => {
@@ -27,18 +27,16 @@ export function authMiddleware(router: any) {
         // verify failed
         .catch(() => {
           // redirect to login page
-          next({ name: "SLogin" });
+          next({ name: 'SLogin' });
 
           Vue.swal({
             // message
-            icon: "warning",
-            title: "ไม่สามารถเข้าสู่ระบบได้",
+            icon: 'warning',
+            title: 'ไม่สามารถเข้าสู่ระบบได้',
             text: `กรุณาเข้าสู่ระบบใหม่อีกครั้ง`
           });
         });
-    } else if (
-      to.matched.some((record: RouteRecord) => record.meta.requiresAuth <= 0)
-    ) {
+    } else if (to.matched.some((record: RouteRecord) => record.meta.requiresAuth <= 0)) {
       // verify token
       await Vue.prototype.$axios
         .post(`${env.BACK_URI}/auth`)

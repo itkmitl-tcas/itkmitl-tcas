@@ -11,10 +11,10 @@ export class User {
   step?: number;
 
   constructor() {
-    this.apply_id = process.env.NODE_ENV == "development" ? 631001130 : null;
-    this.name = process.env.NODE_ENV == "development" ? "?????" : "";
-    this.surname = process.env.NODE_ENV == "development" ? "???????" : "";
-    this.prename = process.env.NODE_ENV == "development" ? "" : "";
+    this.apply_id = process.env.NODE_ENV == 'development' ? 631001130 : null;
+    this.name = process.env.NODE_ENV == 'development' ? '?????' : '';
+    this.surname = process.env.NODE_ENV == 'development' ? '???????' : '';
+    this.prename = process.env.NODE_ENV == 'development' ? '' : '';
     this.permission = 1;
   }
 }

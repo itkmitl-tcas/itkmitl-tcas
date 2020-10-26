@@ -1,5 +1,5 @@
-import { Component, Vue } from "vue-property-decorator";
-import { mapActions, mapGetters, mapMutations } from "vuex";
+import { Component, Vue } from 'vue-property-decorator';
+import { mapActions, mapGetters, mapMutations } from 'vuex';
 
 @Component({
   // computed: mapGetters(['DATA_USER']),

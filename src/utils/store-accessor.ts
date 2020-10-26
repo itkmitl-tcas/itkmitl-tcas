@@ -1,6 +1,6 @@
-import { Store } from "vuex";
-import { getModule } from "vuex-module-decorators";
-import UserStore from "@/store/modules/user";
+import { Store } from 'vuex';
+import { getModule } from 'vuex-module-decorators';
+import UserStore from '@/store/modules/user';
 
 let user_store: UserStore;
 
