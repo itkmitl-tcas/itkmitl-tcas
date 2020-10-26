@@ -45,16 +45,14 @@ jobs:
         if: steps.cache-yarn.outputs.cache-hit != 'true'
         run: yarn install --frozen-lockfile
 
-      # - name: Define env varaible
-      #   run: |
-      #     echo "export "
       # Build static
       - name: Build static
-        run: yarn run build --mode staging
+        run: |
+          yarn run build --mode staging
+          rm -rf node_modules
         env:
           NODE_ENV: staging
           BACK_URI: ${{ secrets.STAG_BACK_URI }}
-
       # Copy project
       - name: Copy project
         uses: appleboy/scp-action@master

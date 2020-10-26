@@ -46,7 +46,9 @@ jobs:
 
       # Build static
       - name: Build static
-        run: yarn run build --mode production
+        run: |
+          yarn run build --mode production
+          rm -rf node_modules
         env:
           NODE_ENV: staging
           BACK_URI: ${{ secrets.PROD_BACK_URI }}
