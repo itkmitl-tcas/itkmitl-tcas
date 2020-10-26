@@ -45,7 +45,7 @@ export default {
           icon: "success",
           title: "ออกจากระบบ"
         }).then(() => {
-          userStore.RESET_USER();
+          userStore.RESET_USER;
           this.$router.push({
             name: "SLogin"
           });
