@@ -48,7 +48,7 @@ jobs:
       - name: Build static
         run: yarn run build --mode production
         env:
-          NODE_ENV: staging
+          NODE_ENV: production
           BACK_URI: ${{ secrets.PROD_BACK_URI }}
 
       # Copy project
@@ -73,7 +73,6 @@ jobs:
           # -V, --renew-anon-volumes   Recreate anonymous volumes instead of retrieving
           script: |
             cd /home/reg/${{ github.event.repository.name }}_prod/nginx/front-prod
-            docker-compose down -v
             docker-compose up -d -V --no-deps
             cd /home/reg/${{ github.event.repository.name }}_prod/nginx/reverse-proxy
             docker-compose up -d --build
