@@ -60,15 +60,17 @@ jobs:
           key : ${{ secrets.SERVER_KEY }}
           source: "./, !./node_modules"
           target: ./${{ github.event.repository.name }}_prod
+          rm: true
 
       # Deploy project
-      # -V, --renew-anon-volumes   Recreate anonymous volumes instead of retrieving
+      
       - name: Deploy project
         uses: appleboy/ssh-action@master
         with:
           host: ${{ secrets.SERVER_HOST }}
           username: ${{ secrets.SERVER_USER }}
           key: ${{ secrets.SERVER_KEY }}
+          # -V, --renew-anon-volumes   Recreate anonymous volumes instead of retrieving
           script: |
             cd /home/reg/${{ github.event.repository.name }}_prod/nginx/front-prod
             docker-compose down -v
