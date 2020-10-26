@@ -9,6 +9,7 @@ services:
       - application-stag-network
     ports:
       - 81:81
+      - 8080:8080
 
 networks:
   application-prod-network:
