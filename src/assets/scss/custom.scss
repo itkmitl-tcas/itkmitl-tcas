@@ -12,7 +12,6 @@ $form-group-margin-bottom: 1.5rem;
   width: auto !important;
   min-width: 20vw;
   
-  
   label {
     cursor: pointer;
     background: $blue;
@@ -27,6 +26,10 @@ $form-group-margin-bottom: 1.5rem;
     &:hover {
       opacity: 0.8;
     }
+  }
+
+  &.active label{
+    background-color: #28a745 !important;
   }
 }
 

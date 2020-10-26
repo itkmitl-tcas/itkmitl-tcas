@@ -11,9 +11,9 @@
             King Mongkut's Institute of Technology Ladkrabang
           </div>
         </div>
-        <div class="flex-grow-1 text-right" v-if="DATA_USER.pay">
+        <div v-if="DATA_USER.pay" class="flex-grow-1 text-right">
           <div class="title" style="color: #d9d9d9">{{ DATA_FULL_NAME }} ({{ DATA_USER.apply_id }})</div>
-          <div @click="signOut()" class="link title text-white-50 font-weight-light">
+          <div class="link title text-white-50 font-weight-light" @click="signOut()">
             ออกจากระบบ
           </div>
         </div>

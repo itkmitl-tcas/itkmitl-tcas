@@ -4,7 +4,7 @@
       <div class="line">
         <div class="i"></div>
       </div>
-      <div class="px-2 px-sm-3 bg-white position-relative" v-for="(step, key) in steps" :key="`step-${key}`">
+      <div v-for="(step, key) in steps" :key="`step-${key}`" class="px-2 px-sm-3 bg-white position-relative">
         <div class="d-flex align-items-center flex-row">
           <div class="circle mr-3" :class="{ active: currentStep == key + 1 }">
             <span v-if="step.checked" class="h2 m-0">
@@ -54,6 +54,12 @@ export default {
       ]
     };
   },
+  watch: {
+    // update current step when route update
+    $route(to) {
+      this.setCurrentStep(to);
+    }
+  },
   mounted() {
     // init current step in first visit
     this.setCurrentStep(this.$router.currentRoute);
@@ -62,12 +68,6 @@ export default {
     setCurrentStep(route) {
       const step = route.matched.filter((record) => record.meta.step);
       this.currentStep = step[0] ? step[0].meta.step : 1;
-    }
-  },
-  watch: {
-    // update current step when route update
-    $route(to) {
-      this.setCurrentStep(to);
     }
   }
 };

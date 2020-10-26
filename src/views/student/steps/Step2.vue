@@ -1,7 +1,7 @@
 <template>
   <div class="step1-container">
     <span class="font-weight-bold title">
-      ขั้นที่ 1: ข้อมูลเอกสาร
+      ขั้นที่ 2: ข้อมูลเอกสาร
     </span>
     <hr />
 
@@ -10,7 +10,7 @@
         <div class="form-group mt-4">
           <div class="row field-wrapper">
             <div class="col-12">
-              <ValidationProvider rules="required" v-slot="{ validate, errors }">
+              <ValidationProvider v-slot="{ validate, errors }" :rules="{ required: transcript ? false : true }">
                 <label class="subtitle font-weight-bold">ใบ ปพ.1</label>
                 <small class="d-flex text-black-80 mb-3"
                   >ใบแสดงผลการเรียนเฉลี่ยสำสมในระดับชั้นมัธยมศึกษาตอนปลาย ๕ ภาคเรียนการศึกษา (กรณีสำเร็จการศึกษาแล้วใช้
@@ -18,48 +18,60 @@
                 >
                 <b-form-file
                   name="transcript"
+                  :placeholder="transcript ? 'UPDATE TRANSCRIPT' : 'CHOOSE TRANSCRIPT(.PDF)'"
+                  :class="{ active: transcript }"
+                  accept=".pdf, .PDF"
+                  drop-placeholder="Drop file here..."
                   @change="
                     fileChange($event.target.name, $event.target.files);
                     validate($event);
                   "
-                  placeholder="CHOOSE TRANSCRIPT(.PDF)"
-                  accept=".pdf, .PDF"
-                  drop-placeholder="Drop file here..."
                 ></b-form-file>
+                <small v-if="transcript" class="form-text">
+                  <a :href="transcript" target="_blank">ดูใบแสดงผลการเรียน</a>
+                </small>
                 <small class="form-text text-danger">{{ errors[0] }}</small>
               </ValidationProvider>
             </div>
             <div class="col-12">
-              <ValidationProvider rules="required" v-slot="{ validate, errors }">
+              <ValidationProvider v-slot="{ validate, errors }" :rules="{ required: identity_card ? false : true }">
                 <label class="subtitle font-weight-bold">สำเนาบัตรประชาชน*</label>
                 <small class="d-flex text-black-80 mb-3">สำเนาบัตประชาชน พร้อมลงนามสำเนาถูกต้อง</small>
                 <b-form-file
                   name="identity_card"
+                  :placeholder="identity_card ? 'UPDATE IDENTITY CARD' : 'CHOOSE IDENTITY CARD(.PDF)'"
+                  :class="{ active: identity_card }"
+                  accept=".pdf, .PDF"
+                  drop-placeholder="Drop file here..."
                   @change="
                     fileChange($event.target.name, $event.target.files);
                     validate($event);
                   "
-                  placeholder="CHOOSE TRANSCRIPT(.PDF)"
-                  accept=".pdf, .PDF"
-                  drop-placeholder="Drop file here..."
                 ></b-form-file>
+                <small v-if="identity_card" class="form-text">
+                  <a :href="identity_card" target="_blanks">ดูสำเนาบัตรประชาชน</a>
+                </small>
                 <small class="form-text text-danger">{{ errors[0] }}</small>
               </ValidationProvider>
             </div>
             <div class="col-12">
-              <ValidationProvider rules="required" v-slot="{ validate, errors }">
+              <ValidationProvider v-slot="{ validate, errors }" :rules="{ required: student_card ? false : true }">
                 <label class="subtitle font-weight-bold">สำเนาบัตรประจำตัวนักเรียน*</label>
                 <small class="d-flex text-black-80 mb-3">สำเนาบัตรประจำตัวนักเรียน พร้อมลงนามสำเนาถูกต้อง</small>
                 <b-form-file
                   name="student_card"
+                  :placeholder="student_card ? 'UPDATE STUDENT CARD' : 'CHOOSE STUDENT CARD(.PDF)'"
+                  :class="{ active: student_card }"
+                  accept=".pdf, .PDF"
+                  drop-placeholder="Drop file here..."
                   @change="
                     fileChange($event.target.name, $event.target.files);
                     validate($event);
                   "
-                  placeholder="CHOOSE TRANSCRIPT(.PDF)"
-                  accept=".pdf, .PDF"
-                  drop-placeholder="Drop file here..."
                 ></b-form-file>
+                <small v-if="student_card" class="form-text">
+                  <a :href="student_card" target="_blanks">ดูสำเนาบัตรประจำตัวนักเรียน</a>
+                </small>
                 <small class="form-text text-danger">{{ errors[0] }}</small>
               </ValidationProvider>
             </div>
@@ -67,28 +79,17 @@
               <label class="subtitle font-weight-bold">สำเนาใบเปลี่ยนชื่อ*</label>
               <small class="d-flex text-black-80 mb-3">สำเนาบัตรเปลี่ยนชื่อ (ถ้ามี) พร้อมลงนามสำเนาถูกต้อง</small>
               <b-form-file
-                name="name_chage"
-                @change="
-                  fileChange($event.target.name, $event.target.files);
-                  validate($event);
-                "
-                placeholder="CHOOSE TRANSCRIPT(.PDF)"
+                name="name_change"
+                :placeholder="name_change ? 'UPDATE NAME CHANGE' : 'CHOOSE NAME CHANGE(.PDF)'"
+                :class="{ active: name_change }"
                 accept=".pdf, .PDF"
                 drop-placeholder="Drop file here..."
+                @change="fileChange($event.target.name, $event.target.files)"
               ></b-form-file>
+              <small v-if="name_change" class="form-text">
+                <a :href="name_change" target="_blanks">ดูสำเนาใบเปลี่ยนชื่อ</a>
+              </small>
             </div>
-            <!-- 
-          <div class="col-12">
-            <label class="subtitle font-weight-bold">สำเนาบัตรประจำตัวนักเรียน*</label>
-            <small class="d-flex text-black-80 mb-3">สำเนาบัตรประจำตัวนักเรียน พร้อมลงนามสำเนาถูกต้อง</small>
-            <b-form-file v-model="form.student_card" :state="Boolean(form.student_card)" placeholder="CHOOSE STUDENT CARD (.PDF)" accept=".pdf .PDF" drop-placeholder="Drop file here..."></b-form-file>
-          </div>
-          <div class="col-12">
-            <label class="subtitle font-weight-bold">สำเนาใบเปลี่ยนชื่อ</label>
-            <small class="d-flex text-black-80 mb-3">สำเนาบัตรเปลี่ยนชื่อ (ถ้ามี) พร้อมลงนามสำเนาถูกต้อง</small>
-            <b-form-file v-model="form.name_chage" :state="Boolean(form.name_chage)" placeholder="CHOOSE NAME CHANGE (.PDF)" accept=".pdf .PDF" drop-placeholder="Drop file here..."></b-form-file>
-          </div>
-          -->
             <div class="col-12 text-center">
               <hr />
               <router-link :to="{ name: 'Step1' }" class="btn border border-primary text-primary mt-4 px-5 mr-3">
@@ -106,17 +107,14 @@
 </template>
 
 <script lang="ts">
-import {
-  // ValidationProvider,
-  ValidationObserver,
-  extend
-} from 'vee-validate';
-import { required } from 'vee-validate/dist/rules';
-import env from '@/environment';
-import { Docs } from '@/type/docs';
-import { Component, Vue, Watch } from 'vue-property-decorator';
+import { extend } from 'vee-validate';
 import SDashboard from '../Dashboard.vue';
-import { AxiosError } from 'axios';
+import env from '@/environment';
+import { required } from 'vee-validate/dist/rules';
+import { Component, PropSync } from 'vue-property-decorator';
+import { userStore } from '@/store';
+import { DocsItem } from '@/type/docs';
+import { User } from '@/type/index';
 
 extend('required', {
   ...required,
@@ -129,6 +127,31 @@ extend('required', {
 export default class Step2 extends SDashboard {
   docs = new FormData();
   loading = false;
+  userStore = userStore;
+
+  get userData() {
+    return this.userStore.DATA_USER;
+  }
+
+  get docsData() {
+    return this.userData.document;
+  }
+
+  get transcript() {
+    return this.docsData ? this.docsData.transcript : null;
+  }
+  get identity_card() {
+    return this.docsData ? this.docsData.identity_card : null;
+  }
+  get student_card() {
+    return this.docsData ? this.docsData.student_card : null;
+  }
+  get name_change() {
+    return this.docsData ? this.docsData.name_change : null;
+  }
+
+  // userData: User = this.userData;
+  // documentData: Record<string, string> | undefined = this.userData.DATA_USER.document;
 
   // on file change
   fileChange(name, file) {
@@ -147,7 +170,7 @@ export default class Step2 extends SDashboard {
 
     await this.$axios
       .post(`${env.BACK_URI}/docs`, this.docs)
-      .then((res) => {
+      .then(() => {
         this.$swal({
           icon: 'success',
           title: 'บันทึก',
@@ -158,7 +181,7 @@ export default class Step2 extends SDashboard {
           })
         );
       })
-      .catch((err: AxiosError) => {
+      .catch((err) => {
         this.$swal({
           icon: 'error',
           title: 'ไม่สามารถบันทึก',

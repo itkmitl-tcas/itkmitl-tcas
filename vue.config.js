@@ -6,18 +6,18 @@ module.exports = {
   transpileDependencies: ['vuex-module-decorators'],
   configureWebpack: {
     plugins: [
-      new PrerenderSPAPlugin({
-        staticDir: path.join(__dirname, 'dist'),
-        routes: ['/'],
-        minify: {
-          collapseBooleanAttributes: true,
-          collapseWhitespace: true,
-          decodeEntities: true,
-          keepClosingSlash: true,
-          sortAttributes: true
-        },
-        captureAfterElementExists: '.view-visable'
-      })
+      // new PrerenderSPAPlugin({
+      //   staticDir: path.join(__dirname, 'dist'),
+      //   routes: ['/'],
+      //   minify: {
+      //     collapseBooleanAttributes: true,
+      //     collapseWhitespace: true,
+      //     decodeEntities: true,
+      //     keepClosingSlash: true,
+      //     sortAttributes: true
+      //   },
+      //   captureAfterElementExists: '.view-visable'
+      // })
     ],
     performance: {
       hints: false

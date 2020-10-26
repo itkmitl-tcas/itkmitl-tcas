@@ -9,6 +9,7 @@ export class User {
   gpax_eng?: number;
   gpax_com?: number;
   step?: number;
+  document?: Record<string, any>;
 
   constructor() {
     this.apply_id = process.env.NODE_ENV == 'development' ? 631001130 : null;

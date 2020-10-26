@@ -22,38 +22,38 @@
             </div>
             <div class="col-12 col-md-6">
               <label class="subtitle font-weight-bold">ชื่อจริง:</label>
-              <input type="text" v-model="form.firstname" class="form-control" placeholder="" disabled />
+              <input v-model="form.firstname" type="text" class="form-control" placeholder="" disabled />
             </div>
             <div class="col-12 col-md-6">
               <label class="subtitle font-weight-bold">นามสกุล:</label>
-              <input type="text" v-model="form.surname" class="form-control" placeholder="" disabled />
+              <input v-model="form.surname" type="text" class="form-control" placeholder="" disabled />
             </div>
             <div class="col-12 col-md-6">
               <label class="subtitle font-weight-bold">เบอร์โทรติดต่อ:</label>
-              <input type="text" v-model="form.tel" class="form-control" placeholder="" disabled />
+              <input v-model="form.tel" type="text" class="form-control" placeholder="" disabled />
             </div>
             <div class="col-12 col-md-6">
               <label class="subtitle font-weight-bold">อีเมลล์:</label>
-              <input type="text" v-model="form.email" class="form-control" placeholder="" disabled />
+              <input v-model="form.email" type="text" class="form-control" placeholder="" disabled />
             </div>
             <div class="col-12 col-md-6">
               <label class="subtitle font-weight-bold">โรงเรียน:</label>
-              <input type="text" v-model="form.school" class="form-control" placeholder="" disabled />
+              <input v-model="form.school" type="text" class="form-control" placeholder="" disabled />
             </div>
             <div class="col-12 col-md-6">
               <label class="subtitle font-weight-bold">แผนการเรียน สาขาวิชา:</label>
-              <input type="text" v-model="form.field" class="form-control" placeholder="แผนการเรียน หรือสาขาวิชา" />
+              <input v-model="form.field" type="text" class="form-control" placeholder="แผนการเรียน หรือสาขาวิชา" />
             </div>
             <div class="col-12 col-md-6">
               <label class="subtitle font-weight-bold">เกรดรวม GPAX:</label>
-              <input type="text" v-model="form.gpax" class="form-control" placeholder="" disabled />
+              <input v-model="form.gpax" type="text" class="form-control" placeholder="" disabled />
             </div>
             <div class="col-12 col-md-6">
-              <ValidationProvider rules="required|double|between:0,4" v-slot="{ errors }">
+              <ValidationProvider v-slot="{ errors }" rules="required|double|between:0,4">
                 <label class="subtitle font-weight-bold">เกรดรวมวิชาคณิตศาสตร์:</label>
                 <input
-                  type="text"
                   v-model="form.mGpax"
+                  type="text"
                   class="form-control"
                   placeholder="เกรด 5,6 ภาคการศึกษา วิชาคณิตศาสตร์"
                 />
@@ -61,11 +61,11 @@
               </ValidationProvider>
             </div>
             <div class="col-12 col-md-6">
-              <ValidationProvider rules="required|double|between:0,4" v-slot="{ errors }">
+              <ValidationProvider v-slot="{ errors }" rules="required|double|between:0,4">
                 <label class="subtitle font-weight-bold">เกรดรวมวิชาภาษาต่างประเทศ:</label>
                 <input
-                  type="text"
                   v-model="form.eGpax"
+                  type="text"
                   class="form-control"
                   placeholder="เกรด 5,6 ภาคการศึกษา วิชาภาษาต่างประเทศ"
                 />
@@ -73,11 +73,11 @@
               </ValidationProvider>
             </div>
             <div class="col-12 col-md-6">
-              <ValidationProvider rules="required|double|between:0,4" v-slot="{ errors }">
+              <ValidationProvider v-slot="{ errors }" rules="required|double|between:0,4">
                 <label class="subtitle font-weight-bold">เกรดรวมวิชาคอมพิวเตอร์:</label>
                 <input
-                  type="text"
                   v-model="form.cGpax"
+                  type="text"
                   class="form-control"
                   placeholder="เกรด 5,6 ภาคการศึกษา วิชาคอมพิวเตอร์หรือการงานอาชีพ"
                 />
@@ -85,8 +85,11 @@
               </ValidationProvider>
             </div>
             <div class="col-12 text-center">
+              <router-link :to="{ name: 'Step2' }" class="btn border border-primary text-primary mt-4 px-5 mr-3">
+                ย้อนกลับ
+              </router-link>
               <button type="submit" class="btn btn-primary mt-4 px-5">
-                ถัดไป
+                บันทึก
               </button>
             </div>
           </div>

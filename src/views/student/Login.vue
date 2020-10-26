@@ -13,12 +13,12 @@
             เข้าสู่ระบบ เพื่อยื่นข้อมูลการสมัครรอบผลงาน
           </div>
           <div class="form-group mt-4">
-            <ValidationProvider rules="required" v-slot="{ errors }">
+            <ValidationProvider v-slot="{ errors }" rules="required">
               <input
-                type="text"
-                v-model="form.apply_id"
-                class="form-control"
                 id="apply_id"
+                v-model="form.apply_id"
+                type="text"
+                class="form-control"
                 placeholder="รหัสประจำตัว"
               />
               <small class="form-text text-muted mt-1">รหัสประจำตัวผู้สมัคร จากสำนักทะเบียน</small>
@@ -26,25 +26,25 @@
             </ValidationProvider>
           </div>
           <div class="form-group mt-3">
-            <ValidationProvider rules="required|prefix" v-slot="{ errors }">
+            <ValidationProvider v-slot="{ errors }" rules="required|prefix">
               <input
-                type="text"
-                v-model="form.name"
-                class="form-control"
                 id="name"
+                v-model="form.name"
+                type="text"
+                class="form-control"
                 placeholder="ชื่อ (ไม่ต้องมีคำนำหน้า)"
               />
               <small class="form-text text-warning">{{ errors[0] }}</small>
             </ValidationProvider>
           </div>
           <div class="form-group">
-            <ValidationProvider rules="required" v-slot="{ errors }">
-              <input type="text" v-model="form.surname" class="form-control" id="surname" placeholder="นามสกุล" />
+            <ValidationProvider v-slot="{ errors }" rules="required">
+              <input id="surname" v-model="form.surname" type="text" class="form-control" placeholder="นามสกุล" />
               <small class="form-text text-warning">{{ errors[0] }}</small>
             </ValidationProvider>
           </div>
           <button type="submit" class="btn btn-primary w-100 mt-4">
-            <div class="spinner-border" style="height: 24px; width: 24px" role="status" v-if="loading">
+            <div v-if="loading" class="spinner-border" style="height: 24px; width: 24px" role="status">
               <span class="sr-only">Loading...</span>
             </div>
             <span v-else>

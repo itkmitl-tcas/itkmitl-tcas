@@ -13,18 +13,18 @@
             เข้าสู่ระบบ Backoffice
           </div>
           <div class="form-group mt-4">
-            <ValidationProvider rules="required|digits:8" v-slot="{ errors }">
-              <input type="text" v-model="form.id" class="form-control" id="id" placeholder="ID" />
+            <ValidationProvider v-slot="{ errors }" rules="required|digits:8">
+              <input id="id" v-model="form.id" type="text" class="form-control" placeholder="ID" />
               <small class="form-text text-warning">{{ errors[0] }}</small>
             </ValidationProvider>
           </div>
           <div class="form-group mt-3">
-            <ValidationProvider rules="required" v-slot="{ errors }">
+            <ValidationProvider v-slot="{ errors }" rules="required">
               <input
-                type="password"
-                v-model="form.password"
-                class="form-control"
                 id="password"
+                v-model="form.password"
+                type="password"
+                class="form-control"
                 placeholder="PASSWORD"
               />
               <small class="form-text text-warning">{{ errors[0] }}</small>
@@ -54,6 +54,10 @@ extend('digits', {
 });
 
 export default {
+  components: {
+    ValidationProvider,
+    ValidationObserver
+  },
   data() {
     return {
       form: {
@@ -61,10 +65,6 @@ export default {
         password: null
       }
     };
-  },
-  components: {
-    ValidationProvider,
-    ValidationObserver
   },
   methods: {
     onSubmit() {
