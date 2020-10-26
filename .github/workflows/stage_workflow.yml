@@ -47,9 +47,7 @@ jobs:
 
       # Build static
       - name: Build static
-        run: |
-          yarn run build --mode staging
-          rm -rf node_modules
+        run: yarn run build --mode staging
         env:
           NODE_ENV: staging
           BACK_URI: ${{ secrets.STAG_BACK_URI }}
@@ -60,7 +58,7 @@ jobs:
           host: ${{ secrets.SERVER_HOST }}
           username: ${{ secrets.SERVER_USER }}
           key : ${{ secrets.SERVER_KEY }}
-          source: ./
+          source: "dist,nginx"
           target: ./${{ github.event.repository.name }}_stag
 
       # Deploy project
