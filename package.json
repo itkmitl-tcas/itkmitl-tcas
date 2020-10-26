@@ -63,7 +63,7 @@
   },
   "husky": {
     "hooks": {
-      "pre-commit": "lint-staged"
+      "pre-commit": "exec < /dev/tty && lint-staged"
     }
   },
   "lint-staged": {
