@@ -17,8 +17,9 @@ export default class UserStore extends VuexModule {
   UPDATE_USER(user: IUser) {
     this.user = user;
   }
-  RESET_USER() {
-    this.user = new User();
+  @Mutation
+  RESET_USER(user: IUser = new User) {
+    this.user = user
   }
 
   @Action

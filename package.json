@@ -1,12 +1,13 @@
 {
-  "name": "itkmitl-tcas",
+  "name": "itkmitl-tcas-love",
   "version": "0.1.0",
-  "private": true,
+  "private": false,
   "scripts": {
     "serve": "vue-cli-service serve --mode local",
     "build": "vue-cli-service build",
     "test:unit": "vue-cli-service test:unit",
-    "lint": "vue-cli-service lint"
+    "lint": "vue-cli-service lint",
+    "commit": "yarn cz"
   },
   "dependencies": {
     "@types/node": "^14.14.2",
@@ -41,6 +42,7 @@
     "@vue/eslint-config-prettier": "^6.0.0",
     "@vue/eslint-config-typescript": "^5.0.2",
     "@vue/test-utils": "^1.0.3",
+    "commitizen": "^4.2.2",
     "compression-webpack-plugin": "^6.0.3",
     "eslint": "^6.7.2",
     "eslint-plugin-json": "^2.1.2",
@@ -49,6 +51,7 @@
     "husky": "^4.3.0",
     "lint-staged": "^10.4.2",
     "node-sass": "^4.12.0",
+    "pinst": "^2.0.0",
     "prerender-spa-plugin": "^3.4.0",
     "prettier": "^1.19.1",
     "responsive-loader": "^2.2.0",
@@ -61,7 +64,7 @@
   },
   "husky": {
     "hooks": {
-      "pre-commit": "lint-staged"
+      "prepare-commit-msg": "exec < /dev/tty && git cz --hook || true"
     }
   },
   "lint-staged": {

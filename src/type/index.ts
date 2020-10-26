@@ -1,5 +1,5 @@
 export class User {
-  apply_id: number;
+  apply_id: number | null;
   permission: number;
   name?: string;
   surname?: string;
@@ -11,10 +11,10 @@ export class User {
   step?: number;
 
   constructor() {
-    this.apply_id = 631001130;
-    this.name = "?????";
-    this.surname = "???????";
-    this.prename = "นาย";
+    this.apply_id = process.env.NODE_ENV == "development" ? 631001130 : null;
+    this.name = process.env.NODE_ENV == "development" ? "?????" : "";
+    this.surname = process.env.NODE_ENV == "development" ? "???????" : "";
+    this.prename = process.env.NODE_ENV == "development" ? "" : "";
     this.permission = 1;
   }
 }
