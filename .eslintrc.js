@@ -6,13 +6,18 @@ module.exports = {
     commonjs: true
   },
   extends: [
-    'plugin:vue/essential',
-    'plugin:json/recommended',
-    'plugin:@typescript-eslint/recommended',
     'eslint:recommended',
+    'plugin:vue/essential',
+    'plugin:vue/recommended',
+    'plugin:vue/strongly-recommended',
+    'plugin:@typescript-eslint/eslint-recommended',
+    'plugin:@typescript-eslint/recommended',
+    'plugin:json/recommended',
     '@vue/typescript/recommended',
     '@vue/prettier/@typescript-eslint',
-    '@vue/prettier'
+    '@vue/prettier',
+    '@vue/eslint-config-typescript',
+    '@vue/eslint-config-prettier'
   ],
   parserOptions: {
     ecmaVersion: 2020
@@ -21,9 +26,9 @@ module.exports = {
     'no-console': process.env.NODE_ENV === 'production' ? 'warn' : 'off',
     'no-debugger': process.env.NODE_ENV === 'production' ? 'warn' : 'off',
     '@typescript-eslint/no-explicit-any': 'off',
-    '@typescript-eslint/camelcase': 'off',
+    '@typescript-eslint/explicit-module-boundary-types': 'off',
     '@typescript-eslint/no-unused-vars': 'off',
-    '@typescript-eslint/explicit-module-boundary-types': 'off'
+    // '@typescript-eslint/camelcase': 'off'
   },
   overrides: [
     {
