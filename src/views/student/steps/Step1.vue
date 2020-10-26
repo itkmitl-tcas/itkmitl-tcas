@@ -103,12 +103,20 @@
             <div class="col-12 text-center">
               <hr />
               <button type="submit" class="btn btn-primary mt-4 px-5">
-                <div v-if="loading" class="spinner-border" style="height: 24px; width: 24px" role="status">
-                  <span class="sr-only">Loading...</span>
-                </div>
-                <span v-else>
-                  บันทึก
-                </span>
+                <transition name="fade" mode="out-in">
+                  <div
+                    v-if="loading"
+                    key="loading"
+                    class="spinner-border"
+                    style="height: 24px; width: 24px"
+                    role="status"
+                  >
+                    <span class="sr-only">Loading...</span>
+                  </div>
+                  <span v-else key="message">
+                    บันทึก
+                  </span>
+                </transition>
               </button>
             </div>
           </div>

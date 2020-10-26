@@ -44,12 +44,18 @@
             </ValidationProvider>
           </div>
           <button type="submit" class="btn btn-primary w-100 mt-4">
-            <div v-if="loading" class="spinner-border" style="height: 24px; width: 24px" role="status">
-              <span class="sr-only">Loading...</span>
-            </div>
-            <span v-else>
-              เข้าสู่ระบบ
-            </span>
+            <transition name="fade" mode="out-in">
+              <div
+                v-if="loading"
+                key="loading"
+                class="spinner-border"
+                style="height: 24px; width: 24px"
+                role="status"
+              ></div>
+              <span v-else key="message">
+                เข้าสู่ระบบ
+              </span>
+            </transition>
           </button>
         </form>
       </ValidationObserver>
