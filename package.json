@@ -11,6 +11,9 @@
     "commit": "yarn cz"
   },
   "dependencies": {
+    "@sentry/browser": "^5.27.1",
+    "@sentry/integrations": "^5.27.1",
+    "@sentry/tracing": "^5.27.1",
     "@types/node": "^14.14.2",
     "axios": "^0.20.0",
     "bootstrap": "^4.5.3",

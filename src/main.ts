@@ -1,7 +1,16 @@
+/* --------------------------------- System --------------------------------- */
 import Vue from 'vue';
 import App from './App.vue';
 import router from './router';
 import store from './store';
+import VueCookies from 'vue-cookies';
+import axios from 'axios';
+import env from './environment';
+
+/* ---------------------------------- Style --------------------------------- */
+import VueSweetalert2 from 'vue-sweetalert2';
+import VueLazyload from 'vue-lazyload';
+import PortalVue from 'portal-vue';
 import {
   ButtonPlugin,
   VBTogglePlugin,
@@ -12,14 +21,26 @@ import {
   FormFilePlugin,
   BadgePlugin
 } from 'bootstrap-vue';
-import PortalVue from 'portal-vue';
-import VueLazyload from 'vue-lazyload';
-import VueSweetalert2 from 'vue-sweetalert2';
-import VueCookies from 'vue-cookies';
-import axios from 'axios';
-import env from './environment';
 
-Vue.config.productionTip = process.env.NODE_ENV == 'production' ? false : true;
+/* -------------------------------- Sentry IO ------------------------------- */
+import * as Sentry from '@sentry/browser';
+import { Vue as VueIntegration } from '@sentry/integrations';
+import { Integrations } from '@sentry/tracing';
+Sentry.init({
+  environment: process.env.NODE_ENV,
+  dsn: 'https://2f491a1ba25a45db9bcaa606cf84ea62@o465173.ingest.sentry.io/5493955',
+  integrations: [
+    new VueIntegration({
+      Vue,
+      tracing: true
+    }),
+    new Integrations.BrowserTracing()
+  ],
+
+  // We recommend adjusting this value in production, or using tracesSampler
+  // for finer control
+  tracesSampleRate: 1.0
+});
 
 Vue.use(ButtonPlugin);
 Vue.use(VBTogglePlugin);
