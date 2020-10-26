@@ -11,15 +11,43 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
 import Progress from "@components/Progress.vue";
+import UserMix from "@/mixin/user";
+import { getModule } from "vuex-module-decorators";
 
-export default {
-  name: "SDashboard",
+import Store, { userStore } from "@/store";
+
+import { ValidationProvider, ValidationObserver } from "vee-validate";
+import { IUser } from "@/type";
+import { Component, Vue } from "vue-property-decorator";
+import { mapActions } from "vuex";
+
+@Component({
+  mixins: [UserMix],
   components: {
-    Progress
+    Progress,
+    ValidationProvider,
+    ValidationObserver
   }
-};
+})
+export default class SDashboard extends Vue {
+  $axios: any;
+  $env: any;
+
+  async created() {
+    await userStore.CALL_USER_DATA().catch(err => {
+      console.log(err);
+      this.$swal({
+        icon: "error",
+        title: "ไม่สามารถดึงข้อมูลได้",
+        text: `ไม่สามารถดึงข้อมูลผู้สมัครจากเซิร์ฟเวอร์ได้ กรุณาลองใหม่อีกครั้ง \n ${err.message}`
+      }).then(() => {
+        this.$router.go(0);
+      });
+    });
+  }
+}
 </script>
 
 <style lang="scss" scoped>

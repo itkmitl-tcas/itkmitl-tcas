@@ -2,13 +2,14 @@ version: '3'
 services:
   reverse-proxy:
     container_name: reverse-proxy
-    restart: on-failure:10
+    restart: always
     build: ./
     networks:
       - application-prod-network
       - application-stag-network
     ports:
       - 81:81
+      - 8080:8080
 
 networks:
   application-prod-network:

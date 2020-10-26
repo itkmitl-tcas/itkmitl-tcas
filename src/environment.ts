@@ -5,8 +5,7 @@
 // }
 
 const environment = {
-  BACK_HOST: process.env.FRONT_HOST || "http://localhost",
-  BACK_PORT: process.env.FRONT_PORT || "3000"
+  BACK_URI: process.env.VUE_APP_BACK_URI || "http://localhost:3001"
 };
 
 export default environment;

@@ -8,6 +8,7 @@ on:
 jobs:
   deploy:
     runs-on: ubuntu-latest
+    timeout-minutes: 5
     steps:
 
       # Checkout
@@ -42,14 +43,16 @@ jobs:
       # Install dependencies
       - name: Install Dependencies
         if: steps.cache-yarn.outputs.cache-hit != 'true'
-        run: yarn install
+        run: yarn install --frozen-lockfile
 
       # Build static
       - name: Build static
-        run: yarn run build
+        run: |
+          yarn run build --mode staging
+          rm -rf node_modules
         env:
           NODE_ENV: staging
-
+          BACK_URI: ${{ secrets.STAG_BACK_URI }}
       # Copy project
       - name: Copy project
         uses: appleboy/scp-action@master
@@ -68,8 +71,6 @@ jobs:
           username: ${{ secrets.SERVER_USER }}
           key: ${{ secrets.SERVER_KEY }}
           script: |
-            export BACK_HOST=${{ secrets.STAG_FRONT_HOST }}
-            export BACK_PORT=${{ secrets.STAG_FRONT_PORT }}
             cd /home/reg/${{ github.event.repository.name }}_stag/nginx/front-stag
             docker-compose up -d --no-deps
             cd /home/reg/${{ github.event.repository.name }}_stag/nginx/reverse-proxy

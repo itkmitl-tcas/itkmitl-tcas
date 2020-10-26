@@ -1,150 +1,126 @@
 <template>
   <div class="step1-container">
     <span class="font-weight-bold title">
-      ขั้นที่ 1: ข้อมูลผู้สมัคร
+      ขั้นที่ 1: ข้อมูลเอกสาร
     </span>
     <hr />
 
     <ValidationObserver ref="form">
-      <form class="mt-3" @submit.prevent="onSubmit">
+      <form class="mt-3" enctype="multipart/form-data" @submit.prevent="onSave">
         <div class="form-group mt-4">
           <div class="row field-wrapper">
-            <div class="col">
-              <label class="subtitle font-weight-bold">คำนำหน้าชื่อ</label>
-              <div class="d-flex flex-row">
-                <b-form-radio-group
-                  id="radio-group-1"
-                  v-model="form.prefix"
-                  :options="prefix"
-                  name="radio-options"
-                ></b-form-radio-group>
-              </div>
+            <div class="col-12">
+              <ValidationProvider
+                rules="required"
+                v-slot="{ validate, errors }"
+              >
+                <label class="subtitle font-weight-bold">ใบ ปพ.1</label>
+                <small class="d-flex text-black-80 mb-3"
+                  >ใบแสดงผลการเรียนเฉลี่ยสำสมในระดับชั้นมัธยมศึกษาตอนปลาย ๕
+                  ภาคเรียนการศึกษา (กรณีสำเร็จการศึกษาแล้วใช้ ๖
+                  ภาคเรียนการศึกษา)</small
+                >
+                <b-form-file
+                  name="transcript"
+                  @change="
+                    fileChange($event.target.name, $event.target.files);
+                    validate($event);
+                  "
+                  placeholder="CHOOSE TRANSCRIPT(.PDF)"
+                  accept=".pdf, .PDF"
+                  drop-placeholder="Drop file here..."
+                ></b-form-file>
+                <small class="form-text text-danger">{{ errors[0] }}</small>
+              </ValidationProvider>
             </div>
-            <div class="col-12 col-md-6">
-              <label class="subtitle font-weight-bold">ชื่อจริง:</label>
-              <input
-                type="text"
-                v-model="form.firstname"
-                class="form-control"
-                placeholder=""
-                disabled
-              />
+            <div class="col-12">
+              <ValidationProvider
+                rules="required"
+                v-slot="{ validate, errors }"
+              >
+                <label class="subtitle font-weight-bold"
+                  >สำเนาบัตรประชาชน*</label
+                >
+                <small class="d-flex text-black-80 mb-3"
+                  >สำเนาบัตประชาชน พร้อมลงนามสำเนาถูกต้อง</small
+                >
+                <b-form-file
+                  name="identity_card"
+                  @change="
+                    fileChange($event.target.name, $event.target.files);
+                    validate($event);
+                  "
+                  placeholder="CHOOSE TRANSCRIPT(.PDF)"
+                  accept=".pdf, .PDF"
+                  drop-placeholder="Drop file here..."
+                ></b-form-file>
+                <small class="form-text text-danger">{{ errors[0] }}</small>
+              </ValidationProvider>
             </div>
-            <div class="col-12 col-md-6">
-              <label class="subtitle font-weight-bold">นามสกุล:</label>
-              <input
-                type="text"
-                v-model="form.surname"
-                class="form-control"
-                placeholder=""
-                disabled
-              />
+            <div class="col-12">
+              <ValidationProvider
+                rules="required"
+                v-slot="{ validate, errors }"
+              >
+                <label class="subtitle font-weight-bold"
+                  >สำเนาบัตรประจำตัวนักเรียน*</label
+                >
+                <small class="d-flex text-black-80 mb-3"
+                  >สำเนาบัตรประจำตัวนักเรียน พร้อมลงนามสำเนาถูกต้อง</small
+                >
+                <b-form-file
+                  name="student_card"
+                  @change="
+                    fileChange($event.target.name, $event.target.files);
+                    validate($event);
+                  "
+                  placeholder="CHOOSE TRANSCRIPT(.PDF)"
+                  accept=".pdf, .PDF"
+                  drop-placeholder="Drop file here..."
+                ></b-form-file>
+                <small class="form-text text-danger">{{ errors[0] }}</small>
+              </ValidationProvider>
             </div>
-            <div class="col-12 col-md-6">
-              <label class="subtitle font-weight-bold">เบอร์โทรติดต่อ:</label>
-              <input
-                type="text"
-                v-model="form.tel"
-                class="form-control"
-                placeholder=""
-                disabled
-              />
-            </div>
-            <div class="col-12 col-md-6">
-              <label class="subtitle font-weight-bold">อีเมลล์:</label>
-              <input
-                type="text"
-                v-model="form.email"
-                class="form-control"
-                placeholder=""
-                disabled
-              />
-            </div>
-            <div class="col-12 col-md-6">
-              <label class="subtitle font-weight-bold">โรงเรียน:</label>
-              <input
-                type="text"
-                v-model="form.school"
-                class="form-control"
-                placeholder=""
-                disabled
-              />
-            </div>
-            <div class="col-12 col-md-6">
+            <div class="col-12">
               <label class="subtitle font-weight-bold"
-                >แผนการเรียน สาขาวิชา:</label
+                >สำเนาใบเปลี่ยนชื่อ*</label
               >
-              <input
-                type="text"
-                v-model="form.field"
-                class="form-control"
-                placeholder="แผนการเรียน หรือสาขาวิชา"
-              />
-            </div>
-            <div class="col-12 col-md-6">
-              <label class="subtitle font-weight-bold">เกรดรวม GPAX:</label>
-              <input
-                type="text"
-                v-model="form.gpax"
-                class="form-control"
-                placeholder=""
-                disabled
-              />
-            </div>
-            <div class="col-12 col-md-6">
-              <ValidationProvider
-                rules="required|double|between:0,4"
-                v-slot="{ errors }"
+              <small class="d-flex text-black-80 mb-3"
+                >สำเนาบัตรเปลี่ยนชื่อ (ถ้ามี) พร้อมลงนามสำเนาถูกต้อง</small
               >
-                <label class="subtitle font-weight-bold"
-                  >เกรดรวมวิชาคณิตศาสตร์:</label
-                >
-                <input
-                  type="text"
-                  v-model="form.mGpax"
-                  class="form-control"
-                  placeholder="เกรด 5,6 ภาคการศึกษา วิชาคณิตศาสตร์"
-                />
-                <small class="form-text text-danger">{{ errors[0] }}</small>
-              </ValidationProvider>
+              <b-form-file
+                name="name_chage"
+                @change="
+                  fileChange($event.target.name, $event.target.files);
+                  validate($event);
+                "
+                placeholder="CHOOSE TRANSCRIPT(.PDF)"
+                accept=".pdf, .PDF"
+                drop-placeholder="Drop file here..."
+              ></b-form-file>
             </div>
-            <div class="col-12 col-md-6">
-              <ValidationProvider
-                rules="required|double|between:0,4"
-                v-slot="{ errors }"
-              >
-                <label class="subtitle font-weight-bold"
-                  >เกรดรวมวิชาภาษาต่างประเทศ:</label
-                >
-                <input
-                  type="text"
-                  v-model="form.eGpax"
-                  class="form-control"
-                  placeholder="เกรด 5,6 ภาคการศึกษา วิชาภาษาต่างประเทศ"
-                />
-                <small class="form-text text-danger">{{ errors[0] }}</small>
-              </ValidationProvider>
-            </div>
-            <div class="col-12 col-md-6">
-              <ValidationProvider
-                rules="required|double|between:0,4"
-                v-slot="{ errors }"
-              >
-                <label class="subtitle font-weight-bold"
-                  >เกรดรวมวิชาคอมพิวเตอร์:</label
-                >
-                <input
-                  type="text"
-                  v-model="form.cGpax"
-                  class="form-control"
-                  placeholder="เกรด 5,6 ภาคการศึกษา วิชาคอมพิวเตอร์หรือการงานอาชีพ"
-                />
-                <small class="form-text text-danger">{{ errors[0] }}</small>
-              </ValidationProvider>
-            </div>
+            <!-- 
+          <div class="col-12">
+            <label class="subtitle font-weight-bold">สำเนาบัตรประจำตัวนักเรียน*</label>
+            <small class="d-flex text-black-80 mb-3">สำเนาบัตรประจำตัวนักเรียน พร้อมลงนามสำเนาถูกต้อง</small>
+            <b-form-file v-model="form.student_card" :state="Boolean(form.student_card)" placeholder="CHOOSE STUDENT CARD (.PDF)" accept=".pdf .PDF" drop-placeholder="Drop file here..."></b-form-file>
+          </div>
+          <div class="col-12">
+            <label class="subtitle font-weight-bold">สำเนาใบเปลี่ยนชื่อ</label>
+            <small class="d-flex text-black-80 mb-3">สำเนาบัตรเปลี่ยนชื่อ (ถ้ามี) พร้อมลงนามสำเนาถูกต้อง</small>
+            <b-form-file v-model="form.name_chage" :state="Boolean(form.name_chage)" placeholder="CHOOSE NAME CHANGE (.PDF)" accept=".pdf .PDF" drop-placeholder="Drop file here..."></b-form-file>
+          </div>
+          -->
             <div class="col-12 text-center">
+              <hr />
+              <router-link
+                :to="{ name: 'Step1' }"
+                class="btn border border-primary text-primary mt-4 px-5 mr-3"
+              >
+                ย้อนกลับ
+              </router-link>
               <button type="submit" class="btn btn-primary mt-4 px-5">
-                ถัดไป
+                บันทึก
               </button>
             </div>
           </div>
@@ -154,92 +130,70 @@
   </div>
 </template>
 
-<script>
-import { ValidationProvider, ValidationObserver } from "vee-validate";
-import { extend } from "vee-validate";
+<script lang="ts">
 import {
-  required,
-  // digits,
-  double,
-  between
-} from "vee-validate/dist/rules";
+  // ValidationProvider,
+  ValidationObserver,
+  extend
+} from "vee-validate";
+import { required } from "vee-validate/dist/rules";
+import env from "@/environment";
+import { Docs } from "@/type/docs";
+import { Component, Vue, Watch } from "vue-property-decorator";
+import SDashboard from "../Dashboard.vue";
+import { AxiosError } from "axios";
 
 extend("required", {
   ...required,
   message: "ค่าต้องไม่ว่างเปล่า"
 });
-extend("double", {
-  ...double,
-  message: "ค่าต้องเป็นตัวเลขทศนิยมเท่านั้น"
-});
-extend("between", {
-  ...between,
-  message: "ค่าต้องอยู่ระหว่าง {min} ถึง {max} เท่านั้น"
-});
-// extend("digits", {
-//   ...digits,
-//   message: "ค่าต้องเป็นตัวเลขจำนวน {length} ตัวเท่านั้น"
-// });
 
-export default {
-  name: "Step1",
-  components: {
-    ValidationProvider,
-    ValidationObserver
-  },
-  data() {
-    return {
-      form: {
-        prefix: "นาย",
-        id: 60070157,
-        firstname: "วศิน",
-        surname: "เสริมสัมพันธ์",
-        tel: "0924644891",
-        email: "dev.vasin@gmail.com",
-        school: "โรงเรียนนวมินทราชินูทิศเบญจมราชาลัย",
-        field: "วิทย์-คณิต",
-        gpax: 2.86,
-        mGpax: 2.9,
-        eGpax: 3.5,
-        cGpax: 3.8
-      },
-      prefix: [
-        {
-          text: "นาย",
-          value: "นาย",
-          disabled: true
-        },
-        {
-          text: "นาง",
-          value: "นาง",
-          disabled: true
-        },
-        {
-          text: "นางสาว",
-          value: "นางสาว",
-          disabled: true
-        }
-      ]
-    };
-  },
-  methods: {
-    onSubmit() {
-      this.$refs.form.validate().then(success => {
-        if (!success) return;
+@Component({
+  name: "Step2"
+})
+export default class Step2 extends SDashboard {
+  docs = new FormData();
+  loading = false;
 
+  // on file change
+  fileChange(name, file) {
+    this.docs.append(name, file[0]);
+  }
+
+  // upload to backend
+  async onSave() {
+    // validate form
+    const validate = await (this.$refs.form as Vue & {
+      validate: () => boolean;
+    }).validate();
+    if (!validate) return;
+
+    this.loading = true;
+
+    await this.$axios
+      .post(`${env.BACK_URI}/docs`, this.docs)
+      .then(res => {
         this.$swal({
           icon: "success",
-          title: "เข้าสู่ระบบ",
-          text: `ยินดีต้อนรับผู้สมัครหมายเลข ${this.form.id}`
-        }).then(() => {
+          title: "บันทึก",
+          text: "ระบบได้ทำการบันทึกข้อมูลเอกสารผู้สมัครแล้ว"
+        }).then(() =>
           this.$router.push({
             name: "Step3"
-          });
-        });
+          })
+        );
+      })
+      .catch((err: AxiosError) => {
+        this.$swal({
+          icon: "error",
+          title: "ไม่สามารถบันทึก",
+          text: `ไม่สามารถบันทึกข้อมูลเอกสารผู้สมัครได้ กรุณาลองใหม่อีกครั้ง \n ${err.message}`
+        }).then(() => this.$router.go(0));
       });
-    }
+
+    this.loading = false;
   }
-};
+}
 </script>
 
 <style lang="scss"></style>

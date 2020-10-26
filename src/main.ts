@@ -8,7 +8,9 @@ import {
   CollapsePlugin,
   BFormRadioGroup,
   ToastPlugin,
-  BootstrapVueIcons
+  BootstrapVueIcons,
+  FormFilePlugin,
+  BadgePlugin
 } from "bootstrap-vue";
 import PortalVue from "portal-vue";
 import VueLazyload from "vue-lazyload";
@@ -23,6 +25,9 @@ Vue.use(ButtonPlugin);
 Vue.use(VBTogglePlugin);
 Vue.use(CollapsePlugin);
 Vue.use(BootstrapVueIcons);
+Vue.use(FormFilePlugin);
+Vue.use(BadgePlugin);
+
 Vue.use(VueLazyload);
 Vue.use(PortalVue);
 Vue.use(ToastPlugin);
