@@ -6,7 +6,7 @@
     <hr />
 
     <ValidationObserver ref="form">
-      <form class="mt-3" @submit.prevent="onSubmit">
+      <form class="mt-3" @submit.prevent="onSave">
         <div class="form-group mt-4">
           <div class="row field-wrapper">
             <div class="col-12 col-md-12">
@@ -14,17 +14,18 @@
               <div class="d-flex flex-row">
                 <b-form-radio-group
                   id="radio-group-1"
-                  v-model="form.prefix"
-                  :options="prefix"
+                  v-model="form.prename"
+                  :options="prename"
                   name="radio-options"
                 ></b-form-radio-group>
               </div>
             </div>
+
             <div class="col-12 col-md-6">
               <label class="subtitle font-weight-bold">ชื่อจริง:</label>
               <input
                 type="text"
-                v-model="form.firstname"
+                v-model="form.name"
                 class="form-control"
                 placeholder=""
                 disabled
@@ -44,7 +45,7 @@
               <label class="subtitle font-weight-bold">เบอร์โทรติดต่อ:</label>
               <input
                 type="text"
-                v-model="form.tel"
+                v-model="form.mobile"
                 class="form-control"
                 placeholder=""
                 disabled
@@ -64,9 +65,19 @@
               <label class="subtitle font-weight-bold">โรงเรียน:</label>
               <input
                 type="text"
-                v-model="form.school"
+                v-model="form.school_name"
                 class="form-control"
                 placeholder=""
+                :disabled="form.school_name ? true : false"
+              />
+            </div>
+            <div class="col-12 col-md-6">
+              <label class="subtitle font-weight-bold">ประเภทการสมัคร:</label>
+              <input
+                type="text"
+                v-model="form.apply_type"
+                class="form-control"
+                placeholder="ประเภทการสมัคร"
                 disabled
               />
             </div>
@@ -76,13 +87,13 @@
               >
               <input
                 type="text"
-                v-model="form.field"
+                v-model="form.study_field"
                 class="form-control"
                 placeholder="แผนการเรียน หรือสาขาวิชา"
               />
             </div>
             <div class="col-12 col-md-6">
-              <label class="subtitle font-weight-bold">เกรดรวม GPAX:</label>
+              <label class="subtitle font-weight-bold">GPAX รวม:</label>
               <input
                 type="text"
                 v-model="form.gpax"
@@ -93,15 +104,15 @@
             </div>
             <div class="col-12 col-md-6">
               <ValidationProvider
-                rules="required|double|between:0,4"
+                rules="required|between:0,4"
                 v-slot="{ errors }"
               >
                 <label class="subtitle font-weight-bold"
-                  >เกรดรวมวิชาคณิตศาสตร์:</label
+                  >GPAX วิชาคณิตศาสตร์:</label
                 >
                 <input
                   type="text"
-                  v-model="form.mGpax"
+                  v-model="form.gpax_match"
                   class="form-control"
                   placeholder="เกรด 5,6 ภาคการศึกษา วิชาคณิตศาสตร์"
                 />
@@ -110,15 +121,15 @@
             </div>
             <div class="col-12 col-md-6">
               <ValidationProvider
-                rules="required|double|between:0,4"
+                rules="required|between:0,4"
                 v-slot="{ errors }"
               >
                 <label class="subtitle font-weight-bold"
-                  >เกรดรวมวิชาภาษาต่างประเทศ:</label
+                  >GPAX วิชาภาษาต่างประเทศ:</label
                 >
                 <input
                   type="text"
-                  v-model="form.eGpax"
+                  v-model="form.gpax_eng"
                   class="form-control"
                   placeholder="เกรด 5,6 ภาคการศึกษา วิชาภาษาต่างประเทศ"
                 />
@@ -127,15 +138,15 @@
             </div>
             <div class="col-12 col-md-6">
               <ValidationProvider
-                rules="required|double|between:0,4"
+                rules="required|between:0,4"
                 v-slot="{ errors }"
               >
                 <label class="subtitle font-weight-bold"
-                  >เกรดรวมวิชาคอมพิวเตอร์:</label
+                  >GPAX วิชาคอมพิวเตอร์:</label
                 >
                 <input
                   type="text"
-                  v-model="form.cGpax"
+                  v-model="form.gpax_com"
                   class="form-control"
                   placeholder="เกรด 5,6 ภาคการศึกษา วิชาคอมพิวเตอร์หรือการงานอาชีพ"
                 />
@@ -143,8 +154,19 @@
               </ValidationProvider>
             </div>
             <div class="col-12 text-center">
+              <hr />
               <button type="submit" class="btn btn-primary mt-4 px-5">
-                ถัดไป
+                <div
+                  class="spinner-border"
+                  style="height: 24px; width: 24px"
+                  role="status"
+                  v-if="loading"
+                >
+                  <span class="sr-only">Loading...</span>
+                </div>
+                <span v-else>
+                  บันทึก
+                </span>
               </button>
             </div>
           </div>
@@ -154,92 +176,98 @@
   </div>
 </template>
 
-<script>
-import { ValidationProvider, ValidationObserver } from "vee-validate";
+<script lang="ts">
+import { IUser, User } from "@/type";
 import { extend } from "vee-validate";
-import {
-  required,
-  // digits,
-  double,
-  between
-} from "vee-validate/dist/rules";
+import { required, between } from "vee-validate/dist/rules";
+import { Component, Vue, Watch } from "vue-property-decorator";
+import SDashboard from "../Dashboard.vue";
 
 extend("required", {
   ...required,
   message: "ค่าต้องไม่ว่างเปล่า"
 });
-extend("double", {
-  ...double,
-  message: "ค่าต้องเป็นตัวเลขทศนิยมเท่านั้น"
-});
 extend("between", {
   ...between,
   message: "ค่าต้องอยู่ระหว่าง {min} ถึง {max} เท่านั้น"
 });
-// extend("digits", {
-//   ...digits,
-//   message: "ค่าต้องเป็นตัวเลขจำนวน {length} ตัวเท่านั้น"
-// });
+import { mapGetters } from "vuex";
+import env from "@/environment";
+import { AxiosError, AxiosResponse } from "axios";
+import Store, { userStore } from "@/store";
 
-export default {
+@Component({
   name: "Step1",
-  components: {
-    ValidationProvider,
-    ValidationObserver
-  },
-  data() {
-    return {
-      form: {
-        prefix: "นาย",
-        id: 60070157,
-        firstname: "วศิน",
-        surname: "เสริมสัมพันธ์",
-        tel: "0924644891",
-        email: "dev.vasin@gmail.com",
-        school: "โรงเรียนนวมินทราชินูทิศเบญจมราชาลัย",
-        field: "วิทย์-คณิต",
-        gpax: 2.86,
-        mGpax: 2.9,
-        eGpax: 3.5,
-        cGpax: 3.8
-      },
-      prefix: [
-        {
-          text: "นาย",
-          value: "นาย",
-          disabled: true
-        },
-        {
-          text: "นาง",
-          value: "นาง",
-          disabled: true
-        },
-        {
-          text: "นางสาว",
-          value: "นางสาว",
-          disabled: true
-        }
-      ]
-    };
-  },
-  methods: {
-    onSubmit() {
-      this.$refs.form.validate().then(success => {
-        if (!success) return;
+  computed: {
+    DATA_USER: () => userStore.DATA_USER
+  }
+})
+export default class Step1 extends SDashboard {
+  DATA_USER!: IUser;
+  form: IUser = new User();
+  $axios: any;
+  $env: any;
+  loading = false;
+  prename = [
+    {
+      text: "นาย",
+      value: "นาย",
+      disabled: true
+    },
+    {
+      text: "นาง",
+      value: "นาง",
+      disabled: true
+    },
+    {
+      text: "นางสาว",
+      value: "นางสาว",
+      disabled: true
+    }
+  ];
 
+  @Watch("DATA_USER", {
+    immediate: true,
+    deep: true
+  })
+  onChange(data: IUser) {
+    this.form = data;
+  }
+
+  async onSave(): Promise<void> {
+    // validate form
+    const validate = await (this.$refs.form as Vue & {
+      validate: () => boolean;
+    }).validate();
+    if (!validate) return;
+
+    this.loading = true;
+    this.form.step = 2;
+
+    await this.$axios
+      .patch(`${this.$env.BACK_URI}/user`, this.form)
+      .then((resp: AxiosResponse) => {
         this.$swal({
           icon: "success",
-          title: "บันทึกข้อมูล",
-          text: `ระบบได้ทำการบันทึกข้อมูลผู้สมัครแล้ว`
-        }).then(() => {
+          title: "บันทึก",
+          text: "ระบบได้ทำการบันทึกข้อมูลผู้สมัครแล้ว"
+        }).then(() =>
           this.$router.push({
             name: "Step2"
-          });
-        });
+          })
+        );
+      })
+      .catch((err: AxiosError) => {
+        this.$swal({
+          icon: "error",
+          title: "ไม่สามารถบันทึก",
+          text: `ไม่สามารถบันทึกข้อมูลผู้สมัครได้ กรุณาลองใหม่อีกครั้ง \n ${err.message}`
+        }).then(() => this.$router.go(0));
       });
-    }
+
+    this.loading = false;
   }
-};
+}
 </script>
 
 <style lang="scss"></style>
