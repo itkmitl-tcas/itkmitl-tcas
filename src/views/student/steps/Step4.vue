@@ -85,8 +85,11 @@
               </ValidationProvider>
             </div>
             <div class="col-12 text-center">
+              <router-link :to="{ name: 'Step3' }" class="btn border border-primary text-primary mt-4 px-5 mr-3">
+                ย้อนกลับ
+              </router-link>
               <button type="submit" class="btn btn-primary mt-4 px-5">
-                ถัดไป
+                บันทึก
               </button>
             </div>
           </div>

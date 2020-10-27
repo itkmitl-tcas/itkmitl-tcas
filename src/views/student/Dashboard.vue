@@ -14,7 +14,7 @@
 <script lang="ts">
 import Progress from '@components/Progress.vue';
 import UserMix from '@/mixin/user';
-import { userStore } from '@/store';
+import { userStore, portfolioStore } from '@/store';
 import { ValidationProvider, ValidationObserver } from 'vee-validate';
 import { Component, Vue } from 'vue-property-decorator';
 
@@ -35,7 +35,17 @@ export default class SDashboard extends Vue {
       this.$swal({
         icon: 'error',
         title: 'ไม่สามารถดึงข้อมูลได้',
-        text: `ไม่สามารถดึงข้อมูลผู้สมัครจากเซิร์ฟเวอร์ได้ กรุณาลองใหม่อีกครั้ง \n ${err.message}`
+        text: `ไม่สามารถดึงข้อมูลผู้สมัครจากเซิร์ฟเวอร์ได้ กรุณาลองใหม่อีกครั้ง`
+      }).then(() => {
+        this.$router.go(0);
+      });
+    });
+
+    await portfolioStore.getPortType().catch((err) => {
+      this.$swal({
+        icon: 'error',
+        title: 'ไม่สามารถดึงข้อมูลได้',
+        text: `ไม่สามารถดึงข้อมูลผู้สมัครจากเซิร์ฟเวอร์ได้ กรุณาลองใหม่อีกครั้ง`
       }).then(() => {
         this.$router.go(0);
       });

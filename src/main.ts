@@ -19,7 +19,8 @@ import {
   ToastPlugin,
   BootstrapVueIcons,
   FormFilePlugin,
-  BadgePlugin
+  BadgePlugin,
+  FormSelectPlugin
 } from 'bootstrap-vue';
 
 /* -------------------------------- Sentry IO ------------------------------- */
@@ -39,7 +40,7 @@ Sentry.init({
 
   // We recommend adjusting this value in production, or using tracesSampler
   // for finer control
-  tracesSampleRate: 1.0
+  tracesSampleRate: 0.1
 });
 
 Vue.use(ButtonPlugin);
@@ -48,6 +49,7 @@ Vue.use(CollapsePlugin);
 Vue.use(BootstrapVueIcons);
 Vue.use(FormFilePlugin);
 Vue.use(BadgePlugin);
+Vue.use(FormSelectPlugin);
 
 Vue.use(VueLazyload);
 Vue.use(PortalVue);
