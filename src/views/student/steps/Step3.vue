@@ -62,7 +62,7 @@
                     accept=".pdf, .PDF"
                     drop-placeholder="Drop file here..."
                     @change="
-                      fileChange($event.target.name, $event.target.files, 'portfolio_0');
+                      fileChange($event.target.name, $event.target.files, 'portfolio_0', 0);
                       validate($event);
                     "
                   ></b-form-file>
@@ -146,7 +146,7 @@
                       accept=".pdf, .PDF"
                       drop-placeholder="Drop file here..."
                       @change="
-                        fileChange($event.target.name, $event.target.files, `portfolio_${key + 1}`);
+                        fileChange($event.target.name, $event.target.files, `portfolio_${key + 1}`, key + 1);
                         validate($event);
                       "
                     ></b-form-file>
@@ -246,8 +246,8 @@ export default class Step2 extends SDashboard {
   }
 
   // on file change
-  fileChange(name, file, field) {
-    this.form[0][field] = file[0];
+  fileChange(name, file, field, key) {
+    this.form[key][field] = file[0];
   }
 
   // add form list
