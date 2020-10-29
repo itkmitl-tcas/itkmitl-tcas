@@ -249,6 +249,8 @@ export default class Step2 extends SDashboard {
     }).validate();
     if (!validate) return;
 
+    this.loading = true;
+
     const removePromises: any = [];
     const promises: any = [];
 
@@ -282,6 +284,8 @@ export default class Step2 extends SDashboard {
           text: 'ไม่สามารถบันทึกข้อมูลผลงานได้ กรุณาลองใหม่อีกครั้ง'
         });
       });
+
+    this.loading = false;
   }
 
   // on file change
