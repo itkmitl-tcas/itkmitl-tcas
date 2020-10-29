@@ -135,9 +135,12 @@ export default class Login extends Vue {
           title: 'เข้าสู่ระบบ',
           text: `ยินดีต้อนรับผู้สมัครหมายเลข ${this.form.apply_id}`
         }).then(() => {
-          this.$router.push({
-            name: 'Step1'
-          });
+          this.$router
+            .push({
+              path: '/',
+              query: { plan: 'private' }
+            })
+            .catch((err) => err);
         });
       })
       .catch((err: AxiosError) => {

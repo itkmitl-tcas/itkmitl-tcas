@@ -96,7 +96,20 @@
                 ย้อนกลับ
               </router-link>
               <button type="submit" class="btn btn-primary mt-4 px-5">
-                บันทึก
+                <transition name="fade" mode="out-in">
+                  <div
+                    v-if="loading"
+                    key="loading"
+                    class="spinner-border"
+                    style="height: 24px; width: 24px"
+                    role="status"
+                  >
+                    <span class="sr-only">Loading...</span>
+                  </div>
+                  <span v-else key="message">
+                    บันทึก
+                  </span>
+                </transition>
               </button>
             </div>
           </div>
