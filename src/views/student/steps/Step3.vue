@@ -173,8 +173,11 @@
             </transition-group>
           </b-collapse>
           <div class="row field-wrapper">
-            <div class="col-12 text-center">
-              <router-link :to="{ name: 'Step2' }" class="btn border border-primary text-primary mt-4 px-5 mr-3">
+            <div class="col-12 text-center d-flex flex-column flex-md-row justify-content-center">
+              <router-link
+                :to="{ name: 'Step2' }"
+                class="btn border border-primary text-primary mt-4 px-5 mr-0 mr-md-3"
+              >
                 ย้อนกลับ
               </router-link>
               <button type="submit" class="btn btn-primary mt-4 px-5">
