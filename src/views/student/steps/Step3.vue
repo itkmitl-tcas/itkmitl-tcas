@@ -57,7 +57,7 @@
                   <b-form-file
                     size="sm"
                     name="portfolio_0"
-                    :placeholder="form[0].file ? 'UPDATE STUDENT CARD' : 'CHOOSE STUDENT CARD(.PDF)'"
+                    :placeholder="form[0].file ? 'UPDATE PORTFOLIO' : 'CHOOSE PORTFOLIO(.PDF)'"
                     :class="{ active: form[0].file }"
                     accept=".pdf, .PDF"
                     drop-placeholder="Drop file here..."
@@ -67,7 +67,7 @@
                     "
                   ></b-form-file>
                   <small v-if="form[0].file" class="form-text">
-                    <a :href="form[0].file" target="_blanks">ดูสำเนาบัตรประจำตัวนักเรียน</a>
+                    <a :href="form[0].file" target="_blanks">ไฟล์ผลงานดีเด่น</a>
                   </small>
                   <small class="form-text text-danger">{{ errors[0] }}</small>
                 </ValidationProvider>
@@ -153,7 +153,7 @@
                       <b-form-file
                         size="sm"
                         :name="`portfolio_${key + 1}`"
-                        :placeholder="form[key + 1].file ? 'UPDATE STUDENT CARD' : 'CHOOSE STUDENT CARD(.PDF)'"
+                        :placeholder="form[key + 1].file ? 'UPDATE PORTFOLIO' : 'CHOOSE PORTFOLIO(.PDF)'"
                         :class="{ active: form[key + 1].file }"
                         accept=".pdf, .PDF"
                         drop-placeholder="Drop file here..."
@@ -163,7 +163,7 @@
                         "
                       ></b-form-file>
                       <small v-if="form[key + 1].file" class="form-text">
-                        <a :href="form[key + 1].file" target="_blanks">ดูสำเนาบัตรประจำตัวนักเรียน</a>
+                        <a :href="form[key + 1].file" target="_blanks">ไฟล์ผลงานดีเด่น</a>
                       </small>
                       <small class="form-text text-danger">{{ errors[0] }}</small>
                     </ValidationProvider>
