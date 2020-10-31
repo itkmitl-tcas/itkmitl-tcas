@@ -12,6 +12,11 @@ const routes: Array<RouteConfig> = [
     },
     children: [
       {
+        path: '/close',
+        name: 'Close',
+        component: () => import('@views/Close.vue')
+      },
+      {
         path: '/student',
         alias: '',
         component: () => import('@components/Student.vue'),
@@ -19,6 +24,7 @@ const routes: Array<RouteConfig> = [
           {
             path: 'dashboard',
             name: 'SDashboard',
+            alias: '',
             component: () => import('@views/student/Dashboard.vue'),
             meta: {
               requiresAuth: 1
@@ -64,18 +70,44 @@ const routes: Array<RouteConfig> = [
       {
         path: '/teacher',
         name: 'Teacher',
+        alias: '',
         component: () => import('@components/Teacher.vue'),
         children: [
           {
             path: 'dashboard',
             name: 'TDashboard',
             alias: '',
-            component: () => import('@views/teacher/Dashboard.vue')
+            component: () => import('@views/teacher/Dashboard.vue'),
+            meta: {
+              requiresTAuth: 1
+            },
+            children: [
+              {
+                path: 'main',
+                name: 'TMain',
+                component: () => import('@views/teacher/Main.vue')
+              },
+              {
+                path: 'member',
+                name: 'TMember',
+                alias: '',
+                component: () => import('@views/teacher/Member.vue')
+              },
+              {
+                path: 'setting',
+                name: 'TSetting',
+                component: () => import('@views/teacher/Setting.vue')
+              }
+            ]
           },
           {
             path: 'login',
             name: 'TLogin',
-            component: () => import('@views/teacher/Login.vue')
+            alias: '',
+            component: () => import('@views/teacher/Login.vue'),
+            meta: {
+              requiresTAuth: 0
+            }
           }
         ]
       }
