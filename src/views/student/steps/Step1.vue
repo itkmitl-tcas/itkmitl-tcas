@@ -52,13 +52,16 @@
               <input v-model="form.apply_type" type="text" class="form-control" placeholder="ประเภทการสมัคร" disabled />
             </div>
             <div class="col-12 col-md-6">
-              <label class="subtitle font-weight-bold">แผนการเรียน สาขาวิชา:</label>
-              <input
-                v-model="form.study_field"
-                type="text"
-                class="form-control"
-                placeholder="แผนการเรียน หรือสาขาวิชา"
-              />
+              <ValidationProvider v-slot="{ errors }" rules="required">
+                <label class="subtitle font-weight-bold">แผนการเรียน สาขาวิชา:</label>
+                <input
+                  v-model="form.study_field"
+                  type="text"
+                  class="form-control"
+                  placeholder="แผนการเรียน หรือสาขาวิชา"
+                />
+                <small class="form-text text-danger">{{ errors[0] }}</small>
+              </ValidationProvider>
             </div>
             <div class="col-12 col-md-6">
               <label class="subtitle font-weight-bold">GPAX รวม:</label>
