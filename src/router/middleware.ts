@@ -3,7 +3,7 @@ import { RouteRecord } from 'vue-router';
 import Vue from 'vue';
 import env from '../environment';
 import { AxiosResponse } from 'axios';
-import Store, { userStore } from '@/store';
+import { userStore } from '@/store';
 
 export function authMiddleware(router: any) {
   router.beforeEach(async (to: any, from: any, next: any) => {
@@ -25,18 +25,65 @@ export function authMiddleware(router: any) {
         })
 
         // verify failed
-        .catch(() => {
+        .catch((err) => {
+          // console.log(err);
           // redirect to login page
           next({ name: 'SLogin' });
 
-          Vue.swal({
-            // message
-            icon: 'warning',
-            title: 'ไม่สามารถเข้าสู่ระบบได้',
-            text: `กรุณาเข้าสู่ระบบใหม่อีกครั้ง`
-          });
+          // Vue.swal({
+          //   // message
+          //   icon: 'warning',
+          //   title: 'ไม่สามารถเข้าสู่ระบบได้',
+          //   text: `กรุณาเข้าสู่ระบบใหม่อีกครั้ง`
+          // });
         });
-    } else if (to.matched.some((record: RouteRecord) => record.meta.requiresAuth <= 0)) {
+    } else if (to.matched.some((record: RouteRecord) => record.meta.requiresTAuth <= 0)) {
+      // verify token
+      await Vue.prototype.$axios
+        .post(`${env.BACK_URI}/auth`)
+
+        // verify successed
+        .then((resp: AxiosResponse) => {
+          const step = resp.data.DATA.step; // redicrec to dashboard step N
+          next({ name: `Step${step}` });
+        })
+        .catch(() => {
+          // redirect to login page
+          // next({ name: "SLogin" });
+        });
+    }
+
+    if (
+      // case student or above require
+      to.matched.some((record: RouteRecord) => record.meta.requiresAuth >= 1)
+    ) {
+      // verify token
+      await Vue.prototype.$axios
+        .post(`${env.BACK_URI}/auth`)
+
+        // verify successed
+        .then((resp: AxiosResponse) => {
+          const user = {
+            apply_id: resp.data.DATA.apply_id,
+            permission: resp.data.DATA.permission
+          };
+          userStore.UPDATE_USER(user);
+        })
+
+        // verify failed
+        .catch((err) => {
+          // console.log(err);
+          // redirect to login page
+          next({ name: 'SLogin' });
+
+          // Vue.swal({
+          //   // message
+          //   icon: 'warning',
+          //   title: 'ไม่สามารถเข้าสู่ระบบได้',
+          //   text: `กรุณาเข้าสู่ระบบใหม่อีกครั้ง`
+          // });
+        });
+    } else if (to.matched.some((record: RouteRecord) => record.meta.requiresTAuth <= 0)) {
       // verify token
       await Vue.prototype.$axios
         .post(`${env.BACK_URI}/auth`)

@@ -94,7 +94,7 @@ extend('prefix', {
 import { Component, Vue } from 'vue-property-decorator';
 import { mapMutations } from 'vuex';
 import { AxiosResponse, AxiosError } from 'axios';
-import Store, { userStore } from '@/store';
+import Store, { userStore, commonStore } from '@/store';
 
 @Component({
   components: {
@@ -118,114 +118,65 @@ export default class Login extends Vue {
     // loading  on
     this.loading = true;
 
-    await this.$axios
-      .post(`${this.$env.BACK_URI}/auth/signin`, {
-        apply_id: parseInt(`${this.form.apply_id}`),
-        name: this.form.name,
-        surname: this.form.surname
-      })
-      .then((resp: AxiosResponse) => {
-        const user = {
-          apply_id: resp.data.DATA.apply_id,
-          permission: resp.data.DATA.permission
-        };
-        userStore.UPDATE_USER(user);
-        this.$swal({
-          icon: 'success',
-          title: 'เข้าสู่ระบบ',
-          text: `ยินดีต้อนรับผู้สมัครหมายเลข ${this.form.apply_id}`
-        }).then(() => {
-          this.$router
-            .push({
-              path: '/',
-              query: { plan: 'private' }
-            })
-            .catch((err) => err);
-        });
-      })
-      .catch((err: AxiosError) => {
-        const resp: any = err.response;
-
-        if (resp.status == 406) {
-          this.$swal({
-            icon: 'warning',
-            title: 'เข้าสู่ระบบ',
-            text: 'กรุณาชำระค่าสมัคร'
-          });
-        } else if (resp.status == 404) {
-          this.$swal({
-            icon: 'warning',
-            title: 'เข้าสู่ระบบ',
-            text: 'รหัสประจำตัวหรือชื่อนามสกุล ไม่ถูกต้อง.'
-          });
-        } else {
-          this.$swal({
-            icon: 'warning',
-            title: 'ไม่สามารถเข้าสู่ระบบได้',
-            text: err.message
-          });
-        }
+    const common: any = await commonStore.getCommon();
+    if (!common.value) {
+      this.$swal({
+        icon: 'warning',
+        title: 'ระบบยังไม่เปิดให้บริการ',
+        text: 'ระบบยังไม่เปิดให้บริการ กรุณาตรวจสอบวันที่จากประกาศจากสถาบัน'
       });
+    } else {
+      await this.$axios
+        .post(`${this.$env.BACK_URI}/auth/signin`, {
+          apply_id: parseInt(`${this.form.apply_id}`),
+          name: this.form.name,
+          surname: this.form.surname
+        })
+        .then(async (resp: AxiosResponse) => {
+          const user = {
+            apply_id: resp.data.DATA.apply_id,
+            permission: resp.data.DATA.permission
+          };
+          userStore.UPDATE_USER(user);
+          this.$swal({
+            icon: 'success',
+            title: 'เข้าสู่ระบบ',
+            text: `ยินดีต้อนรับผู้สมัครหมายเลข ${this.form.apply_id}`
+          }).then(() => {
+            this.$router
+              .push({
+                path: '/',
+                query: { plan: 'private' }
+              })
+              .catch((err) => err);
+          });
+        })
+        .catch((err: AxiosError) => {
+          const resp: any = err.response;
+
+          if (resp.status == 406) {
+            this.$swal({
+              icon: 'warning',
+              title: 'เข้าสู่ระบบ',
+              text: 'กรุณาชำระค่าสมัคร'
+            });
+          } else if (resp.status == 404) {
+            this.$swal({
+              icon: 'warning',
+              title: 'เข้าสู่ระบบ',
+              text: 'รหัสประจำตัวหรือชื่อนามสกุล ไม่ถูกต้อง.'
+            });
+          } else {
+            this.$swal({
+              icon: 'warning',
+              title: 'ไม่สามารถเข้าสู่ระบบได้',
+              text: err.message
+            });
+          }
+        });
+    }
 
     this.loading = false;
   }
 }
-
-// export default {
-//   data() {
-//     return {
-//       form: {
-//         id: 631001130,
-//         name: "?????",
-//         surname: "???????"
-//       },
-//       loading: false
-//     };
-//   },
-//   components: {
-//     ValidationProvider,
-//     ValidationObserver
-//   },
-//   methods: {
-//     onSubmit() {
-//       this.$refs.form.validate().then(async (success) => {
-//         if (!success) return;
-
-//         this.loading = true;
-
-//         await this.$axios
-//           .post(`${this.$env.BACK_URI}/auth/signin`, {
-//             apply_id: this.form.id,
-//             name: this.form.name,
-//             surname: this.form.surname
-//           })
-//           .then((resp) => {
-//             const user = {
-//               apply_id: resp.data.DATA.apply_id,
-//               permission: resp.data.DATA.permisison
-//             }
-//             this.$store.update_user(user)
-//             this.$swal({
-//               icon: "success",
-//               title: "เข้าสู่ระบบ",
-//               text: `ยินดีต้อนรับผู้สมัครหมายเลข ${this.form.id}`
-//             }).then(() => {
-//               this.$router.push({
-//                 name: "Step1"
-//               });
-//             });
-//           })
-//           .catch(err => {
-//             this.$swal({
-//               icon: "error",
-//               title: "ไม่สามารถเข้าสู่ระบบได้",
-//               text: err.message
-//             });
-//           });
-
-//         this.loading = false;
-//       });
-//     }
-//   }
-// };
 </script>

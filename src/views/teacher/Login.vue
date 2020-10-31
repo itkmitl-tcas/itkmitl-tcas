@@ -13,8 +13,8 @@
             เข้าสู่ระบบ Backoffice
           </div>
           <div class="form-group mt-4">
-            <ValidationProvider v-slot="{ errors }" rules="required|digits:8">
-              <input id="id" v-model="form.id" type="text" class="form-control" placeholder="ID" />
+            <ValidationProvider v-slot="{ errors }" rules="required">
+              <input id="email" v-model="form.email" type="text" class="form-control" placeholder="ID" />
               <small class="form-text text-warning">{{ errors[0] }}</small>
             </ValidationProvider>
           </div>
@@ -43,14 +43,11 @@
 import { ValidationProvider, ValidationObserver } from 'vee-validate';
 import { extend } from 'vee-validate';
 import { required, digits } from 'vee-validate/dist/rules';
+import { authStore, userStore } from '@/store';
 
 extend('required', {
   ...required,
   message: 'ค่าต้องไม่ว่างเปล่า'
-});
-extend('digits', {
-  ...digits,
-  message: 'ค่าต้องเป็นตัวเลขจำนวน {length} ตัวเท่านั้น'
 });
 
 export default {
@@ -61,8 +58,8 @@ export default {
   data() {
     return {
       form: {
-        id: null,
-        password: null
+        email: 'tunlaton11@gmail.com',
+        password: '<3'
       }
     };
   },
@@ -70,9 +67,25 @@ export default {
     onSubmit() {
       this.$refs.form.validate().then((success) => {
         if (!success) return;
-        this.$router.push({
-          name: 'TDashboard'
-        });
+
+        // // teacher singin
+        authStore
+          .signinTeacher(this.form)
+          .then((resp) => {
+            this.$swal({
+              icon: 'success',
+              title: 'เข้าสู่ระบบ'
+            }).then(() => {
+              this.$router.push({ name: 'TMember' });
+            });
+          })
+          .catch((err) => {
+            this.$swal({
+              icon: 'error',
+              title: 'ไม่สามารถเข้าสู่ระบบได้',
+              text: err.response ? err.response?.data.MESSAGE : err.message
+            });
+          });
       });
     }
   }

@@ -20,7 +20,10 @@ import {
   BootstrapVueIcons,
   FormFilePlugin,
   BadgePlugin,
-  FormSelectPlugin
+  FormSelectPlugin,
+  TablePlugin,
+  ModalPlugin,
+  FormCheckboxPlugin
 } from 'bootstrap-vue';
 
 /* -------------------------------- Sentry IO ------------------------------- */
@@ -50,6 +53,9 @@ Vue.use(BootstrapVueIcons);
 Vue.use(FormFilePlugin);
 Vue.use(BadgePlugin);
 Vue.use(FormSelectPlugin);
+Vue.use(TablePlugin);
+Vue.use(ModalPlugin);
+Vue.use(FormCheckboxPlugin);
 
 Vue.use(VueLazyload);
 Vue.use(PortalVue);

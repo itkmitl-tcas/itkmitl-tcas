@@ -22,7 +22,38 @@ export default class UserStore extends VuexModule {
     this.user = user;
   }
 
-  @Action
+  @Action({ rawError: true })
+  getTeacher(): Promise<IUser[]> {
+    return new Promise(
+      (resolve, reject): Promise<IUser[] | Error> => {
+        return Vue.prototype.$axios
+          .get(`${env.BACK_URI}/user/teacher`)
+          .then((resp: AxiosResponse) => {
+            resolve(resp.data.DATA);
+          })
+          .catch((err: AxiosError) => {
+            reject(err);
+          });
+      }
+    );
+  }
+  @Action({ rawError: true })
+  upsertTeacher(payload: IUser): Promise<any> {
+    return new Promise(
+      (resolve, reject): Promise<any> => {
+        return Vue.prototype.$axios
+          .post(`${env.BACK_URI}/user/teacher`, payload)
+          .then((resp: AxiosResponse) => {
+            resolve(resp.data.DATA);
+          })
+          .catch((err: AxiosError) => {
+            reject(err);
+          });
+      }
+    );
+  }
+
+  @Action({ rawError: true })
   CALL_USER_DATA(): Promise<IUser | Error> {
     return new Promise(
       (resolve: any, reject: any): Promise<IUser | Error> => {
@@ -46,5 +77,6 @@ export default class UserStore extends VuexModule {
   }
   get DATA_FULL_NAME() {
     return `${this.user.prename}${this.user.name} ${this.user.surname}`;
+    // return `${this.user.name} ${this.user.surname}`;
   }
 }
