@@ -1,0 +1,13 @@
+.content-container  {
+  display: flex;
+  border-radius: 15px;
+  flex-direction: column;
+  padding-bottom: 5vw;
+
+  form {
+    min-width: 400px;
+    @include media-breakpoint-down(md) {
+      min-width: 30vw;
+    }
+  }
+}
