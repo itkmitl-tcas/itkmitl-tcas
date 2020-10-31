@@ -13,7 +13,7 @@
         </div>
         <div v-if="DATA_USER.pay" class="flex-grow-1 text-right">
           <div class="title" style="color: #d9d9d9">{{ DATA_FULL_NAME }} ({{ DATA_USER.apply_id }})</div>
-          <div class="link title text-white-50 font-weight-light" @click="signOut()">
+          <div class="link title text-white-50 font-weight-light" @click="signOut(DATA_USER.permission)">
             ออกจากระบบ
           </div>
         </div>
@@ -34,16 +34,22 @@ export default {
     DATA_FULL_NAME: () => userStore.DATA_FULL_NAME
   },
   methods: {
-    signOut() {
+    signOut(permission) {
       axios.post(`${this.$env.BACK_URI}/auth/signout`).then(() => {
         this.$swal({
           icon: 'success',
           title: 'ออกจากระบบ'
         }).then(() => {
           userStore.RESET_USER();
-          this.$router.push({
-            name: 'SLogin'
-          });
+          if (permission == 1) {
+            this.$router.push({
+              name: 'SLogin'
+            });
+          } else {
+            this.$router.push({
+              name: 'TLogin'
+            });
+          }
         });
       });
     }
