@@ -134,7 +134,7 @@
                 <hr />
               </div>
               <div class="col-12 col-md-6">
-                <ValidationProvider v-slot="{ errors }" rules="required|password:@confirm">
+                <ValidationProvider v-slot="{ errors }" rules="required|confirmed:confirmation">
                   <label class="subtitle font-weight-bold">รหัสผ่าน:</label>
                   <input
                     id="password"
@@ -148,7 +148,7 @@
                 </ValidationProvider>
               </div>
               <div class="col-12 col-md-6">
-                <ValidationProvider v-slot="{ errors }" rules="required" vid="confirm">
+                <ValidationProvider v-slot="{ errors }" rules="required" vid="confirmation">
                   <label class="subtitle font-weight-bold">ยืนยันรหัสผ่าน:</label>
                   <input
                     id="confirm"
@@ -217,13 +217,6 @@ extend('email', {
 extend('confirmed', {
   ...confirmed,
   message: 'รหัสผ่านจำเป็นเหมือนกัน'
-});
-extend('password', {
-  params: ['target'],
-  validate(value, target) {
-    return value === target;
-  },
-  message: 'รหัสผ่านจำไม่ต้องเหมือนกัน'
 });
 
 @Component({
