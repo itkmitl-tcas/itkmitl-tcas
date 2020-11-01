@@ -10,6 +10,9 @@ services:
     ports:
       - 81:81
       - 8080:8080
+    volumes:
+      - /etc/letsencrypt/live/tcas.it.kmitl.ac.th/fullchain.pem:/etc/nginx/ssl/fullchain.pem
+      - /etc/letsencrypt/live/tcas.it.kmitl.ac.th/privkey.pem:/etc/nginx/ssl/privkey.pem
 
 networks:
   application-prod-network:
