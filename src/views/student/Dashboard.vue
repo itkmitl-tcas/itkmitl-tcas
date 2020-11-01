@@ -37,7 +37,9 @@ export default class SDashboard extends Vue {
         title: 'ไม่สามารถดึงข้อมูลได้',
         text: `ไม่สามารถดึงข้อมูลผู้สมัครจากเซิร์ฟเวอร์ได้ กรุณาลองใหม่อีกครั้ง`
       }).then(() => {
-        this.$router.go(0);
+        this.$axios.post(`${this.$env.BACK_URI}/auth/signout`).then(() => {
+          this.$router.push({ name: 'SLogin' });
+        });
       });
     });
 
@@ -47,7 +49,9 @@ export default class SDashboard extends Vue {
         title: 'ไม่สามารถดึงข้อมูลได้',
         text: `ไม่สามารถดึงข้อมูลผู้สมัครจากเซิร์ฟเวอร์ได้ กรุณาลองใหม่อีกครั้ง`
       }).then(() => {
-        this.$router.go(0);
+        this.$axios.post(`${this.$env.BACK_URI}/auth/signout`).then(() => {
+          this.$router.push({ name: 'SLogin' });
+        });
       });
     });
   }
