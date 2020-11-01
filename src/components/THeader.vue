@@ -1,45 +1,35 @@
 <template>
   <div class="theader-container">
     <div class="wrapper w-100">
-      <div class="row">
-        <div class="col-12 col-md">
+      <div class="row ">
+        <div class="col col-md h-100">
           <router-link
             :to="{ name: 'TMember' }"
             type="button"
-            class="btn border border-primary w-100"
+            class="btn btn-sm border border-primary w-100"
             active-class="btn-primary text-white"
           >
             จัดการผู้ใช้
           </router-link>
         </div>
-        <div class="col-12 col-md">
+        <div class="col col-md">
           <router-link
             :to="{ name: 'TSetting' }"
             type="button"
-            class="btn border border-primary w-100"
+            class="btn btn-sm border border-primary w-100"
             active-class="btn-primary text-white"
           >
-            ตั้งค่าการสมัคร
+            ตั้งค่า
           </router-link>
         </div>
-        <!-- <div class="col-12 col-md">
+        <div class="col col-md">
           <router-link
-            :to="{ name: 'TMain' }"
+            :to="{ name: 'TCriteria' }"
             type="button"
-            active-class="btn-primary text-white"
-            class="btn border border-primary w-100"
-          >
-            หน้าหลัก
-          </router-link>
-        </div> -->
-        <div class="col-12 col-md">
-          <router-link
-            :to="{ name: 'TMember' }"
-            type="button"
-            class="btn border border-primary w-100"
+            class="btn border btn-sm border-primary w-100"
             active-class="btn-primary text-white"
           >
-            จัดการเกณฑ์ผลงาน
+            เกณฑ์ผลงาน
           </router-link>
         </div>
       </div>

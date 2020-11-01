@@ -97,6 +97,11 @@ const routes: Array<RouteConfig> = [
                 path: 'setting',
                 name: 'TSetting',
                 component: () => import('@views/teacher/Setting.vue')
+              },
+              {
+                path: 'criteria',
+                name: 'TCriteria',
+                component: () => import('@views/teacher/Criteria.vue')
               }
             ]
           },

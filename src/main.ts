@@ -23,7 +23,10 @@ import {
   FormSelectPlugin,
   TablePlugin,
   ModalPlugin,
-  FormCheckboxPlugin
+  FormCheckboxPlugin,
+  FormGroupPlugin,
+  InputGroupPlugin,
+  FormInputPlugin
 } from 'bootstrap-vue';
 
 /* -------------------------------- Sentry IO ------------------------------- */
@@ -56,6 +59,9 @@ Vue.use(FormSelectPlugin);
 Vue.use(TablePlugin);
 Vue.use(ModalPlugin);
 Vue.use(FormCheckboxPlugin);
+Vue.use(FormGroupPlugin);
+Vue.use(InputGroupPlugin);
+Vue.use(FormInputPlugin);
 
 Vue.use(VueLazyload);
 Vue.use(PortalVue);

@@ -91,6 +91,36 @@ export default class PortfolioStore extends VuexModule {
     });
   }
 
+  @Action({ rawError: true })
+  async createPortType(payload): Promise<any> {
+    return new Promise((resolve, reject) => {
+      Vue.prototype.$axios
+        .post(`${env.BACK_URI}/portfoliotype`, payload)
+        .then((resp: AxiosResponse) => {
+          const data = resp.data.DATA;
+          return resolve(data);
+        })
+        .catch((err: AxiosError) => {
+          reject(err);
+        });
+    });
+  }
+
+  @Action({ rawError: true })
+  async deletePortType(payload): Promise<any> {
+    return new Promise((resolve, reject) => {
+      Vue.prototype.$axios
+        .post(`${env.BACK_URI}/portfoliotype/delete`, payload)
+        .then((resp: AxiosResponse) => {
+          const data = resp.data.DATA;
+          return resolve(data);
+        })
+        .catch((err: AxiosError) => {
+          reject(err);
+        });
+    });
+  }
+
   get dataPort() {
     return this.portfolio;
   }
