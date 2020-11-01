@@ -23,49 +23,25 @@
 
             <div class="col-12 col-md-6">
               <label class="subtitle font-weight-bold">ชื่อจริง:</label>
-              <input
-                type="text"
-                v-model="form.name"
-                class="form-control"
-                placeholder=""
-                disabled
-              />
+              <input v-model="form.name" type="text" class="form-control" placeholder="" disabled />
             </div>
             <div class="col-12 col-md-6">
               <label class="subtitle font-weight-bold">นามสกุล:</label>
-              <input
-                type="text"
-                v-model="form.surname"
-                class="form-control"
-                placeholder=""
-                disabled
-              />
+              <input v-model="form.surname" type="text" class="form-control" placeholder="" disabled />
             </div>
             <div class="col-12 col-md-6">
               <label class="subtitle font-weight-bold">เบอร์โทรติดต่อ:</label>
-              <input
-                type="text"
-                v-model="form.mobile"
-                class="form-control"
-                placeholder=""
-                disabled
-              />
+              <input v-model="form.mobile" type="text" class="form-control" placeholder="" disabled />
             </div>
             <div class="col-12 col-md-6">
               <label class="subtitle font-weight-bold">อีเมลล์:</label>
-              <input
-                type="text"
-                v-model="form.email"
-                class="form-control"
-                placeholder=""
-                disabled
-              />
+              <input v-model="form.email" type="text" class="form-control" placeholder="" disabled />
             </div>
             <div class="col-12 col-md-6">
               <label class="subtitle font-weight-bold">โรงเรียน:</label>
               <input
-                type="text"
                 v-model="form.school_name"
+                type="text"
                 class="form-control"
                 placeholder=""
                 :disabled="form.school_name ? true : false"
@@ -73,46 +49,30 @@
             </div>
             <div class="col-12 col-md-6">
               <label class="subtitle font-weight-bold">ประเภทการสมัคร:</label>
-              <input
-                type="text"
-                v-model="form.apply_type"
-                class="form-control"
-                placeholder="ประเภทการสมัคร"
-                disabled
-              />
+              <input v-model="form.apply_type" type="text" class="form-control" placeholder="ประเภทการสมัคร" disabled />
             </div>
             <div class="col-12 col-md-6">
-              <label class="subtitle font-weight-bold"
-                >แผนการเรียน สาขาวิชา:</label
-              >
-              <input
-                type="text"
-                v-model="form.study_field"
-                class="form-control"
-                placeholder="แผนการเรียน หรือสาขาวิชา"
-              />
+              <ValidationProvider v-slot="{ errors }" rules="required">
+                <label class="subtitle font-weight-bold">แผนการเรียน สาขาวิชา:</label>
+                <input
+                  v-model="form.study_field"
+                  type="text"
+                  class="form-control"
+                  placeholder="แผนการเรียน หรือสาขาวิชา"
+                />
+                <small class="form-text text-danger">{{ errors[0] }}</small>
+              </ValidationProvider>
             </div>
             <div class="col-12 col-md-6">
               <label class="subtitle font-weight-bold">GPAX รวม:</label>
-              <input
-                type="text"
-                v-model="form.gpax"
-                class="form-control"
-                placeholder=""
-                disabled
-              />
+              <input v-model="form.gpax" type="text" class="form-control" placeholder="" disabled />
             </div>
             <div class="col-12 col-md-6">
-              <ValidationProvider
-                rules="required|between:0,4"
-                v-slot="{ errors }"
-              >
-                <label class="subtitle font-weight-bold"
-                  >GPAX วิชาคณิตศาสตร์:</label
-                >
+              <ValidationProvider v-slot="{ errors }" rules="required|between:0,4">
+                <label class="subtitle font-weight-bold">GPAX วิชาคณิตศาสตร์:</label>
                 <input
-                  type="text"
                   v-model="form.gpax_match"
+                  type="text"
                   class="form-control"
                   placeholder="เกรด 5,6 ภาคการศึกษา วิชาคณิตศาสตร์"
                 />
@@ -120,16 +80,11 @@
               </ValidationProvider>
             </div>
             <div class="col-12 col-md-6">
-              <ValidationProvider
-                rules="required|between:0,4"
-                v-slot="{ errors }"
-              >
-                <label class="subtitle font-weight-bold"
-                  >GPAX วิชาภาษาต่างประเทศ:</label
-                >
+              <ValidationProvider v-slot="{ errors }" rules="required|between:0,4">
+                <label class="subtitle font-weight-bold">GPAX วิชาภาษาต่างประเทศ:</label>
                 <input
-                  type="text"
                   v-model="form.gpax_eng"
+                  type="text"
                   class="form-control"
                   placeholder="เกรด 5,6 ภาคการศึกษา วิชาภาษาต่างประเทศ"
                 />
@@ -137,16 +92,11 @@
               </ValidationProvider>
             </div>
             <div class="col-12 col-md-6">
-              <ValidationProvider
-                rules="required|between:0,4"
-                v-slot="{ errors }"
-              >
-                <label class="subtitle font-weight-bold"
-                  >GPAX วิชาคอมพิวเตอร์:</label
-                >
+              <ValidationProvider v-slot="{ errors }" rules="required|between:0,4">
+                <label class="subtitle font-weight-bold">GPAX วิชาคอมพิวเตอร์:</label>
                 <input
-                  type="text"
                   v-model="form.gpax_com"
+                  type="text"
                   class="form-control"
                   placeholder="เกรด 5,6 ภาคการศึกษา วิชาคอมพิวเตอร์หรือการงานอาชีพ"
                 />
@@ -156,17 +106,20 @@
             <div class="col-12 text-center">
               <hr />
               <button type="submit" class="btn btn-primary mt-4 px-5">
-                <div
-                  class="spinner-border"
-                  style="height: 24px; width: 24px"
-                  role="status"
-                  v-if="loading"
-                >
-                  <span class="sr-only">Loading...</span>
-                </div>
-                <span v-else>
-                  บันทึก
-                </span>
+                <transition name="fade" mode="out-in">
+                  <div
+                    v-if="loading"
+                    key="loading"
+                    class="spinner-border"
+                    style="height: 24px; width: 24px"
+                    role="status"
+                  >
+                    <span class="sr-only">Loading...</span>
+                  </div>
+                  <span v-else key="message">
+                    บันทึก
+                  </span>
+                </transition>
               </button>
             </div>
           </div>
@@ -177,27 +130,25 @@
 </template>
 
 <script lang="ts">
-import { IUser, User } from "@/type";
-import { extend } from "vee-validate";
-import { required, between } from "vee-validate/dist/rules";
-import { Component, Vue, Watch } from "vue-property-decorator";
-import SDashboard from "../Dashboard.vue";
+import { IUser, User } from '@/type';
+import { extend } from 'vee-validate';
+import { required, between } from 'vee-validate/dist/rules';
+import { Component, Watch } from 'vue-property-decorator';
+import SDashboard from '../Dashboard.vue';
+import { mapGetters } from 'vuex';
+import Store, { userStore } from '@/store';
 
-extend("required", {
+extend('required', {
   ...required,
-  message: "ค่าต้องไม่ว่างเปล่า"
+  message: 'ค่าต้องไม่ว่างเปล่า'
 });
-extend("between", {
+extend('between', {
   ...between,
-  message: "ค่าต้องอยู่ระหว่าง {min} ถึง {max} เท่านั้น"
+  message: 'ค่าต้องอยู่ระหว่าง {min} ถึง {max} เท่านั้น'
 });
-import { mapGetters } from "vuex";
-import env from "@/environment";
-import { AxiosError, AxiosResponse } from "axios";
-import Store, { userStore } from "@/store";
 
 @Component({
-  name: "Step1",
+  name: 'Step1',
   computed: {
     DATA_USER: () => userStore.DATA_USER
   }
@@ -210,23 +161,23 @@ export default class Step1 extends SDashboard {
   loading = false;
   prename = [
     {
-      text: "นาย",
-      value: "นาย",
+      text: 'นาย',
+      value: 'นาย',
       disabled: true
     },
     {
-      text: "นาง",
-      value: "นาง",
+      text: 'นาง',
+      value: 'นาง',
       disabled: true
     },
     {
-      text: "นางสาว",
-      value: "นางสาว",
+      text: 'นางสาว',
+      value: 'นางสาว',
       disabled: true
     }
   ];
 
-  @Watch("DATA_USER", {
+  @Watch('DATA_USER', {
     immediate: true,
     deep: true
   })
@@ -246,21 +197,21 @@ export default class Step1 extends SDashboard {
 
     await this.$axios
       .patch(`${this.$env.BACK_URI}/user`, this.form)
-      .then((resp: AxiosResponse) => {
+      .then(() => {
         this.$swal({
-          icon: "success",
-          title: "บันทึก",
-          text: "ระบบได้ทำการบันทึกข้อมูลผู้สมัครแล้ว"
+          icon: 'success',
+          title: 'บันทึก',
+          text: 'ระบบได้ทำการบันทึกข้อมูลผู้สมัครแล้ว'
         }).then(() =>
           this.$router.push({
-            name: "Step2"
+            name: 'Step2'
           })
         );
       })
-      .catch((err: AxiosError) => {
+      .catch((err) => {
         this.$swal({
-          icon: "error",
-          title: "ไม่สามารถบันทึก",
+          icon: 'error',
+          title: 'ไม่สามารถบันทึก',
           text: `ไม่สามารถบันทึกข้อมูลผู้สมัครได้ กรุณาลองใหม่อีกครั้ง \n ${err.message}`
         }).then(() => this.$router.go(0));
       });

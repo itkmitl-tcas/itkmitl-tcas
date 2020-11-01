@@ -2,7 +2,12 @@ $border-radius: 10px;
 $input-btn-padding-y: 0.5rem;
 $input-btn-padding-x: 1rem;
 $form-group-margin-bottom: 1.5rem;
+$modal-content-border-radius: 10px;
+$enable-gradients: true;
 
+*:focus {
+  outline: none !important;
+}
 
 .container {
   transition: all 0.3s ease-out
@@ -11,7 +16,6 @@ $form-group-margin-bottom: 1.5rem;
 .custom-file {
   width: auto !important;
   min-width: 20vw;
-  
   
   label {
     cursor: pointer;
@@ -28,9 +32,14 @@ $form-group-margin-bottom: 1.5rem;
       opacity: 0.8;
     }
   }
+
+  &.active label{
+    background-color: #28a745 !important;
+  }
 }
 
 .custom-file-label::after {
   display: none !important;
   // content: ""
 }
+

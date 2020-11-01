@@ -7,9 +7,13 @@
     "build": "vue-cli-service build",
     "test:unit": "vue-cli-service test:unit",
     "lint": "vue-cli-service lint",
+    "lint:fix": "vue-cli-service lint --fix",
     "commit": "yarn cz"
   },
   "dependencies": {
+    "@sentry/browser": "^5.27.1",
+    "@sentry/integrations": "^5.27.1",
+    "@sentry/tracing": "^5.27.1",
     "@types/node": "^14.14.2",
     "axios": "^0.20.0",
     "bootstrap": "^4.5.3",
@@ -29,6 +33,7 @@
     "vuex": "^3.4.0"
   },
   "devDependencies": {
+    "@types/axios": "^0.14.0",
     "@types/jest": "^24.0.19",
     "@typescript-eslint/eslint-plugin": "^4.5.0",
     "@typescript-eslint/parser": "^2.33.0",
@@ -48,6 +53,7 @@
     "eslint-plugin-json": "^2.1.2",
     "eslint-plugin-prettier": "^3.1.3",
     "eslint-plugin-vue": "^6.2.2",
+    "eslint-plugin-vue-types": "^2.0.0",
     "husky": "^4.3.0",
     "lint-staged": "^10.4.2",
     "node-sass": "^4.12.0",

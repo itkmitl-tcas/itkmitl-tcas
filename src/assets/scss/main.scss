@@ -13,10 +13,12 @@
 /* ---------------------------------- Views --------------------------------- */
 @import "views/login";
 @import 'views/steps';
+// @import "views/teacher";
 
 
 /* -------------------------------- Component ------------------------------- */
 @import "components/progress";
+@import "components/teacher_header";
 
 
 /* ---------------------------------- Other --------------------------------- */

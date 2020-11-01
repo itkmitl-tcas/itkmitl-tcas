@@ -4,11 +4,7 @@
       <div class="line">
         <div class="i"></div>
       </div>
-      <div
-        class="px-2 px-sm-3 bg-white position-relative"
-        v-for="(step, key) in steps"
-        :key="`step-${key}`"
-      >
+      <div v-for="(step, key) in steps" :key="`step-${key}`" class="px-2 px-sm-3 bg-white position-relative">
         <div class="d-flex align-items-center flex-row">
           <div class="circle mr-3" :class="{ active: currentStep == key + 1 }">
             <span v-if="step.checked" class="h2 m-0">
@@ -18,10 +14,7 @@
               {{ key + 1 }}
             </span>
           </div>
-          <div
-            class="text d-flex flex-column"
-            :class="{ active: currentStep == key + 1 || step.checked }"
-          >
+          <div class="text d-flex flex-column" :class="{ active: currentStep == key + 1 || step.checked }">
             <b>ขั้นที่ {{ key + 1 }}</b>
             <span>{{ step.text }}</span>
           </div>
@@ -33,7 +26,7 @@
 
 <script>
 export default {
-  name: "Progress",
+  name: 'Progress',
   data() {
     return {
       currentStep: 1,
@@ -41,25 +34,31 @@ export default {
         {
           active: false,
           checked: false,
-          text: "ข้อมูลผู้สมัคร"
+          text: 'ข้อมูลผู้สมัคร'
         },
         {
           active: false,
           checked: false,
-          text: "อัปโหลดเอกสาร"
+          text: 'อัปโหลดเอกสาร'
         },
         {
           active: false,
           checked: false,
-          text: "อัปโหลดผลงาน"
+          text: 'อัปโหลดผลงาน'
         },
         {
           active: false,
           checked: false,
-          text: "เสร็จสิ้น"
+          text: 'เสร็จสิ้น'
         }
       ]
     };
+  },
+  watch: {
+    // update current step when route update
+    $route(to) {
+      this.setCurrentStep(to);
+    }
   },
   mounted() {
     // init current step in first visit
@@ -67,14 +66,8 @@ export default {
   },
   methods: {
     setCurrentStep(route) {
-      const step = route.matched.filter(record => record.meta.step);
+      const step = route.matched.filter((record) => record.meta.step);
       this.currentStep = step[0] ? step[0].meta.step : 1;
-    }
-  },
-  watch: {
-    // update current step when route update
-    $route(to) {
-      this.setCurrentStep(to);
     }
   }
 };

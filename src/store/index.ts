@@ -1,9 +1,9 @@
 // https://github.com/garyo/vuex-module-decorators-example
 
-import Vue from "vue";
-import Vuex, { Store } from "vuex";
+import Vue from 'vue';
+import Vuex, { Store } from 'vuex';
 // Note: you shouldn't need to import store modules here.
-import { initializeStores, modules } from "@/store/store-accessor";
+import { initializeStores, modules } from '@/store/store-accessor';
 
 Vue.use(Vuex);
 
@@ -13,7 +13,7 @@ Vue.use(Vuex);
 // when the root store is created allows them to be hooked up properly.
 const initializer = (store: Store<any>) => initializeStores(store);
 export const plugins = [initializer];
-export * from "@/store/store-accessor"; // re-export the modules
+export * from '@/store/store-accessor'; // re-export the modules
 
 // Export the root store. You can add mutations & actions here as well.
 // Note that this is a standard Vuex store, not a vuex-module-decorator one.
@@ -21,7 +21,7 @@ export * from "@/store/store-accessor"; // re-export the modules
 export default new Store({
   plugins, // important!
   modules, // important!
-  state: { root: "Yep Peaches!" },
+  state: { root: 'Yep Peaches!' },
   mutations: {},
   actions: {}
 });

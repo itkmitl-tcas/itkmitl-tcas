@@ -13,24 +13,18 @@
             เข้าสู่ระบบ Backoffice
           </div>
           <div class="form-group mt-4">
-            <ValidationProvider rules="required|digits:8" v-slot="{ errors }">
-              <input
-                type="text"
-                v-model="form.id"
-                class="form-control"
-                id="id"
-                placeholder="ID"
-              />
+            <ValidationProvider v-slot="{ errors }" rules="required">
+              <input id="email" v-model="form.email" type="text" class="form-control" placeholder="ID" />
               <small class="form-text text-warning">{{ errors[0] }}</small>
             </ValidationProvider>
           </div>
           <div class="form-group mt-3">
-            <ValidationProvider rules="required" v-slot="{ errors }">
+            <ValidationProvider v-slot="{ errors }" rules="required">
               <input
-                type="password"
-                v-model="form.password"
-                class="form-control"
                 id="password"
+                v-model="form.password"
+                type="password"
+                class="form-control"
                 placeholder="PASSWORD"
               />
               <small class="form-text text-warning">{{ errors[0] }}</small>
@@ -46,39 +40,52 @@
 </template>
 
 <script>
-import { ValidationProvider, ValidationObserver } from "vee-validate";
-import { extend } from "vee-validate";
-import { required, digits } from "vee-validate/dist/rules";
+import { ValidationProvider, ValidationObserver } from 'vee-validate';
+import { extend } from 'vee-validate';
+import { required, digits } from 'vee-validate/dist/rules';
+import { authStore, userStore } from '@/store';
 
-extend("required", {
+extend('required', {
   ...required,
-  message: "ค่าต้องไม่ว่างเปล่า"
-});
-extend("digits", {
-  ...digits,
-  message: "ค่าต้องเป็นตัวเลขจำนวน {length} ตัวเท่านั้น"
+  message: 'ค่าต้องไม่ว่างเปล่า'
 });
 
 export default {
-  data() {
-    return {
-      form: {
-        id: null,
-        password: null
-      }
-    };
-  },
   components: {
     ValidationProvider,
     ValidationObserver
   },
+  data() {
+    return {
+      form: {
+        email: 'tunlaton11@gmail.com',
+        password: '<3'
+      }
+    };
+  },
   methods: {
     onSubmit() {
-      this.$refs.form.validate().then(success => {
+      this.$refs.form.validate().then((success) => {
         if (!success) return;
-        this.$router.push({
-          name: "TDashboard"
-        });
+
+        // // teacher singin
+        authStore
+          .signinTeacher(this.form)
+          .then((resp) => {
+            this.$swal({
+              icon: 'success',
+              title: 'เข้าสู่ระบบ'
+            }).then(() => {
+              this.$router.push({ name: 'TMember' });
+            });
+          })
+          .catch((err) => {
+            this.$swal({
+              icon: 'error',
+              title: 'ไม่สามารถเข้าสู่ระบบได้',
+              text: err.response ? err.response?.data.MESSAGE : err.message
+            });
+          });
       });
     }
   }

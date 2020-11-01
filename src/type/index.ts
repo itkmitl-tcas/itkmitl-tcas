@@ -9,14 +9,24 @@ export class User {
   gpax_eng?: number;
   gpax_com?: number;
   step?: number;
+  email?: string;
+  mobile?: string;
+  document?: Record<string, any>;
 
   constructor() {
-    this.apply_id = process.env.NODE_ENV == "development" ? 631001130 : null;
-    this.name = process.env.NODE_ENV == "development" ? "?????" : "";
-    this.surname = process.env.NODE_ENV == "development" ? "???????" : "";
-    this.prename = process.env.NODE_ENV == "development" ? "" : "";
+    this.apply_id = process.env.NODE_ENV == 'development' ? 631001130 : null;
+    this.name = process.env.NODE_ENV == 'development' ? 'ตุลธร' : '';
+    this.surname = process.env.NODE_ENV == 'development' ? 'วงศ์ชัย' : '';
+    this.prename = process.env.NODE_ENV == 'development' ? 'นาย' : '';
+    this.email = process.env.NODE_ENV == 'development' ? 'dev.vasin@gmail.com' : '';
+    this.mobile = process.env.NODE_ENV == 'development' ? '0924644891' : '';
     this.permission = 1;
   }
+}
+
+export interface ITeacherSignin {
+  email: string;
+  password: string;
 }
 
 export type IUser = User;
