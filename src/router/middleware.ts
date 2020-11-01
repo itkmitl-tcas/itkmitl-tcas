@@ -16,13 +16,13 @@ export function authMiddleware(router: any) {
         .post(`${env.BACK_URI}/auth`)
 
         // verify successed
-        .then((resp: AxiosResponse) => {
+        .then(async (resp: AxiosResponse) => {
           const user = {
             apply_id: resp.data.DATA.apply_id,
             permission: resp.data.DATA.permission
           };
-          userStore.CALL_USER_DATA();
-          // userStore.UPDATE_USER(user);
+          await userStore.UPDATE_USER(user);
+          await userStore.CALL_USER_DATA();
         })
 
         // verify failed
@@ -54,7 +54,7 @@ export function authMiddleware(router: any) {
         .post(`${env.BACK_URI}/auth`)
 
         // verify successed
-        .then((resp: AxiosResponse) => {
+        .then(async (resp: AxiosResponse) => {
           if (resp.data.DATA.permission < 2) {
             next({ name: 'SLogin' });
           } else {
@@ -62,7 +62,8 @@ export function authMiddleware(router: any) {
               apply_id: resp.data.DATA.apply_id,
               permission: resp.data.DATA.permission
             };
-            userStore.CALL_USER_DATA();
+            await userStore.UPDATE_USER(user);
+            await userStore.CALL_USER_DATA();
           }
         })
         // verify failed
