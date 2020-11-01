@@ -21,23 +21,16 @@ export function authMiddleware(router: any) {
             apply_id: resp.data.DATA.apply_id,
             permission: resp.data.DATA.permission
           };
-          userStore.UPDATE_USER(user);
+          userStore.CALL_USER_DATA();
+          // userStore.UPDATE_USER(user);
         })
 
         // verify failed
         .catch((err) => {
-          // console.log(err);
           // redirect to login page
           next({ name: 'SLogin' });
-
-          // Vue.swal({
-          //   // message
-          //   icon: 'warning',
-          //   title: 'ไม่สามารถเข้าสู่ระบบได้',
-          //   text: `กรุณาเข้าสู่ระบบใหม่อีกครั้ง`
-          // });
         });
-    } else if (to.matched.some((record: RouteRecord) => record.meta.requiresTAuth <= 0)) {
+    } else if (to.matched.some((record: RouteRecord) => record.meta.requiresAuth <= 0)) {
       // verify token
       await Vue.prototype.$axios
         .post(`${env.BACK_URI}/auth`)
@@ -47,15 +40,14 @@ export function authMiddleware(router: any) {
           const step = resp.data.DATA.step; // redicrec to dashboard step N
           next({ name: `Step${step}` });
         })
-        .catch(() => {
-          // redirect to login page
-          // next({ name: "SLogin" });
-        });
+        .catch((err) => err);
     }
+
+    /* ------------------------------ Teacher Auth ------------------------------ */
 
     if (
       // case student or above require
-      to.matched.some((record: RouteRecord) => record.meta.requiresAuth >= 1)
+      to.matched.some((record: RouteRecord) => record.meta.requiresTAuth >= 1)
     ) {
       // verify token
       await Vue.prototype.$axios
@@ -63,25 +55,20 @@ export function authMiddleware(router: any) {
 
         // verify successed
         .then((resp: AxiosResponse) => {
-          const user = {
-            apply_id: resp.data.DATA.apply_id,
-            permission: resp.data.DATA.permission
-          };
-          userStore.UPDATE_USER(user);
+          if (resp.data.DATA.permission < 2) {
+            next({ name: 'SLogin' });
+          } else {
+            const user = {
+              apply_id: resp.data.DATA.apply_id,
+              permission: resp.data.DATA.permission
+            };
+            userStore.CALL_USER_DATA();
+          }
         })
-
         // verify failed
         .catch((err) => {
-          // console.log(err);
           // redirect to login page
-          next({ name: 'SLogin' });
-
-          // Vue.swal({
-          //   // message
-          //   icon: 'warning',
-          //   title: 'ไม่สามารถเข้าสู่ระบบได้',
-          //   text: `กรุณาเข้าสู่ระบบใหม่อีกครั้ง`
-          // });
+          next({ name: 'TLogin' });
         });
     } else if (to.matched.some((record: RouteRecord) => record.meta.requiresTAuth <= 0)) {
       // verify token
@@ -91,12 +78,9 @@ export function authMiddleware(router: any) {
         // verify successed
         .then((resp: AxiosResponse) => {
           const step = resp.data.DATA.step; // redicrec to dashboard step N
-          next({ name: `Step${step}` });
+          next({ name: `TMember` });
         })
-        .catch(() => {
-          // redirect to login page
-          // next({ name: "SLogin" });
-        });
+        .catch((err) => err);
     }
     next();
   });
