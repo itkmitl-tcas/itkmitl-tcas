@@ -46,7 +46,7 @@
               </div>
               <div class="col-12">
                 <ValidationProvider v-slot="{ errors }" rules="required">
-                  <label class="subtitle font-weight-bold">ชื่อผลงาน:</label>
+                  <label class="subtitle font-weight-bold">รายละเอียดผลงาน:</label>
                   <textarea v-model="form[0].desc" class="form-control" rows="3"></textarea>
                   <small class="form-text text-danger">{{ errors[0] }}</small>
                 </ValidationProvider>
@@ -139,7 +139,7 @@
                   </div>
                   <div class="col-12">
                     <ValidationProvider v-slot="{ errors }" rules="required">
-                      <label class="subtitle font-weight-bold">ชื่อผลงาน:</label>
+                      <label class="subtitle font-weight-bold">รายละเอียดผลงาน:</label>
                       <textarea v-model="form[key + 1].desc" class="form-control" rows="3"></textarea>
                       <small class="form-text text-danger">{{ errors[0] }}</small>
                     </ValidationProvider>
