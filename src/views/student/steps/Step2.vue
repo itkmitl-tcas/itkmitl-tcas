@@ -91,6 +91,21 @@
               </small>
             </div>
             <div class="col-12">
+              <label class="subtitle font-weight-bold">แฟ้มสะสมผลงาน*</label>
+              <small class="d-flex text-black-80 mb-3">ไฟล์แฟ้มสะสมผลงานแบบเต็มจำนวนไม่เกิน 10 หน้า PDF</small>
+              <b-form-file
+                name="full_portfolio"
+                :placeholder="full_portfolio ? 'UPDATE PORTFOLIO' : 'CHOOSE PORTFOLIO(.PDF)'"
+                :class="{ active: full_portfolio }"
+                accept=".pdf, .PDF"
+                drop-placeholder="Drop file here..."
+                @change="fileChange($event.target.name, $event.target.files)"
+              ></b-form-file>
+              <small v-if="full_portfolio" class="form-text">
+                <a :href="full_portfolio" target="_blanks">ดูแฟ้มสะสมผลงาน</a>
+              </small>
+            </div>
+            <div class="col-12">
               <hr />
             </div>
             <div class="col-12 text-center d-flex flex-column flex-md-row justify-content-center">
@@ -166,6 +181,9 @@ export default class Step2 extends SDashboard {
   }
   get name_change() {
     return this.docsData ? this.docsData.name_change : null;
+  }
+  get full_portfolio() {
+   return this.docsData ? this.docsData.full_portfolio : null; 
   }
 
   // userData: User = this.userData;
