@@ -14,7 +14,7 @@
           </div>
           <div class="form-group mt-4">
             <ValidationProvider v-slot="{ errors }" rules="required">
-              <input id="email" v-model="form.email" type="text" class="form-control" placeholder="ID" />
+              <input id="email" v-model="form.email" type="text" class="form-control" placeholder="EMAIL" />
               <small class="form-text text-warning">{{ errors[0] }}</small>
             </ValidationProvider>
           </div>
