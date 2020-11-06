@@ -76,3 +76,19 @@ jobs:
             docker-compose up -d -V --no-deps
             cd /home/reg/${{ github.event.repository.name }}_prod/nginx/reverse-proxy
             docker-compose up -d --build
+
+  release:
+    runs-on: ubuntu-16.04
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Semantic Release
+        uses: cycjimmy/semantic-release-action@v2
+        env:
+          GH_TOKEN: ${{ secrets.GH_TOKEN }}
+          DIST_TAR_PATH: dist/dist.tar.gz
+        with:
+          extra_plugins: |
+            @semantic-release/git@7.0.18
+            @semantic-release/exec@3.3.8
+            @semantic-release/changelog@3.0.0
