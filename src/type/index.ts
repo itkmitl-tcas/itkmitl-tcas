@@ -11,6 +11,7 @@ export class User {
   step?: number;
   email?: string;
   mobile?: string;
+  password?: string;
   document?: Record<string, any>;
 
   constructor() {
@@ -20,13 +21,14 @@ export class User {
     this.prename = process.env.NODE_ENV == 'development' ? 'นาย' : '';
     this.email = process.env.NODE_ENV == 'development' ? 'dev.vasin@gmail.com' : '';
     this.mobile = process.env.NODE_ENV == 'development' ? '0924644891' : '';
+    this.password = process.env.NODE_ENV == 'development' ? '' : '';
     this.permission = 1;
   }
 }
 
 export interface ITeacherSignin {
-  email: string;
-  password: string;
+  email?: string;
+  password?: string;
 }
 
 export type IUser = User;
