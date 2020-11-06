@@ -149,7 +149,7 @@
                       v-slot="{ validate, errors }"
                       :rules="{ required: form[key + 1].file ? false : true }"
                     >
-                      <label class="subtitle font-weight-bold d-block">ไฟล์ผลงานดีเด่น</label>
+                      <label class="subtitle font-weight-bold d-block">ไฟล์ผลงานอื่น ๆ</label>
                       <b-form-file
                         size="sm"
                         :name="`portfolio_${key + 1}`"
@@ -163,7 +163,7 @@
                         "
                       ></b-form-file>
                       <small v-if="form[key + 1].file" class="form-text">
-                        <a :href="form[key + 1].file" target="_blanks">ไฟล์ผลงานดีเด่น</a>
+                        <a :href="form[key + 1].file" target="_blanks">ไฟล์ผลงานอื่น ๆ</a>
                       </small>
                       <small class="form-text text-danger">{{ errors[0] }}</small>
                     </ValidationProvider>
