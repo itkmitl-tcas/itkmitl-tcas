@@ -31,7 +31,14 @@
             </ValidationProvider>
           </div>
           <button type="submit" class="btn btn-primary w-100 mt-4">
-            เข้าสู่ระบบ
+            <transition name="fade" mode="out-in">
+              <div v-if="loading" key="loading" class="spinner-border" style="height: 24px; width: 24px" role="status">
+                <span class="sr-only"></span>
+              </div>
+              <span v-else key="message">
+                เข้าสู่ระบบ
+              </span>
+            </transition>
           </button>
         </form>
       </ValidationObserver>
@@ -39,55 +46,52 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
 import { ValidationProvider, ValidationObserver } from 'vee-validate';
 import { extend } from 'vee-validate';
 import { required, digits } from 'vee-validate/dist/rules';
 import { authStore, userStore } from '@/store';
+import { Component, Vue } from 'vue-property-decorator';
+import { ITeacherSignin, IUser, User } from '@/type';
 
 extend('required', {
   ...required,
   message: 'ค่าต้องไม่ว่างเปล่า'
 });
-
-export default {
+@Component({
   components: {
     ValidationProvider,
     ValidationObserver
-  },
-  data() {
-    return {
-      form: {
-        email: 'tunlaton11@gmail.com',
-        password: '<3'
-      }
-    };
-  },
-  methods: {
-    onSubmit() {
-      this.$refs.form.validate().then((success) => {
-        if (!success) return;
-
-        // // teacher singin
-        authStore
-          .signinTeacher(this.form)
-          .then((resp) => {
-            this.$swal({
-              icon: 'success',
-              title: 'เข้าสู่ระบบ'
-            }).then(() => {
-              this.$router.push({ name: 'TMember' });
-            });
-          })
-          .catch((err) => {
-            this.$swal({
-              icon: 'error',
-              title: 'ไม่สามารถเข้าสู่ระบบได้',
-              text: err.response ? err.response?.data.MESSAGE : err.message
-            });
-          });
-      });
-    }
   }
-};
+})
+export default class TLogin extends Vue {
+  form: ITeacherSignin = new User();
+
+  async onSubmit() {
+    // validate form
+    const validate = await (this.$refs.form as Vue & {
+      validate: () => boolean;
+    }).validate();
+    if (!validate) return;
+
+    // teacher singin
+    authStore
+      .signinTeacher(this.form)
+      .then((resp) => {
+        this.$swal({
+          icon: 'success',
+          title: 'เข้าสู่ระบบ'
+        }).then(() => {
+          this.$router.push({ name: 'TMember' });
+        });
+      })
+      .catch((err) => {
+        this.$swal({
+          icon: 'error',
+          title: 'ไม่สามารถเข้าสู่ระบบได้',
+          text: err.response ? err.response?.data.MESSAGE : err.message
+        });
+      });
+  }
+}
 </script>
