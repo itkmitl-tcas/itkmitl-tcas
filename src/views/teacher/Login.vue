@@ -66,6 +66,7 @@ extend('required', {
 })
 export default class TLogin extends Vue {
   form: ITeacherSignin = new User();
+  loading = false;
 
   async onSubmit() {
     // validate form
