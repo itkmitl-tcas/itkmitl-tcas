@@ -13,6 +13,7 @@ export class User {
   mobile?: string;
   password?: string;
   document?: Record<string, any>;
+  study_field?: string;
 
   constructor() {
     this.apply_id = process.env.NODE_ENV == 'development' ? 631001130 : null;
@@ -22,6 +23,7 @@ export class User {
     this.email = process.env.NODE_ENV == 'development' ? 'dev.vasin@gmail.com' : '';
     this.mobile = process.env.NODE_ENV == 'development' ? '0924644891' : '';
     this.password = process.env.NODE_ENV == 'development' ? '' : '';
+    this.study_field = '';
     this.permission = 1;
   }
 }
