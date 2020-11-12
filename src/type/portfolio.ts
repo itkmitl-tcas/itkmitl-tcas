@@ -6,9 +6,9 @@ export class PortfolioItem {
 
   constructor() {
     this.type_id = null;
-    this.name = process.env.NODE_ENV !== 'production' ? 'ผลงาน' : '';
+    this.name = '';
     this.file = null;
-    this.desc = process.env.NODE_ENV !== 'production' ? 'รายละเอียดผลงาน' : '';
+    this.desc = '';
   }
 }
 
