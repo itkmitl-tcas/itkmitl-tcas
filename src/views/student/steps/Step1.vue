@@ -216,8 +216,8 @@ export default class Step1 extends SDashboard {
         this.$swal({
           icon: 'error',
           title: 'ไม่สามารถบันทึก',
-          text: `ไม่สามารถบันทึกข้อมูลผู้สมัครได้ กรุณาลองใหม่อีกครั้ง \n ${err.message}`
-        }).then(() => this.$router.go(0));
+          text: `ไม่สามารถบันทึกข้อมูลผู้สมัครได้ กรุณาลองใหม่อีกครั้ง \n ${err.response.data.DATA}`
+        });
       });
 
     this.loading = false;
