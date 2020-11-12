@@ -17,14 +17,24 @@
               <div class="col-12">
                 <ValidationProvider v-slot="{ errors }" rules="required">
                   <label class="subtitle font-weight-bold">ชื่อผลงาน:</label>
-                  <input v-model="form[0].name" type="text" class="form-control" placeholder="ชื่อผลงานดีเด่น" />
+                  <input
+                    v-model="form[0].name"
+                    type="text"
+                    class="form-control"
+                    placeholder="ชื่อผลงานดีเด่น"
+                    :class="{ 'border-danger': errors[0] }"
+                  />
                   <small class="form-text text-danger">{{ errors[0] }}</small>
                 </ValidationProvider>
               </div>
               <div class="col-12 ">
                 <ValidationProvider v-slot="{ errors, validate }" rules="required">
                   <label class="subtitle font-weight-bold">หมวดหมู่ผลงาน:</label>
-                  <b-form-select v-model="form[0].type_id" class="mb-3" @change="validate($event)">
+                  <b-form-select
+                    v-model="form[0].type_id"
+                    :class="{ 'border-danger': errors[0] }"
+                    @change="validate($event)"
+                  >
                     <b-form-select-option :value="null" selecte>
                       เลือกหมวดหมู่ผลงาน
                     </b-form-select-option>
@@ -50,6 +60,7 @@
                     class="form-control"
                     rows="3"
                     placeholder="รายละเอียดผลงานดีเด่น"
+                    :class="{ 'border-danger': errors[0] }"
                   ></textarea>
                   <small class="form-text text-danger">{{ errors[0] }}</small>
                 </ValidationProvider>
@@ -116,6 +127,7 @@
                         v-model="form[key + 1].name"
                         type="text"
                         class="form-control"
+                        :class="{ 'border-danger': errors[0] }"
                         :placeholder="`ชื่อผลงานของรายการที่ ${key + 1}`"
                       />
                       <small class="form-text text-danger">{{ errors[0] }}</small>
@@ -124,7 +136,12 @@
                   <div class="col-12 ">
                     <ValidationProvider v-slot="{ errors, validate }" rules="required">
                       <label class="subtitle font-weight-bold">หมวดหมู่ผลงาน:</label>
-                      <b-form-select v-model="form[key + 1].type_id" class="mb-3" @change="validate($event)">
+                      <b-form-select
+                        v-model="form[key + 1].type_id"
+                        class=""
+                        :class="{ 'border-danger': errors[0] }"
+                        @change="validate($event)"
+                      >
                         <b-form-select-option :value="null" selecte>
                           เลือกหมวดหมู่ผลงาน
                         </b-form-select-option>
@@ -148,6 +165,7 @@
                       <textarea
                         v-model="form[key + 1].desc"
                         class="form-control"
+                        :class="{ 'border-danger': errors[0] }"
                         rows="3"
                         :placeholder="`รายละเอียดผลงานของรายการที่ ${key + 1}`"
                       ></textarea>
@@ -260,7 +278,11 @@ export default class Step2 extends SDashboard {
     const validate = await (this.$refs.form as Vue & {
       validate: () => boolean;
     }).validate();
-    if (!validate) return;
+    if (!validate) {
+      const el: any = document.querySelector('small.text-danger:first-of-type');
+      el.scrollIntoView({ behavior: 'smooth' });
+      return;
+    }
 
     this.loading = true;
 
