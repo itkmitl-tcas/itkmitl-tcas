@@ -39,13 +39,7 @@
             </div>
             <div class="col-12 col-md-6">
               <label class="subtitle font-weight-bold">โรงเรียน:</label>
-              <input
-                v-model="form.school_name"
-                type="text"
-                class="form-control"
-                placeholder=""
-                :disabled="form.school_name ? true : false"
-              />
+              <input v-model="form.school_name" type="text" class="form-control" placeholder="" disabled />
             </div>
             <div class="col-12 col-md-6">
               <label class="subtitle font-weight-bold">ประเภทการสมัคร:</label>
@@ -53,13 +47,14 @@
             </div>
             <div class="col-12 col-md-6">
               <ValidationProvider v-slot="{ errors }" rules="required">
-                <label class="subtitle font-weight-bold">แผนการเรียน สาขาวิชา:</label>
-                <input
+                <label class="subtitle font-weight-bold">แผนการศึกษา:</label>
+                <b-form-select v-model="form.study_field" :options="study_field"></b-form-select>
+                <!-- <input
                   v-model="form.study_field"
                   type="text"
                   class="form-control"
                   placeholder="แผนการเรียน หรือสาขาวิชา"
-                />
+                /> -->
                 <small class="form-text text-danger">{{ errors[0] }}</small>
               </ValidationProvider>
             </div>
@@ -175,6 +170,15 @@ export default class Step1 extends SDashboard {
       value: 'นางสาว',
       disabled: true
     }
+  ];
+  study_field = [
+    { value: '', text: 'เลือกแผนการศึกษา', disabled: true },
+    { value: 'วิทย์-คณิต', text: 'วิทย์-คณิต' },
+    { value: 'ศิลป์-ภาษา', text: 'ศิลป์-ภาษา' },
+    { value: 'ศิลป์-คำนวน', text: 'ศิลป์-คำนวน' },
+    { value: 'สายอาชีพ (ปวช.)', text: 'สายอาชีพ (ปวช.)' },
+    { value: 'สายอาชีพ (ปวส.)', text: 'สายอาชีพ (ปวส.)' },
+    { value: 'อื่นๆ', text: 'อื่นๆ' }
   ];
 
   @Watch('DATA_USER', {
