@@ -118,85 +118,87 @@
                     </button>
                   </div>
                   <hr />
-                </div>
-                <b-collapse :id="`collapse-${key + 1}`" visible class="mt-2">
-                  <div class="col-12">
-                    <ValidationProvider v-slot="{ errors }" rules="required">
-                      <label class="subtitle font-weight-bold">ชื่อผลงาน:</label>
-                      <input
-                        v-model="form[key + 1].name"
-                        type="text"
-                        class="form-control"
-                        :class="{ 'border-danger': errors[0] }"
-                        :placeholder="`ชื่อผลงานของรายการที่ ${key + 1}`"
-                      />
-                      <small class="form-text text-danger">{{ errors[0] }}</small>
-                    </ValidationProvider>
-                  </div>
-                  <div class="col-12 ">
-                    <ValidationProvider v-slot="{ errors, validate }" rules="required">
-                      <label class="subtitle font-weight-bold">หมวดหมู่ผลงาน:</label>
-                      <b-form-select
-                        v-model="form[key + 1].type_id"
-                        class=""
-                        :class="{ 'border-danger': errors[0] }"
-                        @change="validate($event)"
-                      >
-                        <b-form-select-option :value="null" selecte>
-                          เลือกหมวดหมู่ผลงาน
-                        </b-form-select-option>
-                        <b-form-select-option-group
-                          v-for="(group, typeKey) in dataPortType"
-                          :key="typeKey"
-                          class="font-weight-bold"
-                          :label="typeKey"
+                  <b-collapse :id="`collapse-${key + 1}`" visible class="mt-2 ">
+                    <div class="row field-wrapper">
+                      <div class="col-12">
+                        <ValidationProvider v-slot="{ errors }" rules="required">
+                          <label class="subtitle font-weight-bold">ชื่อผลงาน:</label>
+                          <input
+                            v-model="form[key + 1].name"
+                            type="text"
+                            class="form-control"
+                            :class="{ 'border-danger': errors[0] }"
+                            :placeholder="`ชื่อผลงานของรายการที่ ${key + 1}`"
+                          />
+                          <small class="form-text text-danger">{{ errors[0] }}</small>
+                        </ValidationProvider>
+                      </div>
+                      <div class="col-12 ">
+                        <ValidationProvider v-slot="{ errors, validate }" rules="required">
+                          <label class="subtitle font-weight-bold">หมวดหมู่ผลงาน:</label>
+                          <b-form-select
+                            v-model="form[key + 1].type_id"
+                            class=""
+                            :class="{ 'border-danger': errors[0] }"
+                            @change="validate($event)"
+                          >
+                            <b-form-select-option :value="null" selecte>
+                              เลือกหมวดหมู่ผลงาน
+                            </b-form-select-option>
+                            <b-form-select-option-group
+                              v-for="(group, typeKey) in dataPortType"
+                              :key="typeKey"
+                              class="font-weight-bold"
+                              :label="typeKey"
+                            >
+                              <b-form-select-option v-for="option in group" :key="option.name" :value="option.type_id">
+                                {{ option.desc }}
+                              </b-form-select-option>
+                            </b-form-select-option-group>
+                          </b-form-select>
+                          <small class="form-text text-danger">{{ errors[0] }}</small>
+                        </ValidationProvider>
+                      </div>
+                      <div class="col-12">
+                        <ValidationProvider v-slot="{ errors }" rules="required">
+                          <label class="subtitle font-weight-bold">รายละเอียดผลงาน:</label>
+                          <textarea
+                            v-model="form[key + 1].desc"
+                            class="form-control"
+                            :class="{ 'border-danger': errors[0] }"
+                            rows="3"
+                            :placeholder="`รายละเอียดผลงานของรายการที่ ${key + 1}`"
+                          ></textarea>
+                          <small class="form-text text-danger">{{ errors[0] }}</small>
+                        </ValidationProvider>
+                      </div>
+                      <div class="col-12 pt-3">
+                        <ValidationProvider
+                          v-slot="{ validate, errors }"
+                          :rules="{ required: form[key + 1].file ? false : true }"
                         >
-                          <b-form-select-option v-for="option in group" :key="option.name" :value="option.type_id">
-                            {{ option.desc }}
-                          </b-form-select-option>
-                        </b-form-select-option-group>
-                      </b-form-select>
-                      <small class="form-text text-danger">{{ errors[0] }}</small>
-                    </ValidationProvider>
-                  </div>
-                  <div class="col-12">
-                    <ValidationProvider v-slot="{ errors }" rules="required">
-                      <label class="subtitle font-weight-bold">รายละเอียดผลงาน:</label>
-                      <textarea
-                        v-model="form[key + 1].desc"
-                        class="form-control"
-                        :class="{ 'border-danger': errors[0] }"
-                        rows="3"
-                        :placeholder="`รายละเอียดผลงานของรายการที่ ${key + 1}`"
-                      ></textarea>
-                      <small class="form-text text-danger">{{ errors[0] }}</small>
-                    </ValidationProvider>
-                  </div>
-                  <div class="col-12 pt-3">
-                    <ValidationProvider
-                      v-slot="{ validate, errors }"
-                      :rules="{ required: form[key + 1].file ? false : true }"
-                    >
-                      <label class="subtitle font-weight-bold d-block">ไฟล์ผลงานของรายการที่ {{ key + 1 }}</label>
-                      <b-form-file
-                        size="sm"
-                        :name="`portfolio_${key + 1}`"
-                        :placeholder="form[key + 1].file ? 'UPDATE FILE' : 'CHOOSE FILE(.PDF)'"
-                        :class="{ active: form[key + 1].file }"
-                        accept=".pdf, .PDF"
-                        drop-placeholder="Drop file here..."
-                        @change="
-                          fileChange($event.target.name, $event.target.files, `portfolio_${key + 1}`, key + 1);
-                          validate($event);
-                        "
-                      ></b-form-file>
-                      <small v-if="form[key + 1].file" class="form-text">
-                        <a :href="form[key + 1].file" target="_blanks">ไฟล์ผลงานรายการที่ {{ key + 1 }} </a>
-                      </small>
-                      <small class="form-text text-danger">{{ errors[0] }}</small>
-                    </ValidationProvider>
-                  </div>
-                </b-collapse>
+                          <label class="subtitle font-weight-bold d-block">ไฟล์ผลงานของรายการที่ {{ key + 1 }}</label>
+                          <b-form-file
+                            size="sm"
+                            :name="`portfolio_${key + 1}`"
+                            :placeholder="form[key + 1].file ? 'UPDATE FILE' : 'CHOOSE FILE(.PDF)'"
+                            :class="{ active: form[key + 1].file }"
+                            accept=".pdf, .PDF"
+                            drop-placeholder="Drop file here..."
+                            @change="
+                              fileChange($event.target.name, $event.target.files, `portfolio_${key + 1}`, key + 1);
+                              validate($event);
+                            "
+                          ></b-form-file>
+                          <small v-if="form[key + 1].file" class="form-text">
+                            <a :href="form[key + 1].file" target="_blanks">ไฟล์ผลงานรายการที่ {{ key + 1 }} </a>
+                          </small>
+                          <small class="form-text text-danger">{{ errors[0] }}</small>
+                        </ValidationProvider>
+                      </div>
+                    </div>
+                  </b-collapse>
+                </div>
               </div>
             </transition-group>
           </b-collapse>
