@@ -12,7 +12,7 @@
               <span v-b-toggle.head-1 class="font-weight-bold"> ส่วนที่ 1: ผลงานดีเด่น <b-icon-chevron-down /> </span>
             </div>
           </div>
-          <b-collapse id="head-1" :visible="!form[0].file ? true : false" class="mt-2">
+          <b-collapse id="head-1" :visible="!form[0].file ? true : false" class="mt-2" accordion="portfolio-section">
             <div class="row field-wrapper">
               <div class="col-12">
                 <ValidationProvider v-slot="{ errors }" rules="required">
@@ -99,7 +99,7 @@
             </div>
             <hr />
           </div>
-          <b-collapse :id="`head-2`" visible class="mt-2">
+          <b-collapse :id="`head-2`" visible class="mt-2" accordion="portfolio-section">
             <transition-group name="list" tag="div">
               <div v-for="(item, key) in form.slice(1, 100)" :key="`key-${key}`" class="row field-wrapper">
                 <div class="col-12 mb-2">
@@ -118,7 +118,7 @@
                     </button>
                   </div>
                   <hr />
-                  <b-collapse :id="`collapse-${key + 1}`" visible class="mt-2 ">
+                  <b-collapse :id="`collapse-${key + 1}`" visible class="mt-2" accordion="portfolio-item">
                     <div class="row field-wrapper">
                       <div class="col-12">
                         <ValidationProvider v-slot="{ errors }" rules="required">
