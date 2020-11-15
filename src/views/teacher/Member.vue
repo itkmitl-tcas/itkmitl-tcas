@@ -1,5 +1,5 @@
 <template>
-  <div class="teacher-member-container content-container">
+  <div class="teacher-member-container content-container content bg-white mt-3">
     <div class="row">
       <div class="col d-flex align-items-center">
         <div class="font-weight-bold">จัดการอาจารย์</div>
@@ -226,7 +226,7 @@ extend('confirmed', {
     ValidationObserver
   }
 })
-export default class SMember extends Vue {
+export default class TMember extends Vue {
   loading = false;
   /* --------------------------------- Teacher -------------------------------- */
   // teacher data

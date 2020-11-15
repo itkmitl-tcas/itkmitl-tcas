@@ -1,5 +1,5 @@
 <template>
-  <div class="content-container">
+  <div class="content-container content bg-white mt-3">
     <!-- <div class="row">
       <div class="col font-weight-bold">
         ตั้งค่าระบบ
@@ -14,12 +14,12 @@
         class="d-flex flex-row align-items-center justify-content-center py-5 rounded text-light"
         style="background: linear-gradient(-45deg, #0889ff, #023145)"
       >
-        <div>ปิดการรับสมัคร</div>
-        <label class="switch mx-3 my-0">
+        <small>ปิดการรับสมัคร</small>
+        <label class="switch mx-2 mx-md-3 my-0">
           <input v-model="client_access" type="checkbox" checked />
           <span class="slider round"></span>
         </label>
-        <div>เปิดการรับสมัคร</div>
+        <small>เปิดการรับสมัคร</small>
       </div>
       <div class="btn btn-success mt-2 w-100" @click="onSave()">บันทึก</div>
       <hr />

@@ -26,7 +26,9 @@ import {
   FormCheckboxPlugin,
   FormGroupPlugin,
   InputGroupPlugin,
-  FormInputPlugin
+  FormInputPlugin,
+  EmbedPlugin,
+  AspectPlugin
 } from 'bootstrap-vue';
 
 /* -------------------------------- Sentry IO ------------------------------- */
@@ -46,7 +48,7 @@ Sentry.init({
 
   // We recommend adjusting this value in production, or using tracesSampler
   // for finer control
-  tracesSampleRate: 0.1
+  tracesSampleRate: process.env.NODE_ENV == 'production' ? 1 : 0.1
 });
 
 Vue.use(ButtonPlugin);
@@ -62,6 +64,8 @@ Vue.use(FormCheckboxPlugin);
 Vue.use(FormGroupPlugin);
 Vue.use(InputGroupPlugin);
 Vue.use(FormInputPlugin);
+Vue.use(EmbedPlugin);
+Vue.use(AspectPlugin);
 
 Vue.use(VueLazyload);
 Vue.use(PortalVue);
