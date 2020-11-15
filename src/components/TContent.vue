@@ -286,7 +286,7 @@ export default class TContent extends Vue {
 
   @Watch('studentProp')
   async onChange(data) {
-    if (!this.studentProp) return;
+    if (!this.studentProp || !this.studentProp.apply_id) return;
     this.loading = true;
     await userStore
       .getUserById(this.studentProp.apply_id)
@@ -300,7 +300,7 @@ export default class TContent extends Vue {
   }
 
   async created() {
-    if (!this.studentProp) return;
+    if (!this.studentProp || !this.studentProp.apply_id) return;
     await userStore
       .getUserById(this.studentProp.apply_id)
       .then((resp) => (this.student = resp))
