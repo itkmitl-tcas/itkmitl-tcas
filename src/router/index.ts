@@ -48,7 +48,7 @@ const routes: Array<RouteConfig> = [
                 path: 'step3',
                 name: 'Step3',
                 component: () => import('@views/student/steps/Step3.vue'),
-                meta: { step: 3, title: 'ขั้นที่2: อัพโหลดผลงาน' }
+                meta: { step: 3, title: 'ขั้นที่3: อัพโหลดผลงาน' }
               },
               {
                 path: 'step4',
