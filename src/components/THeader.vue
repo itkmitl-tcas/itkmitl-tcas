@@ -2,14 +2,24 @@
   <div class="theader-container">
     <div class="wrapper w-100">
       <div class="row ">
-        <div class="col col-md h-100">
+        <div class="col-6 col-md h-100">
+          <router-link
+            :to="{ name: 'TMain' }"
+            type="button"
+            class="btn btn-sm border border-primary w-100"
+            active-class="btn-primary text-white"
+          >
+            จัดการผู้สมัคร
+          </router-link>
+        </div>
+        <div class="col-6 col-md h-100">
           <router-link
             :to="{ name: 'TMember' }"
             type="button"
             class="btn btn-sm border border-primary w-100"
             active-class="btn-primary text-white"
           >
-            จัดการผู้ใช้
+            จัดการอาจารย์
           </router-link>
         </div>
         <div class="col col-md">

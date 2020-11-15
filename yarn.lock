@@ -3572,6 +3572,17 @@ compressible@~2.0.16:
   dependencies:
     mime-db ">= 1.43.0 < 2"
 
+compression-webpack-plugin@^4.0.0:
+  version "4.0.1"
+  resolved "https://registry.npm.taobao.org/compression-webpack-plugin/download/compression-webpack-plugin-4.0.1.tgz#33eda97f1170dd38c5556771de10f34245aa0274"
+  integrity sha1-M+2pfxFw3TjFVWdx3hDzQkWqAnQ=
+  dependencies:
+    cacache "^15.0.5"
+    find-cache-dir "^3.3.1"
+    schema-utils "^2.7.0"
+    serialize-javascript "^4.0.0"
+    webpack-sources "^1.4.3"
+
 compression-webpack-plugin@^6.0.3:
   version "6.0.4"
   resolved "https://registry.yarnpkg.com/compression-webpack-plugin/-/compression-webpack-plugin-6.0.4.tgz#524699c0ad4e94cab0eb199c734e291f6ab685b9"
@@ -11814,6 +11825,13 @@ vue-class-component@^7.2.6:
   version "7.2.6"
   resolved "https://registry.yarnpkg.com/vue-class-component/-/vue-class-component-7.2.6.tgz#8471e037b8e4762f5a464686e19e5afc708502e4"
   integrity sha512-+eaQXVrAm/LldalI272PpDe3+i4mPis0ORiMYxF6Ae4hyuCh15W8Idet7wPUEs4N4YptgFHGys4UrgNQOMyO6w==
+
+vue-cli-plugin-compression@~1.0.3:
+  version "1.0.3"
+  resolved "https://registry.yarnpkg.com/vue-cli-plugin-compression/-/vue-cli-plugin-compression-1.0.3.tgz#55d898016f42399ea58545b1988ed01e834de171"
+  integrity sha512-fHhfk4IIkqFJH+YI9oUQH8MkGOPRIjDYsSwygnfUM9Rxse5jfS0voq6BF4RhAW5B8EU6R479L+nApXhj2zau0Q==
+  dependencies:
+    compression-webpack-plugin "^4.0.0"
 
 vue-cookies@^1.7.4:
   version "1.7.4"
