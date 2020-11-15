@@ -114,7 +114,7 @@
                       aria-label="Close"
                       @click="remove(item, key + 1, `portfolio_${key + 1}`)"
                     >
-                      <h1><span aria-hidden="true" class="text-danger">&times;</span></h1>
+                      <span aria-hidden="true" class="text-danger"><h1>&times;</h1></span>
                     </button>
                   </div>
                   <hr />

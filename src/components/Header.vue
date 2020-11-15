@@ -1,6 +1,6 @@
 <template>
   <div class="header-container">
-    <div class="py-4 container">
+    <div class="py-4 container-xl">
       <div class="d-flex flex-row align-items-center">
         <img v-lazy="require('@images/logo.png')" class="mr-3" />
         <div class="d-md-flex flex-column d-none">

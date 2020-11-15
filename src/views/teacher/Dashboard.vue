@@ -1,10 +1,10 @@
 <template>
   <div class="dashboard-container d-flex">
-    <div class="container">
+    <div class="container-xl">
       <THeader />
-      <div class="content bg-white mt-3">
+      <div>
         <transition name="fade" mode="out-in">
-          <router-view key="steps" class="px-2 px-sm-3 mt-2" />
+          <router-view key="steps" class="px-2 px-sm-3 mt-md-4" />
         </transition>
       </div>
     </div>

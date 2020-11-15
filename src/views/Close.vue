@@ -1,5 +1,5 @@
 <template>
-  <div class="container">
+  <div class="container-xl">
     <div class="close-container bg-light">
       <div class="content rounded w-100 text-center py-5" style="background: linear-gradient(-45deg, #0889ff, #023145)">
         Close
