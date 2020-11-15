@@ -85,12 +85,12 @@ const routes: Array<RouteConfig> = [
               {
                 path: 'main',
                 name: 'TMain',
+                alias: '',
                 component: () => import('@views/teacher/Main.vue')
               },
               {
                 path: 'member',
                 name: 'TMember',
-                alias: '',
                 component: () => import('@views/teacher/Member.vue')
               },
               {

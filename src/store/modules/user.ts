@@ -3,6 +3,7 @@ import env from '@/environment';
 import { User, IUser } from '@/type';
 import { Module, VuexModule, Mutation, Action } from 'vuex-module-decorators';
 import { AxiosError, AxiosResponse } from 'axios';
+import { resolve } from 'path';
 
 // https://github.com/championswimmer/vuex-module-decorators
 @Module({
@@ -22,6 +23,38 @@ export default class UserStore extends VuexModule {
     this.user = user;
   }
 
+  @Action({ rawError: true })
+  getStudent(filters): Promise<IUser[]> {
+    return new Promise(
+      (resolve, reject): Promise<IUser[] | Error> => {
+        return Vue.prototype.$axios
+          .get(`${env.BACK_URI}/user/student`, {
+            params: filters
+          })
+          .then((resp: AxiosResponse) => {
+            resolve(resp.data.DATA);
+          })
+          .catch((err: AxiosError) => {
+            reject(err);
+          });
+      }
+    );
+  }
+  @Action({ rawError: true })
+  getUserById(apply_id): Promise<IUser> {
+    return new Promise(
+      (resolve, reject): Promise<IUser | Error> => {
+        return Vue.prototype.$axios
+          .post(`${env.BACK_URI}/user/get`, { apply_id: apply_id })
+          .then((resp: AxiosResponse) => {
+            resolve(resp.data.DATA);
+          })
+          .catch((err: AxiosError) => {
+            reject(err);
+          });
+      }
+    );
+  }
   @Action({ rawError: true })
   getTeacher(): Promise<IUser[]> {
     return new Promise(

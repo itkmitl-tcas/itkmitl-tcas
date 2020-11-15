@@ -83,7 +83,7 @@ export default class TLogin extends Vue {
           icon: 'success',
           title: 'เข้าสู่ระบบ'
         }).then(() => {
-          this.$router.push({ name: 'TMember' });
+          this.$router.push({ name: 'TMain' });
         });
       })
       .catch((err) => {
