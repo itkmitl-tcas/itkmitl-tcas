@@ -5,6 +5,13 @@ import env from '../environment';
 import { AxiosResponse } from 'axios';
 import { userStore } from '@/store';
 
+export function titleMiddleware(router: any) {
+  router.beforeEach((to, from, next) => {
+    document.title = to.meta.title;
+    next();
+  });
+}
+
 export function authMiddleware(router: any) {
   router.beforeEach(async (to: any, from: any, next: any) => {
     if (
