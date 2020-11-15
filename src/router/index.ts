@@ -1,6 +1,6 @@
 import Vue from 'vue';
 import VueRouter, { RouteConfig } from 'vue-router';
-import { authMiddleware } from './middleware';
+import { authMiddleware, titleMiddleware } from './middleware';
 
 Vue.use(VueRouter);
 
@@ -16,6 +16,7 @@ const routes: Array<RouteConfig> = [
         name: 'Close',
         component: () => import('@views/Close.vue')
       },
+
       {
         path: '/student',
         alias: '',
@@ -35,25 +36,25 @@ const routes: Array<RouteConfig> = [
                 name: 'Step1',
                 alias: '',
                 component: () => import('@views/student/steps/Step1.vue'),
-                meta: { step: 1 }
+                meta: { step: 1, title: 'ขั้นที่1: ข้อมูลผู้สมัคร' }
               },
               {
                 path: 'step2',
                 name: 'Step2',
                 component: () => import('@views/student/steps/Step2.vue'),
-                meta: { step: 2 }
+                meta: { step: 2, title: 'ขั้นที่2: อัพโหลดเอกสาร' }
               },
               {
                 path: 'step3',
                 name: 'Step3',
                 component: () => import('@views/student/steps/Step3.vue'),
-                meta: { step: 3 }
+                meta: { step: 3, title: 'ขั้นที่2: อัพโหลดผลงาน' }
               },
               {
                 path: 'step4',
                 name: 'Step4',
                 component: () => import('@views/student/steps/Step4.vue'),
-                meta: { step: 4 }
+                meta: { step: 4, title: 'ขั้นที่4: เสร็จสิ้น' }
               }
             ]
           },
@@ -62,7 +63,8 @@ const routes: Array<RouteConfig> = [
             name: 'SLogin',
             component: () => import('@views/student/Login.vue'),
             meta: {
-              requiresAuth: 0
+              requiresAuth: 0,
+              title: 'เข้าสู่ระบบเพื่อยื่นผลงานการสมัคร'
             }
           }
         ]
@@ -86,22 +88,34 @@ const routes: Array<RouteConfig> = [
                 path: 'main',
                 name: 'TMain',
                 alias: '',
-                component: () => import('@views/teacher/Main.vue')
+                component: () => import('@views/teacher/Main.vue'),
+                meta: {
+                  title: 'จัดการผู้สมัคร'
+                }
               },
               {
                 path: 'member',
                 name: 'TMember',
-                component: () => import('@views/teacher/Member.vue')
+                component: () => import('@views/teacher/Member.vue'),
+                meta: {
+                  title: 'จัดการสมาชิค'
+                }
               },
               {
                 path: 'setting',
                 name: 'TSetting',
-                component: () => import('@views/teacher/Setting.vue')
+                component: () => import('@views/teacher/Setting.vue'),
+                meta: {
+                  title: 'ตั้งค่าระบบ'
+                }
               },
               {
                 path: 'criteria',
                 name: 'TCriteria',
-                component: () => import('@views/teacher/Criteria.vue')
+                component: () => import('@views/teacher/Criteria.vue'),
+                meta: {
+                  title: 'จัดการเกณฑ์ผลงาน'
+                }
               }
             ]
           },
@@ -111,10 +125,20 @@ const routes: Array<RouteConfig> = [
             alias: '',
             component: () => import('@views/teacher/Login.vue'),
             meta: {
-              requiresTAuth: 0
+              requiresTAuth: 0,
+              title: 'เข้าสู่ระบบ backoffice'
             }
           }
         ]
+      },
+      {
+        path: '*',
+        alias: '404',
+        name: '404',
+        component: () => import('@views/404.vue'),
+        meta: {
+          title: 'ไม่พบหน้าที่ท่านต้องการ'
+        }
       }
     ]
   }
@@ -127,5 +151,6 @@ const router = new VueRouter({
 });
 
 authMiddleware(router);
+titleMiddleware(router);
 
 export default router;
