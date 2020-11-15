@@ -12,6 +12,11 @@
           <div class="text-white-50 text-center">
             เข้าสู่ระบบ เพื่อยื่นข้อมูลการสมัครรอบผลงาน
           </div>
+          <div class="w-100 text-center mt-3">
+            <a href="https://drive.google.com/file/d/1f_gqatgv4l-KO_yiHPOdpjv0Hef2D2oC/view?usp=sharing" target="_blank"
+              >คู่มือการใช้งาน</a
+            >
+          </div>
           <div class="form-group mt-4">
             <ValidationProvider v-slot="{ errors }" rules="required">
               <input
