@@ -1,4 +1,4 @@
-name: Deploy Staging Workflow
+name: staging-workflow
 
 on:
   push:
