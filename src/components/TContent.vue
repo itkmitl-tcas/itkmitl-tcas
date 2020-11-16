@@ -67,7 +67,7 @@
                   </div>
                   <div class="col-12 col-md-6">
                     <label class="font-weight-bold">แผนการศึกษา:</label>
-                    <b-form-select v-model="student.study_field" disabled size="sm" style="border-radius: 5px;" />
+                    <input v-model="student.study_field" type="text" class="form-control form-control-sm" disabled />
                   </div>
                   <div class="col-12 col-md-6">
                     <label class="font-weight-bold">GPAX รวม:</label>
