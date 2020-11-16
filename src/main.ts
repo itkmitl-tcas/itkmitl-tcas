@@ -37,7 +37,7 @@ import { Vue as VueIntegration } from '@sentry/integrations';
 import { Integrations } from '@sentry/tracing';
 Sentry.init({
   environment: process.env.NODE_ENV,
-  dsn: 'https://2f491a1ba25a45db9bcaa606cf84ea62@o465173.ingest.sentry.io/5493955',
+  dsn: 'https://f27f8a5306ab4b598525019f236905bb@o465173.ingest.sentry.io/5518155',
   integrations: [
     new VueIntegration({
       Vue,
