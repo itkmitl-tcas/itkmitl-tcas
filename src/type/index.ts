@@ -14,6 +14,7 @@ export class User {
   password?: string;
   document?: Record<string, any>;
   study_field?: string;
+  portfolios?: any[];
 
   constructor() {
     this.apply_id = process.env.NODE_ENV == 'development' ? 631001130 : null;
@@ -25,6 +26,7 @@ export class User {
     this.password = process.env.NODE_ENV == 'development' ? '' : '';
     this.study_field = '';
     this.permission = 1;
+    this.portfolios = [];
   }
 }
 
