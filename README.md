@@ -1,7 +1,7 @@
 # ITKMITL TCAS
-[![Production Actions Status](https://github.com/itkmitl-tcas/itkmitl-tcas/workflows/production-workflow/badge.svg)](https://github.com/itkmitl-tcas/itkmitl-tcas/actions)
-
 > This application is created to provide the 1st round of TCAS submission service, It includes submit portfolios and backoffice system for evaluating and managing portfolios.
+
+[![Production Actions Status](https://github.com/itkmitl-tcas/itkmitl-tcas/workflows/production-workflow/badge.svg)](https://github.com/itkmitl-tcas/itkmitl-tcas/actions)
 
 <br/>
 <div style="width: 100%; display: flex; justify-content: space-around">
