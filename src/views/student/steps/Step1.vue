@@ -230,9 +230,7 @@ export default class Step1 extends SDashboard {
             title: 'Session timeout',
             text: `หมดเวลาในการเข้าสู่ระบบ กรุณาเข้าสู่ระบบใหม่อีกครั้ง \n ${msg}`
           }).then(() => {
-            this.$axios.post(`${this.$env.BACK_URI}/auth/signout`).then(() => {
-              this.$router.push({ name: 'SLogin' });
-            });
+            this.$router.push({ name: 'SLogin' });
           });
         }
       });
