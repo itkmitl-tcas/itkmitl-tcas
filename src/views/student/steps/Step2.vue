@@ -154,6 +154,7 @@ import { Component, PropSync } from 'vue-property-decorator';
 import { userStore } from '@/store';
 import { DocsItem } from '@/type/docs';
 import { User } from '@/type/index';
+import * as Sentry from '@sentry/browser';
 
 extend('required', {
   ...required,
@@ -224,11 +225,27 @@ export default class Step2 extends SDashboard {
         );
       })
       .catch((err) => {
-        this.$swal({
-          icon: 'error',
-          title: 'ไม่สามารถบันทึก',
-          text: `ไม่สามารถบันทึกข้อมูลเอกสารผู้สมัครได้ กรุณาลองใหม่อีกครั้ง \n ${err.message}`
-        }).then(() => this.$router.go(0));
+        const status = err.response.status;
+        const msg = err.response.data.MESSAGE || err.message;
+
+        if (status != 401) {
+          Sentry.captureException(new Error(msg));
+          this.$swal({
+            icon: 'error',
+            title: 'ไม่สามารถบันทึกข้อมูลเอกสารได้',
+            text: `เกิดข้อผิดพลาดในการบันทึกข้อมูลเอกสาร กรุณาติดต่อผู้ดูแลระบบ \n ${msg}`
+          });
+        } else if (status == 401) {
+          this.$swal({
+            icon: 'warning',
+            title: 'Session timeout',
+            text: `หมดเวลาในการเข้าสู่ระบบ กรุณาเข้าสู่ระบบใหม่อีกครั้ง \n ${msg}`
+          }).then(() => {
+            this.$axios.post(`${this.$env.BACK_URI}/auth/signout`).then(() => {
+              this.$router.push({ name: 'SLogin' });
+            });
+          });
+        }
       });
 
     this.loading = false;

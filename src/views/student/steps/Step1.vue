@@ -132,6 +132,7 @@ import { Component, Watch } from 'vue-property-decorator';
 import SDashboard from '../Dashboard.vue';
 import { mapGetters } from 'vuex';
 import Store, { userStore } from '@/store';
+import * as Sentry from '@sentry/browser';
 
 extend('required', {
   ...required,
@@ -213,11 +214,27 @@ export default class Step1 extends SDashboard {
         );
       })
       .catch((err) => {
-        this.$swal({
-          icon: 'error',
-          title: 'ไม่สามารถบันทึก',
-          text: `ไม่สามารถบันทึกข้อมูลผู้สมัครได้ กรุณาลองใหม่อีกครั้ง \n ${err.response.data.DATA}`
-        });
+        const status = err.response.status;
+        const msg = err.response.data.MESSAGE || err.message;
+
+        if (status != 401) {
+          Sentry.captureException(new Error(msg));
+          this.$swal({
+            icon: 'error',
+            title: 'ไม่สามารถบันทึกข้อมูลผู้สมัครได้',
+            text: `เกิดข้อผิดพลาดในการบันทึกข้อมูลผู้สมัคร กรุณาติดต่อผู้ดูแลระบบ \n ${msg}`
+          });
+        } else if (status == 401) {
+          this.$swal({
+            icon: 'warning',
+            title: 'Session timeout',
+            text: `หมดเวลาในการเข้าสู่ระบบ กรุณาเข้าสู่ระบบใหม่อีกครั้ง \n ${msg}`
+          }).then(() => {
+            this.$axios.post(`${this.$env.BACK_URI}/auth/signout`).then(() => {
+              this.$router.push({ name: 'SLogin' });
+            });
+          });
+        }
       });
 
     this.loading = false;

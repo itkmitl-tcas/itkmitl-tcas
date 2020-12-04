@@ -291,7 +291,7 @@ export default class TContent extends Vue {
     await userStore
       .getUserById(this.studentProp.apply_id)
       .then((resp) => (this.student = resp))
-      .catch((err) => this.$swal('ไม่สามารถดึงข้อมูลผู้สมัครได้', undefined, 'warning'))
+      .catch((err) => this.$swal('ไม่สามารถดึงข้อมูลผู้สมัครได้', err.message, 'warning'))
       .finally(() => {
         setTimeout(() => {
           this.loading = false;
@@ -304,7 +304,7 @@ export default class TContent extends Vue {
     await userStore
       .getUserById(this.studentProp.apply_id)
       .then((resp) => (this.student = resp))
-      .catch((err) => this.$swal('ไม่สามารถดึงข้อมูลผู้สมัครได้', undefined, 'warning'))
+      .catch((err) => this.$swal('ไม่สามารถดึงข้อมูลผู้สมัครได้', err.message, 'warning'))
       .finally(() => {
         setTimeout(() => {
           this.loading = false;
