@@ -4,6 +4,7 @@ import Vue from 'vue';
 import env from '../environment';
 import { AxiosResponse } from 'axios';
 import { userStore } from '@/store';
+import * as Sentry from '@sentry/browser';
 
 export function titleMiddleware(router: any) {
   router.beforeEach((to, from, next) => {
@@ -29,7 +30,14 @@ export function authMiddleware(router: any) {
             permission: resp.data.DATA.permission
           };
           await userStore.UPDATE_USER(user);
-          await userStore.CALL_USER_DATA();
+          const userData: any = await userStore.CALL_USER_DATA();
+
+          const userInfo = {
+            apply_id: userData.apply_id,
+            mobile: userData.mobile,
+            name: `${userData.prename}${userData.name} ${userData.surname}`
+          };
+          Sentry.setUser(userInfo);
         })
 
         // verify failed
