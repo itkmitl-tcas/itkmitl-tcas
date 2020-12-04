@@ -244,6 +244,7 @@ import { Component, Watch } from 'vue-property-decorator';
 import { PortfolioType, Portfolio } from '@/type/portfolio';
 import Store, { portfolioStore, userStore } from '@/store';
 import PortfolioStore from '@/store/modules/portfolio';
+import * as Sentry from '@sentry/browser';
 
 extend('required', {
   ...required,
@@ -259,6 +260,17 @@ export default class Step2 extends SDashboard {
   removePayload: any = [];
   collapseStates = [this.form[0].file == '' ? true : false];
 
+  async created() {
+    await portfolioStore.getPortType().catch((err) => {
+      this.$swal({
+        icon: 'error',
+        title: 'ไม่สามารถดึงข้อมูลได้ชนิดแฟ้มผลงานได้',
+        text: `ไม่สามารถดึงข้อมูลได้ชนิดแฟ้มผลงานได้กรุณาออกและเข้าสู่ระบบใหม่อีกครั้ง \n ${err.response.data.MESSAGE ||
+          err.message}`
+      });
+    });
+  }
+
   get dataPortType() {
     return portfolioStore.dataPortType;
   }
@@ -272,7 +284,7 @@ export default class Step2 extends SDashboard {
       portfolioStore
         .createPort(payload)
         .then((resp) => resolve(resp))
-        .catch((err) => reject(err.message));
+        .catch((err) => reject(err));
     });
   }
 
@@ -315,11 +327,26 @@ export default class Step2 extends SDashboard {
         });
       })
       .catch((err) => {
-        this.$swal({
-          icon: 'warning',
-          title: 'บันทึก',
-          text: 'ไม่สามารถบันทึกข้อมูลผลงานได้ กรุณาลองใหม่อีกครั้ง'
-        });
+        const status = err.response.status;
+        const msg = err.response.data.MESSAGE || err.message;
+        if (status != 401) {
+          Sentry.captureException(new Error(msg));
+          this.$swal({
+            icon: 'error',
+            title: 'ไม่สามารถบันทึกข้อมูลผลงานได้',
+            text: `เกิดข้อผิดพลาดในการบันทึกข้อมูลผลงาน กรุณาติดต่อผู้ดูแลระบบ \n ${msg}`
+          });
+        } else if (status == 401) {
+          this.$swal({
+            icon: 'warning',
+            title: 'Session timeout',
+            text: `หมดเวลาในการเข้าสู่ระบบ กรุณาเข้าสู่ระบบใหม่อีกครั้ง \n ${msg}`
+          }).then(() => {
+            this.$axios.post(`${this.$env.BACK_URI}/auth/signout`).then(() => {
+              this.$router.push({ name: 'SLogin' });
+            });
+          });
+        }
       });
 
     this.loading = false;

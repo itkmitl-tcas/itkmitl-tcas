@@ -29,32 +29,6 @@ import { Component, Vue } from 'vue-property-decorator';
 export default class SDashboard extends Vue {
   $axios: any;
   $env: any;
-
-  async created() {
-    // await userStore.CALL_USER_DATA().catch((err) => {
-    //   this.$swal({
-    //     icon: 'error',
-    //     title: 'ไม่สามารถดึงข้อมูลได้',
-    //     text: `ไม่สามารถดึงข้อมูลผู้สมัครจากเซิร์ฟเวอร์ได้ กรุณาลองใหม่อีกครั้ง`
-    //   }).then(() => {
-    //     this.$axios.post(`${this.$env.BACK_URI}/auth/signout`).then(() => {
-    //       this.$router.push({ name: 'SLogin' });
-    //     });
-    //   });
-    // });
-
-    await portfolioStore.getPortType().catch((err) => {
-      this.$swal({
-        icon: 'error',
-        title: 'ไม่สามารถดึงข้อมูลได้',
-        text: `ไม่สามารถดึงข้อมูลผู้สมัครจากเซิร์ฟเวอร์ได้ กรุณาลองใหม่อีกครั้ง`
-      }).then(() => {
-        this.$axios.post(`${this.$env.BACK_URI}/auth/signout`).then(() => {
-          this.$router.push({ name: 'SLogin' });
-        });
-      });
-    });
-  }
 }
 </script>
 
