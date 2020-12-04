@@ -58,7 +58,7 @@ export default class PortfolioStore extends VuexModule {
         });
     });
   }
-  @Action
+  @Action({ rawError: true })
   async createPort(payload): Promise<PortfolioType> {
     return new Promise((resolve, reject) => {
       const form = new FormData();
@@ -72,11 +72,11 @@ export default class PortfolioStore extends VuexModule {
           return resolve(data);
         })
         .catch((err: AxiosError) => {
-          reject(err);
+          return reject(err);
         });
     });
   }
-  @Action
+  @Action({ rawError: true })
   async removePort(payload): Promise<PortfolioType> {
     return new Promise((resolve, reject) => {
       Vue.prototype.$axios
