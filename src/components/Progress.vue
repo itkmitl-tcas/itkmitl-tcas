@@ -5,7 +5,12 @@
         <div class="i"></div>
       </div>
       <div v-for="(step, key) in steps" :key="`step-${key}`" class="px-2 px-sm-3 bg-white position-relative">
-        <router-link :to="{ path: `/student/dashboard/step${key + 1}` }" class="link">
+        <router-link
+          :disabled="user_data.step < key + 1"
+          tag="button"
+          :to="{ path: `/student/dashboard/step${key + 1}` }"
+          class="link"
+        >
           <div class="d-flex align-items-center flex-row">
             <div class="circle mr-3" :class="{ active: currentStep == key + 1 }">
               <span v-if="step.checked" class="h2 m-0">
@@ -27,6 +32,7 @@
 </template>
 
 <script>
+import Store, { userStore } from '@/store';
 export default {
   name: 'Progress',
   data() {
@@ -56,6 +62,9 @@ export default {
       ]
     };
   },
+  computed: {
+    user_data: () => userStore.DATA_USER
+  },
   watch: {
     // update current step when route update
     $route(to) {
@@ -74,3 +83,9 @@ export default {
   }
 };
 </script>
+<style lang="scss" scoped>
+button {
+  border: none;
+  background: none !important;
+}
+</style>
