@@ -140,7 +140,8 @@ export default class Login extends Vue {
         .then(async (resp: AxiosResponse) => {
           const user = {
             apply_id: resp.data.DATA.apply_id,
-            permission: resp.data.DATA.permission
+            permission: resp.data.DATA.permission,
+            step: resp.data.DATA.step
           };
           userStore.UPDATE_USER(user);
           this.$swal({
@@ -150,8 +151,7 @@ export default class Login extends Vue {
           }).then(() => {
             this.$router
               .push({
-                path: '/',
-                query: { plan: 'private' }
+                path: `/student/dashboard/step${user.step}`
               })
               .catch((err) => err);
           });

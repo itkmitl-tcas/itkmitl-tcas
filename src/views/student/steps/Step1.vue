@@ -198,7 +198,8 @@ export default class Step1 extends SDashboard {
     if (!validate) return;
 
     this.loading = true;
-    this.form.step = 2;
+
+    if (this.form.step !== 4) this.form.step = 2;
 
     await this.$axios
       .patch(`${this.$env.BACK_URI}/user`, this.form)
