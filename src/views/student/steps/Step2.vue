@@ -198,7 +198,7 @@ export default class Step2 extends SDashboard {
 
   // on file change
   fileChange(name, file) {
-    this.docs.append(name, file[0]);
+    if (file) this.docs.append(name, file[0]);
   }
 
   // upload to backend
@@ -225,8 +225,8 @@ export default class Step2 extends SDashboard {
         );
       })
       .catch((err) => {
-        const status = err.response.status;
-        const msg = err.response.data.MESSAGE || err.message;
+        const status = err.response?.status;
+        const msg = err.response?.data.MESSAGE || err.message;
 
         if (status != 401) {
           Sentry.captureException(new Error(msg));
