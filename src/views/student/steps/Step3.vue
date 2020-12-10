@@ -327,8 +327,8 @@ export default class Step2 extends SDashboard {
         });
       })
       .catch((err) => {
-        const status = err.response.status;
-        const msg = err.response.data.MESSAGE || err.message;
+        const status = err.response?.status;
+        const msg = err.response.data?.MESSAGE || err.message;
         if (status != 401) {
           Sentry.captureException(new Error(msg));
           this.$swal({
