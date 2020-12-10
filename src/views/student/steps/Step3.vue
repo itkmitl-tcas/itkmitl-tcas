@@ -352,7 +352,7 @@ export default class Step2 extends SDashboard {
 
   // on file change
   fileChange(name, file, field, key) {
-    this.form[key][field] = file[0];
+    if (file) this.form[key][field] = file[0];
   }
 
   // add form list
