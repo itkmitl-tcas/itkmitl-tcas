@@ -198,7 +198,7 @@ export default class Step2 extends SDashboard {
 
   // on file change
   fileChange(name, file) {
-    this.docs.append(name, file[0]);
+    if (file) this.docs.append(name, file[0]);
   }
 
   // upload to backend
