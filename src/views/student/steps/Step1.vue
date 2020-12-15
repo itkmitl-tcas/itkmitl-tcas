@@ -229,7 +229,7 @@ export default class Step1 extends SDashboard {
           this.$swal({
             icon: 'warning',
             title: 'Session timeout',
-            text: `หมดเวลาในการเข้าสู่ระบบ กรุณาเข้าสู่ระบบใหม่อีกครั้ง \n ${msg}`
+            text: `หมดเวลาในการเข้าสู่ระบบ กรุณาเข้าสู่ระบบใหม่อีกครั้ง`
           }).then(() => {
             this.$router.push({ name: 'SLogin' });
           });
