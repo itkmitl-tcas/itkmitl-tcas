@@ -100,6 +100,7 @@ import { Component, Vue } from 'vue-property-decorator';
 import { mapMutations } from 'vuex';
 import { AxiosResponse, AxiosError } from 'axios';
 import Store, { userStore, commonStore } from '@/store';
+import * as Sentry from '@sentry/browser';
 
 @Component({
   components: {
@@ -158,7 +159,8 @@ export default class Login extends Vue {
         })
         .catch((err: AxiosError) => {
           const resp: any = err.response;
-
+          const msg = err.response?.data.MESSAGE || err.message;
+          Sentry.captureException(new Error(msg));
           if (resp.status == 406) {
             this.$swal({
               icon: 'warning',
@@ -175,7 +177,7 @@ export default class Login extends Vue {
             this.$swal({
               icon: 'warning',
               title: 'ไม่สามารถเข้าสู่ระบบได้',
-              text: err.message
+              text: msg
             });
           }
         });
