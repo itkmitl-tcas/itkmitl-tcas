@@ -198,7 +198,26 @@ export default class Step2 extends SDashboard {
 
   // on file change
   fileChange(name, file) {
-    if (file) this.docs.append(name, file[0]);
+    if (file) {
+      const file_type = file[0].type;
+      if (file_type !== 'application/pdf') {
+        return this.$swal({
+          icon: 'warning',
+          title: 'ประเภทไฟล์ไม่ถูกต้อง',
+          text: `ประเภทไฟล์ต้องเป็นไฟล์ application/pdf เท่านั้น แต่ไฟล์คุณเป็นประเภท ${file_type}`
+        });
+      }
+      // check file size
+      const file_size = +(file[0].size / 1024 / 1024).toFixed(2);
+      if (file_size > 100) {
+        return this.$swal({
+          icon: 'warning',
+          title: 'ขนาดไฟล์ไม่ถูกต้อง',
+          text: `ขนาดไฟล์ต้องไม่เกิน 100MB แต่ไฟล์ของคุณมีขนาด ${file_size}MB`
+        });
+      }
+      this.docs.append(name, file[0]);
+    }
   }
 
   // upload to backend
