@@ -199,7 +199,6 @@ export default class Step2 extends SDashboard {
   // on file change
   fileChange(name, file) {
     if (file && file[0]) {
-      console.log(file);
       const file_type = file[0].type;
       if (file_type !== 'application/pdf') {
         return this.$swal({
