@@ -16,15 +16,15 @@ services:
     volumes:
       # - /etc/letsencrypt/live/tcas.it.kmitl.ac.th/fullchain.pem:/etc/nginx/ssl/fullchain.pem
       # - /etc/letsencrypt/live/tcas.it.kmitl.ac.th/privkey.pem:/etc/nginx/ssl/privkey.pem
-      - /etc/certbot/conf:/etc/nginx/ssl
-      - /etc/certbot/data:/var/www/certbot
+      - /etc/letsencrypt/conf:/etc/nginx/ssl
+      - /etc/letsencrypt/data:/var/www/certbot
   certbot:
     image: certbot/certbot:latest
     command: certonly --webroot --webroot-path=/var/www/certbot --email dev.vasin@gmail.com --agree-tos --no-eff-email -d tcas.it.kmitl.ac.th -d www.tcas.it.kmitl.ac.th
     volumes:
-      - /etc/certbot/conf:/etc/letsencrypt
-      - /etc/certbot/logs:/var/log/letsencrypt
-      - /etc/certbot/data:/var/www/certbot
+      - /etc/letsencrypt/conf:/etc/letsencrypt
+      - /etc/letsencrypt/logs:/var/log/letsencrypt
+      - /etc/letsencrypt/data:/var/www/certbot
 networks:
   application-prod-network:
     external:
