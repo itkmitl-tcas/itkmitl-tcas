@@ -14,9 +14,11 @@ services:
       - 443:443
       - 8080:8080
     volumes:
+      - /etc/letsencrypt/data:/var/www/certbot
       - /etc/letsencrypt/live/tcas.it.kmitl.ac.th/fullchain.pem:/etc/nginx/ssl/fullchain.pem
       - /etc/letsencrypt/live/tcas.it.kmitl.ac.th/privkey.pem:/etc/nginx/ssl/privkey.pem
   certbot:
+    container_name: 'certbot'
     image: certbot/certbot:latest
     command: certonly --webroot --webroot-path=/var/www/certbot --email dev.vasin@gmail.com --agree-tos --no-eff-email -d tcas.it.kmitl.ac.th -d
     volumes:
