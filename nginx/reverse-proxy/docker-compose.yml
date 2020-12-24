@@ -1,3 +1,5 @@
+# https://www.cloudbooklet.com/how-to-install-nginx-and-lets-encrypt-with-docker-ubuntu-20-04/
+
 version: '3'
 services:
   reverse-proxy:
@@ -12,9 +14,17 @@ services:
       - 443:443
       - 8080:8080
     volumes:
-      - /etc/letsencrypt/live/tcas.it.kmitl.ac.th/fullchain.pem:/etc/nginx/ssl/fullchain.pem
-      - /etc/letsencrypt/live/tcas.it.kmitl.ac.th/privkey.pem:/etc/nginx/ssl/privkey.pem
-
+      # - /etc/letsencrypt/live/tcas.it.kmitl.ac.th/fullchain.pem:/etc/nginx/ssl/fullchain.pem
+      # - /etc/letsencrypt/live/tcas.it.kmitl.ac.th/privkey.pem:/etc/nginx/ssl/privkey.pem
+      - ./certbot/conf:/etc/nginx/ssl
+      - ./certbot/data:/var/www/certbot
+  certbot:
+    image: certbot/certbot:latest
+    command: certonly --webroot --webroot-path=/var/www/certbot --email dev.vasin@gmail.com --agree-tos --no-eff-email -d tcas.it.kmitl.ac.th -d www.tcas.it.kmitl.ac.th
+    volumes:
+      - ./certbot/conf:/etc/letsencrypt
+      - ./certbot/logs:/var/log/letsencrypt
+      - ./certbot/data:/var/www/certbot
 networks:
   application-prod-network:
     external:
