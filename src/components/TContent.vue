@@ -22,7 +22,7 @@
             <b-icon-person class="text-primary" /> ข้อมูลผู้สมัคร <b-icon-chevron-down />
           </div>
           <b-collapse id="common-collapse" visible accordion="accordin">
-            <form class="mt-3 px-3">
+            <form class=" px-3">
               <div class="form-group mt-4">
                 <div class="row field-wrapper">
                   <div class="col-12">
