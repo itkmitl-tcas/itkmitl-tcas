@@ -12,27 +12,6 @@
     <!-- data table -->
     <b-table responsive striped hover :items="teacher" :fields="fields" @row-clicked="openTeacher"></b-table>
 
-    <!-- modal -->
-    <b-modal
-      id="teacher-modal"
-      hide-footer
-      header-bg-variant="primary"
-      header-text-variant="light"
-      :title="selectTeacher.full_name"
-      size="lg"
-      scrollable
-      centered
-    >
-      <div class="form-group form-group-sm mt-4">
-        <div class="row field-warpper">
-          <div v-for="item in Object.keys(selectTeacher)" :key="item" class="col-12 col-md-6">
-            <label class="subtitle font-weight-bold">{{ item }}</label>
-            <input :value="selectTeacher[item]" type="text" class="form-control form-control-sm mb-2 py-1" disabled />
-          </div>
-        </div>
-      </div>
-    </b-modal>
-
     <!-- Add teacher -->
     <b-modal
       id="add-modal"

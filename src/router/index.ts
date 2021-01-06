@@ -116,6 +116,14 @@ const routes: Array<RouteConfig> = [
                 meta: {
                   title: 'จัดการเกณฑ์ผลงาน'
                 }
+              },
+              {
+                path: 'assessment',
+                name: 'TAssessment',
+                component: () => import('@views/teacher/Assessment.vue'),
+                meta: {
+                  title: 'ประเมินผลงาน'
+                }
               }
             ]
           },

@@ -14,6 +14,16 @@
         </div>
         <div class="col-6 col-md h-100">
           <router-link
+            :to="{ name: 'TAssessment' }"
+            type="button"
+            class="btn btn-sm border border-primary w-100"
+            active-class="btn-primary text-white"
+          >
+            ประเมินผลงาน
+          </router-link>
+        </div>
+        <div class="col-6 col-md h-100">
+          <router-link
             :to="{ name: 'TMember' }"
             type="button"
             class="btn btn-sm border border-primary w-100"
