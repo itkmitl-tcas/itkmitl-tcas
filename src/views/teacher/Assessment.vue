@@ -16,6 +16,7 @@
         </div>
         <hr />
       </div>
+
       <div v-if="selected" class="col-12">
         <TContent :student-prop="selected" />
         <hr />
@@ -62,6 +63,7 @@ export default class SAssessment extends Vue {
 
   async created() {
     this.assessments = await this.$axios.get(`${this.$env.BACK_URI}/assessment`);
+    console.log(this.assessments);
     this.selected = this.assessments.data.DATA[0];
   }
 
