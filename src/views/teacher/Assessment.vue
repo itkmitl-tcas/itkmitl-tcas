@@ -63,13 +63,14 @@ export default class SAssessment extends Vue {
 
   async created() {
     this.assessments = await this.$axios.get(`${this.$env.BACK_URI}/assessment`);
-    console.log(this.assessments);
     this.selected = this.assessments.data.DATA[0];
+    this.score = this.selected.assessments[0].score;
   }
 
   async assessment(amount) {
     this.assessments = await this.$axios.post(`${this.$env.BACK_URI}/assessment/start`, { amount: amount });
     this.selected = this.assessments.data.DATA[0];
+    this.score = this.selected.assessments[0].score;
   }
 
   async onSave() {
@@ -79,8 +80,8 @@ export default class SAssessment extends Vue {
     };
     await this.$axios.post(`${this.$env.BACK_URI}/assessment`, payload).then(() => {
       const index = this.assessments.data.DATA.findIndex((item) => item.apply_id == this.selected.apply_id);
-      this.selected = this.assessments.data.DATA[index + 1 || 0];
-      this.score = '';
+      this.selected = this.assessments.data.DATA[index + 1] || this.assessments.data.DATA[0];
+      this.score = this.selected.assessments[0].score;
       if (index + 1 >= this.assessments.data.DATA.length) {
         this.$swal({
           icon: 'success',
