@@ -1,8 +1,9 @@
 <template>
   <div class="content-container content bg-white mt-3">
     <div class="row">
-      <div class="col ">
+      <div class="col">
         <div class="font-weight-bold">ประเมินผลงานนักศึกษา</div>
+
         <label style="font-size: 13px">กรุณาเลือกจำนวนที่ต้องการก่อนเริ่มการประเมิน</label>
         <div class="">
           <div v-if="!selected" class="mt-2 d-flex justify-content-center ">
@@ -24,8 +25,14 @@
       <div v-if="selected" class="col-12 d-flex justify-content-center">
         <input v-model="score" class="form-control w-25 text-center" placeholder="คะแนน" />
       </div>
-      <div v-if="selected" class="col-12  d-flex justify-content-center mt-3 mb-5">
+      <div v-if="selected" class="col-12  d-flex justify-content-center mt-3 ">
         <button class="btn btn-success w-25" @click="onSave()">บันทึก</button>
+      </div>
+      <div v-if="selected" class="col-12  d-flex justify-content-center mt-3 ">
+        <button class="btn btn-secondary w-25" @click="prev()">หน้าที่แล้ว</button>
+      </div>
+      <div v-if="selected" class="col-12  d-flex justify-content-center mt-3 mb-5">
+        {{ index + 1 }} / {{ assessments.data.DATA.length }}
       </div>
     </div>
   </div>
@@ -47,7 +54,8 @@ import TContent from '@components/TContent.vue';
     return {
       selected: {},
       assessments: {},
-      student: {}
+      student: {},
+      index: 0
     };
   }
 })
@@ -60,6 +68,7 @@ export default class SAssessment extends Vue {
   score = '';
   selected: any;
   student: any;
+  index: any;
 
   async created() {
     this.assessments = await this.$axios.get(`${this.$env.BACK_URI}/assessment`);
@@ -79,16 +88,29 @@ export default class SAssessment extends Vue {
       assessee_id: this.selected.apply_id
     };
     await this.$axios.post(`${this.$env.BACK_URI}/assessment`, payload).then(() => {
-      const index = this.assessments.data.DATA.findIndex((item) => item.apply_id == this.selected.apply_id);
-      this.selected = this.assessments.data.DATA[index + 1] || this.assessments.data.DATA[0];
+      this.index = this.assessments.data.DATA.findIndex((item) => item.apply_id == this.selected.apply_id);
+      console.log(this.assessments.data.DATA[this.index + 1]);
+      this.selected = this.assessments.data.DATA[this.index + 1] || this.assessments.data.DATA[0];
       this.score = this.selected.assessments[0].score;
-      if (index + 1 >= this.assessments.data.DATA.length) {
-        this.$swal({
-          icon: 'success',
-          title: 'ประเมินเสร็จสิ้น'
-        });
-      }
     });
+  }
+
+  async prev() {
+    // this.index = this.assessments.data.DATA.findIndex((item) => item.apply_id == this.selected.apply_id);
+    if (this.index - 1 < 0) {
+      this.selected = this.assessments.data.DATA[this.assessments.data.DATA.length];
+    } else {
+      this.index -= 1;
+    }
+    this.selected = this.assessments.data.DATA[this.index];
+    this.score = this.selected.assessments[0].score;
+    // this.selected =
+    //   this.assessments.data.DATA[this.index - 1] || this.assessments.data.DATA[this.assessments.data.DATA.length];
+    // this.score = this.selected.assessments[0].score;
+    // console.log(this.index);
+    // if (this.index - 1 < 0) {
+    //   this.selected = this.assessments.data.DATA[this.assessments.data.DATA.length];
+    // }
   }
 
   // @Watch('selected')
