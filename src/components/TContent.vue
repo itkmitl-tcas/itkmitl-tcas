@@ -316,7 +316,7 @@ export default class TContent extends Vue {
 
 <style lang="scss" scoped>
 object {
-  min-height: 50vh;
+  min-height: 85vh;
   width: 100%;
 }
 .teacher-content {
