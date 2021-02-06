@@ -166,6 +166,16 @@
                   <small class="form-text text-danger">{{ errors[0] }}</small>
                 </ValidationProvider>
               </div>
+              <div class="col-12 col-md-6">
+                <ValidationProvider v-slot="{ errors }" rules="required" vid="confirmation">
+                  <label class="subtitle font-weight-bold">ระดับการเข้าถึง:</label>
+                  <b-form-select v-model="addTeacher.permission" size="sm" style="border-radius: 5px;">
+                    <option :value="2">อาจารย์</option>
+                    <option :value="3">ผู้ดูแล</option>
+                  </b-form-select>
+                  <small class="form-text text-danger">{{ errors[0] }}</small>
+                </ValidationProvider>
+              </div>
               <div class="col-12 mb-0">
                 <hr />
               </div>
@@ -183,6 +193,7 @@
                   <small class="form-text text-danger">{{ errors[0] }}</small>
                 </ValidationProvider>
               </div>
+
               <div class="col-12 col-md-6">
                 <ValidationProvider v-slot="{ errors }" rules="required" vid="confirmation">
                   <label class="subtitle font-weight-bold">ยืนยันรหัสผ่าน:</label>
@@ -273,6 +284,7 @@ export default class TMember extends Vue {
   $env: any;
   async created() {
     await userStore.getTeacher().then((resp) => (this.teacher = resp));
+    this.addTeacher.permission = 2;
   }
 
   // inject full_name to teacher data
@@ -336,7 +348,6 @@ export default class TMember extends Vue {
     // add default value to payload
     this.addTeacher['pay'] = true;
     this.addTeacher['step'] = 1;
-    this.addTeacher['permission'] = 2;
     this.addTeacher['apply_id'] = parseInt(`${this.addTeacher['apply_id']}`);
 
     // request
@@ -350,6 +361,7 @@ export default class TMember extends Vue {
           text: `เพิ่มอาจารย์รหัส ${this.addTeacher.apply_id} เสร็จสิ้น`
         }).then(() => {
           this.addTeacher = new User();
+          this.addTeacher.permission = 2;
           this.$bvModal.hide('add-modal');
         });
       })
@@ -375,32 +387,35 @@ export default class TMember extends Vue {
       icon: 'warning',
       title: 'ยืนยันการลบ',
       text: `คุณต้องการลบอาจารย์รหัส ${apply_id} หรือไม่`
+    }).then(async (result) => {
+      if (result.isConfirmed) {
+        await userStore
+          .deleteTeacher(apply_id)
+          .then((resp: any) => {
+            this.$swal({ icon: 'success', title: 'ลบอาจารย์เสร็จสิ้น', text: resp.data.MESSAGE }).then(async () => {
+              // check delete yourself -> login
+              if (apply_id == userStore.DATA_USER.apply_id) {
+                userStore.RESET_USER();
+                this.$router.push({
+                  name: 'TLogin'
+                });
+              } else {
+                // hide model, clear teacher, refreash table
+                this.$bvModal.hide('teacher-modal');
+                this.teacher = [new User()];
+                await userStore.getTeacher().then((resp) => (this.teacher = resp));
+              }
+            });
+          })
+          .catch((err) => {
+            this.$swal({
+              icon: 'error',
+              title: `ไม่สามารถลบอาจารย์ได้`,
+              text: `${err.response.data.MESSAGE}`
+            });
+          });
+      }
     });
-    // await userStore
-    //   .deleteTeacher(apply_id)
-    //   .then((resp: any) => {
-    //     this.$swal({ icon: 'success', title: 'ลบอาจารย์เสร็จสิ้น', text: resp.data.MESSAGE }).then(async () => {
-    //       // check delete yourself -> login
-    //       if (apply_id == userStore.DATA_USER.apply_id) {
-    //         userStore.RESET_USER();
-    //         this.$router.push({
-    //           name: 'TLogin'
-    //         });
-    //       } else {
-    //         // hide model, clear teacher, refreash table
-    //         this.$bvModal.hide('teacher-modal');
-    //         this.teacher = [new User()];
-    //         await userStore.getTeacher().then((resp) => (this.teacher = resp));
-    //       }
-    //     });
-    //   })
-    //   .catch((err) => {
-    //     this.$swal({
-    //       icon: 'error',
-    //       title: `ไม่สามารถลบอาจารย์ได้`,
-    //       text: `${err.response.data.MESSAGE}`
-    //     });
-    //   });
     this.loading = false;
   }
 
