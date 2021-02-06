@@ -49,12 +49,6 @@
               <ValidationProvider v-slot="{ errors }" rules="required">
                 <label class="subtitle font-weight-bold">แผนการศึกษา:</label>
                 <b-form-select v-model="form.study_field" :options="study_field"></b-form-select>
-                <!-- <input
-                  v-model="form.study_field"
-                  type="text"
-                  class="form-control"
-                  placeholder="แผนการเรียน หรือสาขาวิชา"
-                /> -->
                 <small class="form-text text-danger">{{ errors[0] }}</small>
               </ValidationProvider>
             </div>
@@ -173,7 +167,7 @@ export default class Step1 extends SDashboard {
     }
   ];
   study_field = [
-    { value: '', text: 'เลือกแผนการศึกษา', disabled: true },
+    { value: undefined, text: 'เลือกแผนการศึกษา' },
     { value: 'วิทย์-คณิต', text: 'วิทย์-คณิต' },
     { value: 'ศิลป์-ภาษา', text: 'ศิลป์-ภาษา' },
     { value: 'ศิลป์-คำนวน', text: 'ศิลป์-คำนวน' },

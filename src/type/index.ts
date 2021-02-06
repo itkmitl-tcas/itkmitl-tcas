@@ -24,7 +24,7 @@ export class User {
     this.email = process.env.NODE_ENV == 'development' ? 'dev.vasin@gmail.com' : '';
     this.mobile = process.env.NODE_ENV == 'development' ? '0924644891' : '';
     this.password = process.env.NODE_ENV == 'development' ? '' : '';
-    this.study_field = '';
+    this.study_field = undefined;
     this.permission = 1;
     this.portfolios = [];
   }
