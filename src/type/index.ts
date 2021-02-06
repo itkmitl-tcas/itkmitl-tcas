@@ -35,8 +35,11 @@ export interface ITeacherSignin {
   password?: string;
 }
 
-export type IUser = User;
+export interface IUserDestory {
+  apply_id: number;
+}
 
+export type IUser = User;
 export interface UserState {
   user: IUser;
 }

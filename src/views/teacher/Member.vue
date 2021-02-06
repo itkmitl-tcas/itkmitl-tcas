@@ -5,12 +5,70 @@
         <div class="font-weight-bold">จัดการอาจารย์</div>
       </div>
       <div class="col text-right">
-        <button v-b-modal.add-modal class="btn btn-success btn-sm">เพิ่มอาจารย์</button>
+        <button v-if="dataUser.permission == 3" v-b-modal.add-modal class="btn btn-success btn-sm">เพิ่มอาจารย์</button>
       </div>
     </div>
     <hr />
     <!-- data table -->
     <b-table responsive striped hover :items="teacher" :fields="fields" @row-clicked="openTeacher"></b-table>
+
+    <!-- Manage teacher -->
+    <b-modal
+      id="teacher-modal"
+      hide-footer
+      header-bg-variant="primary"
+      header-text-variant="light"
+      title="ข้อมูลอาจารย์"
+      size="lg"
+      centered
+    >
+      <form>
+        <div class="form-group mt-4">
+          <div class="row field-wrapper">
+            <div class="col-12">
+              <label class="subtitle font-weight-bold">ชื่อ: </label>
+              <span> {{ selectTeacher.prename }}{{ selectTeacher.name }} {{ selectTeacher.surname }}</span>
+            </div>
+            <div class="col-12">
+              <label class="subtitle font-weight-bold">รหัส: </label>
+              <span> {{ selectTeacher.apply_id }}</span>
+            </div>
+            <div class="col-12">
+              <label class="subtitle font-weight-bold">เบอร์โทรติดต่อ: </label>
+              <span> {{ selectTeacher.mobile }}</span>
+            </div>
+            <div class="col-12">
+              <label class="subtitle font-weight-bold">อีเมลล์: </label>
+              <span> {{ selectTeacher.email }}</span>
+            </div>
+            <div class="col-12">
+              <label class="subtitle font-weight-bold">ระดับการเข้าถึง: </label>
+              <span> {{ mapPermission(selectTeacher.permission) }}</span>
+            </div>
+            <!-- must have permission 3 to delete -->
+            <div v-if="dataUser.permission == 3" class="col-12 text-center mb-0">
+              <hr />
+              <button type="button" class="btn btn-danger px-5" @click="deleteTeacher(selectTeacher.apply_id)">
+                <transition name="fade" mode="out-in">
+                  <div
+                    v-if="loading"
+                    key="loading"
+                    class="spinner-border"
+                    style="height: 24px; width: 24px"
+                    role="status"
+                  >
+                    <span class="sr-only">Loading...</span>
+                  </div>
+                  <span v-else key="message">
+                    ลบอาจารย์
+                  </span>
+                </transition>
+              </button>
+            </div>
+          </div>
+        </div>
+      </form>
+    </b-modal>
 
     <!-- Add teacher -->
     <b-modal
@@ -20,7 +78,6 @@
       header-text-variant="light"
       title="เพิ่มอาจารย์"
       size="lg"
-      scrollable
       centered
     >
       <ValidationObserver ref="form">
@@ -203,6 +260,9 @@ extend('confirmed', {
   components: {
     ValidationProvider,
     ValidationObserver
+  },
+  computed: {
+    dataUser: () => userStore.DATA_USER
   }
 })
 export default class TMember extends Vue {
@@ -210,6 +270,7 @@ export default class TMember extends Vue {
   /* --------------------------------- Teacher -------------------------------- */
   // teacher data
   teacher: User[] = [new User()];
+  $env: any;
   async created() {
     await userStore.getTeacher().then((resp) => (this.teacher = resp));
   }
@@ -240,6 +301,7 @@ export default class TMember extends Vue {
 
   /* ---------------------------------- Show Teacher --------------------------------- */
   selectTeacher: User = new User();
+
   openTeacher(item, index, e) {
     this.selectTeacher = item;
     this.$bvModal.show('teacher-modal');
@@ -262,6 +324,7 @@ export default class TMember extends Vue {
       value: 'นางสาว'
     }
   ];
+
   async onSave() {
     // validate form
     const validate = await (this.$refs.form as Vue & {
@@ -278,7 +341,7 @@ export default class TMember extends Vue {
 
     // request
     await userStore
-      .upsertTeacher(this.addTeacher)
+      .createTeacher(this.addTeacher)
       .then(async (resp) => {
         await userStore.getTeacher().then((resp) => (this.teacher = resp));
         this.$swal({
@@ -299,6 +362,56 @@ export default class TMember extends Vue {
       });
 
     this.loading = false;
+  }
+
+  async deleteTeacher(apply_id: number) {
+    this.loading = true;
+    this.$swal({
+      confirmButtonColor: '#dc3545',
+      confirmButtonText: `ลบ`,
+      cancelButtonText: 'ยกเลิก',
+      showCancelButton: true,
+      focusCancel: true,
+      icon: 'warning',
+      title: 'ยืนยันการลบ',
+      text: `คุณต้องการลบอาจารย์รหัส ${apply_id} หรือไม่`
+    });
+    // await userStore
+    //   .deleteTeacher(apply_id)
+    //   .then((resp: any) => {
+    //     this.$swal({ icon: 'success', title: 'ลบอาจารย์เสร็จสิ้น', text: resp.data.MESSAGE }).then(async () => {
+    //       // check delete yourself -> login
+    //       if (apply_id == userStore.DATA_USER.apply_id) {
+    //         userStore.RESET_USER();
+    //         this.$router.push({
+    //           name: 'TLogin'
+    //         });
+    //       } else {
+    //         // hide model, clear teacher, refreash table
+    //         this.$bvModal.hide('teacher-modal');
+    //         this.teacher = [new User()];
+    //         await userStore.getTeacher().then((resp) => (this.teacher = resp));
+    //       }
+    //     });
+    //   })
+    //   .catch((err) => {
+    //     this.$swal({
+    //       icon: 'error',
+    //       title: `ไม่สามารถลบอาจารย์ได้`,
+    //       text: `${err.response.data.MESSAGE}`
+    //     });
+    //   });
+    this.loading = false;
+  }
+
+  mapPermission(permission) {
+    if (permission == 1) {
+      return 'นักศึกษา';
+    } else if (permission == 2) {
+      return 'อาจารย์';
+    } else if (permission == 3) {
+      return 'ผู้ดูแล';
+    }
   }
 }
 </script>

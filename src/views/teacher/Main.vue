@@ -85,6 +85,7 @@ export default class TMain extends Vue {
   loading = true;
   student: User[] = [new User()];
   selectStudent?: User = new User();
+  currentYear = new Date().getFullYear();
   filters: filters = {
     search: '',
     year: null,
@@ -95,13 +96,17 @@ export default class TMain extends Vue {
     await userStore
       .getStudent(this.filters)
       .then((resp) => (this.student = resp))
-      .catch((err) =>
-        this.$swal(
-          'ไม่สามารถดึงข้อมูลผู้สมัครได้',
-          'กรุณาออกและเข้าสู่ระบบใหม่ ถ้าไม่สามารถใช้งานได้กรุณาติดต่อผู้ดูแลระบบ',
-          'warning'
-        )
-      )
+      .catch((err) => {
+        if (err.response.status == 404) {
+          this.$swal('ไม่พบข้อมูลที่ต้องการ', 'ไม่พบผลการค้นหาที่ต้องการ', 'warning');
+        } else {
+          this.$swal(
+            'ไม่สามารถดึงข้อมูลผู้สมัครได้',
+            'กรุณาออกและเข้าสู่ระบบใหม่ ถ้าไม่สามารถใช้งานได้กรุณาติดต่อผู้ดูแลระบบ',
+            'warning'
+          );
+        }
+      })
       .finally(() => {
         setTimeout(() => {
           this.loading = false;
@@ -141,9 +146,10 @@ export default class TMain extends Vue {
   }
 
   // create year options
-  yearOptions: Record<string, any>[] = [{ text: new Date().getFullYear(), value: new Date().getFullYear() }];
+  yearOptions: Record<string, any>[] = [{ text: this.currentYear, value: this.currentYear }];
   convertDate() {
-    const years: any = this.student
+    // get year from student
+    let years: any = this.student
       .map((item: any) => new Date(item.createdAt).getFullYear())
       .filter((value, index, self) => self.indexOf(value) === index)
       .map((item) => {
@@ -152,7 +158,19 @@ export default class TMain extends Vue {
           text: item
         };
       });
-    years.unshift({ value: null, text: 'ปีการศึกษา' });
+
+    const checkCurrent = years.filter((year) => year.value == this.currentYear);
+    // add current year of not in years
+    if (!checkCurrent) {
+      years.unshift({ text: this.currentYear, value: this.currentYear });
+    }
+
+    // sort object.value in years
+    years = years.sort((a, b) => (a.value < b.value ? 1 : b.value < a.value ? -1 : 0));
+
+    // add empty option in top of yearOptions
+    years.unshift({ text: 'ปีการศึกษา (ทุกปี)', value: null });
+
     return years;
   }
   /* ---------------------------- data table fields --------------------------- */
