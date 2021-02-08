@@ -14,7 +14,7 @@
         </div>
         <div class="col-6 col-md h-100">
           <router-link
-            :to="{ name: 'TAssessment' }"
+            :to="{ name: 'TAudit' }"
             type="button"
             class="btn btn-sm border border-primary w-100"
             active-class="btn-primary text-white"
@@ -32,7 +32,7 @@
             จัดการอาจารย์
           </router-link>
         </div>
-        <div class="col col-md">
+        <div class="col-6 col-md">
           <router-link
             :to="{ name: 'TSetting' }"
             type="button"
@@ -42,7 +42,7 @@
             ตั้งค่า
           </router-link>
         </div>
-        <div class="col col-md">
+        <div class="col-6 col-md">
           <router-link
             :to="{ name: 'TCriteria' }"
             type="button"
