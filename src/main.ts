@@ -42,8 +42,7 @@ Sentry.init({
     new VueIntegration({
       Vue,
       tracing: true
-    }),
-    new Integrations.BrowserTracing()
+    })
   ],
 
   // We recommend adjusting this value in production, or using tracesSampler
