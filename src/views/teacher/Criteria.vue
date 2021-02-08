@@ -1,5 +1,5 @@
 fwef<template>
-  <div class="content-container criteria-container content bg-white mt-3">
+  <div class="content-container criteria-container content bg-white mt-3 px-2 px-sm-3 px-md-4">
     <div class="row">
       <div class="col ">
         <div class="font-weight-bold">จัดการเกณฑ์ผลงาน</div>

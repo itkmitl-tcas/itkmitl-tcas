@@ -1,6 +1,6 @@
 <template>
   <div class="theader-container">
-    <div class="wrapper w-100">
+    <div class="w-100">
       <div class="row ">
         <div class="col-6 col-md h-100">
           <router-link

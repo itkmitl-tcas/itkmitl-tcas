@@ -1,30 +1,30 @@
 <template>
-  <div class="teacher-main-container">
-    <form @submit.prevent="search">
-      <div class="row mb-md-3 mb-3 search">
-        <div class="col-12 col-md-3 pl-md-0 mb-2 mb-md-0">
-          <input v-model="filters.search" type="text" class="form-control form-control-sm" placeholder="ค้นหา" />
-        </div>
-        <div class="col-12 col-md mb-2 mb-md-0">
-          <b-form-select v-model="filters.year" size="sm" :options="yearOptions" style="border-radius: 5px;">
-          </b-form-select>
-        </div>
-        <div class="col-12 col-md mb-2 mb-md-0">
-          <b-form-select v-model="filters.step" size="sm" style="border-radius: 5px;">
-            <option :value="null">กรองความคืบหน้าผู้สมัคร</option>
-            <option :value="1">ขั้นที่ 1: กรอกข้อมูลผู้สมัคร</option>
-            <option :value="2">ขั้นที่ 2: อัปโหลดเอกสาร</option>
-            <option :value="3">ขั้นที่ 3: อัปโหลดผลงาน</option>
-            <option :value="4">ขั้นที่ 4: เสร็จสิ้น</option>
-          </b-form-select>
-        </div>
-        <div class="col-12 col-md pr-md-0 ">
-          <button type="submit" class="btn btn-success btn-sm w-100">ค้นหา</button>
-        </div>
+  <div class="teacher-main-container content">
+    <!-- <form @submit.prevent="search"> -->
+    <div class="row mb-md-3 mb-3 search">
+      <div class="col-12 col-md-3 pl-md-0 mb-2 mb-md-0">
+        <input v-model="filters.search" type="text" class="form-control form-control-sm" placeholder="ค้นหา" />
       </div>
-    </form>
+      <div class="col-12 col-md mb-2 mb-md-0">
+        <b-form-select v-model="filters.year" size="sm" :options="yearOptions" style="border-radius: 5px;">
+        </b-form-select>
+      </div>
+      <div class="col-12 col-md mb-2 mb-md-0">
+        <b-form-select v-model="filters.step" size="sm" style="border-radius: 5px;">
+          <option :value="null">กรองความคืบหน้าผู้สมัคร</option>
+          <option :value="1">ขั้นที่ 1: กรอกข้อมูลผู้สมัคร</option>
+          <option :value="2">ขั้นที่ 2: อัปโหลดเอกสาร</option>
+          <option :value="3">ขั้นที่ 3: อัปโหลดผลงาน</option>
+          <option :value="4">ขั้นที่ 4: เสร็จสิ้น</option>
+        </b-form-select>
+      </div>
+      <div class="col-12 col-md pr-md-0 ">
+        <button type="submit" class="btn btn-success btn-sm w-100">ค้นหา</button>
+      </div>
+    </div>
+    <!-- </form> -->
     <div class="row">
-      <div class="col-12 col-md-3 pl-md-0">
+      <div class="col-12 col-md-4 col-lg-3 pl-md-0">
         <div class="student-list-wrapper">
           <div class="bg-light rounded">
             <b-table

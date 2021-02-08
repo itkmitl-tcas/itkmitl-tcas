@@ -1,5 +1,5 @@
 <template>
-  <div class="teacher-member-container content-container content bg-white mt-3">
+  <div class="teacher-member-container content-container content bg-white mt-3 px-2 px-sm-3 px-md-4">
     <div class="row">
       <div class="col d-flex align-items-center">
         <div class="font-weight-bold">จัดการอาจารย์</div>
