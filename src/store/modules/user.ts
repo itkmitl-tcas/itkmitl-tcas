@@ -13,6 +13,7 @@ import { resolve } from 'path';
 })
 export default class UserStore extends VuexModule {
   user: User = new User();
+  users: User[] = [new User()];
 
   @Mutation
   UPDATE_USER(user: IUser) {
