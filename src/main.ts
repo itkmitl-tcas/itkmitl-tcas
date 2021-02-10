@@ -28,7 +28,8 @@ import {
   InputGroupPlugin,
   FormInputPlugin,
   EmbedPlugin,
-  AspectPlugin
+  AspectPlugin,
+  TooltipPlugin
 } from 'bootstrap-vue';
 
 /* -------------------------------- Sentry IO ------------------------------- */
@@ -65,6 +66,7 @@ Vue.use(InputGroupPlugin);
 Vue.use(FormInputPlugin);
 Vue.use(EmbedPlugin);
 Vue.use(AspectPlugin);
+Vue.use(TooltipPlugin);
 
 Vue.use(VueLazyload);
 Vue.use(PortalVue);
