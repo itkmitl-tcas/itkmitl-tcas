@@ -267,7 +267,6 @@ export default class Audit extends Vue {
               'warning'
             );
           }
-          reject(err);
         });
     });
   }
@@ -299,7 +298,7 @@ export default class Audit extends Vue {
     });
   }
 
-  private fetchMapping(teacher_id: number) {
+  private fetchMapping(teacher_id) {
     return new Promise<User[]>((resolve, reject) => {
       auditStore
         .getMapping(teacher_id)
@@ -324,8 +323,8 @@ export default class Audit extends Vue {
               'กรุณาออกและเข้าสู่ระบบใหม่ ถ้าไม่สามารถใช้งานได้กรุณาติดต่อผู้ดูแลระบบ',
               'warning'
             );
-            reject(err);
           }
+          reject(err);
         });
     });
   }
@@ -401,15 +400,18 @@ export default class Audit extends Vue {
     this.delay(() => (this.loadingMapping = false));
   }
 
-  @Watch('teacherSelected', { immediate: true })
-  onTeacherSelectedChange(teacher) {
+  @Watch('teacherSelected', { deep: true })
+  async onTeacherSelectedChange() {
     // when admin not click any teacher
     if (this.teacherSelected.length) {
       // fetch mapping list
-      this.fetchMapping(teacher[0].apply_id).then(() => {
-        // update audit submit button
-        this.updateAuditDisable();
-      });
+      await this.fetchMapping(this.teacherSelected[0].apply_id)
+        .then(() => {
+          this.updateAuditDisable();
+        })
+        .catch(() => {
+          this.updateAuditDisable();
+        });
     } else {
       this.auditDisable = true;
       this.mappingData = [];
