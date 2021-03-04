@@ -104,6 +104,7 @@
           </div>
           <b-table
             ref="viewTable"
+            selectable
             :items="mappingData"
             :fields="fields2"
             :busy="loadingMapping"
@@ -112,8 +113,10 @@
             striped
             show-empty
             responsive="sm"
-            selected-variant="success"
+            selected-variant="secondary"
             small
+            select-mode="single"
+            @row-selected="onAuditSelect"
           >
             <template #cell(index)="data">
               {{ data.index + 1 }}
@@ -247,6 +250,35 @@ export default class Audit extends Vue {
   onTeacherSelect(items) {
     this.teacherSelected = items;
   }
+  onAuditSelect(item) {
+    this.$swal({
+      confirmButtonColor: '#d9534f',
+      confirmButtonText: `ลบ`,
+      cancelButtonText: 'ยกเลิก',
+      showCancelButton: true,
+      focusCancel: true,
+      icon: 'warning',
+      title: 'ยืนยันลบรายการประเมิน',
+      text: `ลบรายการที่ต้องประเมินของนักศึกษารหัส ${item[0].apply_id}`
+    }).then(async (result) => {
+      if (result.isConfirmed) {
+        auditStore
+          .delMapping(item[0].apply_id)
+          .then(() => {
+            this.$swal('ลบรายการ', '', 'success');
+            this.fetchStudents().catch(() => (this.students = []));
+            this.fetchMapping(this.teacherSelected[0].apply_id || 0);
+          })
+          .catch((err) =>
+            this.$swal(
+              'ไม่สามารถลบรายการได้',
+              `เกิดข้อผิดพลาดในการลบรายการจับคู่กรุณาติดต่อผู้ดูแลระบบ <hr/> ${err.message}`,
+              'error'
+            )
+          );
+      }
+    });
+  }
 
   private async fetchStudents() {
     return new Promise<User[]>((resolve, reject) => {
@@ -338,7 +370,7 @@ export default class Audit extends Vue {
       focusCancel: true,
       icon: 'warning',
       title: 'ยืนยันการจับคู่',
-      text: `เมื่อจับคู่แล้วจำเป็นต้องทำการประเมินให้เสร็จสิ้น ถึงจะทำการจับคู่ใหม่ได้`
+      text: `ถ้ามีรายการประเมินอยู่แล้ว การจับคู่จะเพิ่มรายการที่ต้องประเมิน`
     }).then(async (result) => {
       if (result.isConfirmed) {
         auditStore

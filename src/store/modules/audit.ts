@@ -35,4 +35,15 @@ export default class AuditStore extends VuexModule {
         .catch((err) => reject(err));
     });
   }
+
+  @Action({ rawError: true })
+  async delMapping(student_id) {
+    const payload = { params: { student_id: student_id } };
+    return new Promise((resolve, reject) => {
+      Vue.prototype.$axios
+        .delete(`${env.BACK_URI}/audit/${student_id}`)
+        .then((resp) => resolve(resp))
+        .catch((err) => reject(err));
+    });
+  }
 }
