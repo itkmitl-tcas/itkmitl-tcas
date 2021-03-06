@@ -26,6 +26,31 @@ export default class AuditStore extends VuexModule {
   }
 
   @Action({ rawError: true })
+  async auditGrade(data) {
+    return new Promise((resolve, reject) => {
+      const payload = { student_id: data.apply_id, apply_type: data.apply_type };
+      Vue.prototype.$axios
+        .post(`${env.BACK_URI}/audit/grade`, payload)
+        .then((resp) => resolve(resp))
+        .catch((err) => reject(err));
+    });
+  }
+
+  @Action({ rawError: true })
+  async submitAudit(data) {
+    return new Promise((resolve, reject) => {
+      const payload = {
+        student_id: data.student_id,
+        score: data.score
+      };
+      Vue.prototype.$axios
+        .post(`${env.BACK_URI}/audit/submit`, payload)
+        .then((resp) => resolve(resp))
+        .catch((err) => reject(err));
+    });
+  }
+
+  @Action({ rawError: true })
   async getMapping(teacher_id) {
     const payload = { params: { teacher_id: teacher_id } };
     return new Promise((resolve, reject) => {

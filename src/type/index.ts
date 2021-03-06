@@ -4,6 +4,7 @@ export class User {
   name?: string;
   surname?: string;
   prename?: string;
+  apply_type?: string;
   gpax?: number;
   gpax_match?: number;
   gpax_eng?: number;
