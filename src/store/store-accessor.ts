@@ -9,6 +9,7 @@ import UserModule from '@/store/modules/user';
 import PortfolioModule from '@/store/modules/portfolio';
 import AuthModule from '@/store/modules/auth';
 import CommonModule from '@/store/modules/common';
+import AuditModule from '@/store/modules/audit';
 
 // Each store is the singleton instance of its module class
 // Use these -- they have methods for state/getters/mutations/actions
@@ -17,6 +18,7 @@ export let userStore: UserModule;
 export let portfolioStore: PortfolioModule;
 export let authStore: AuthModule;
 export let commonStore: CommonModule;
+export let auditStore: AuditModule;
 
 // initializer plugin: sets up state/getters/mutations/actions for each store
 export function initializeStores(store: Store<any>): void {
@@ -24,6 +26,7 @@ export function initializeStores(store: Store<any>): void {
   portfolioStore = getModule(PortfolioModule, store);
   authStore = getModule(AuthModule, store);
   commonStore = getModule(CommonModule, store);
+  auditStore = getModule(AuditModule, store);
 }
 
 // for use in 'modules' store init (see store/index.ts), so each module
@@ -33,7 +36,8 @@ export const modules = {
   user: UserModule,
   portfolio: PortfolioModule,
   auth: AuthModule,
-  common: CommonModule
+  common: CommonModule,
+  audit: AuditModule
 };
 
 // console.log('end of store-accessor: UserModule=<', typeof UserModule, '>') // expect "function"

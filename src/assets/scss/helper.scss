@@ -53,9 +53,9 @@
 
 .teacher-main-container {
   .b-table-sticky-header {
-    @include media-breakpoint-down(md) {
-      min-height: calc(50vh - 200px) !important;
-      max-height: calc(50vh - 200px) !important;
+    @include media-breakpoint-down(sm) {
+      min-height: calc(50vh) !important;
+      max-height: calc(50vh) !important;
     } 
   }
 

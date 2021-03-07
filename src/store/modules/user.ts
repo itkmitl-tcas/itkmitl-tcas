@@ -1,6 +1,6 @@
 import Vue from 'vue';
 import env from '@/environment';
-import { User, IUser } from '@/type';
+import { User, IUser, IUserDestory } from '@/type';
 import { Module, VuexModule, Mutation, Action } from 'vuex-module-decorators';
 import { AxiosError, AxiosResponse } from 'axios';
 import { resolve } from 'path';
@@ -13,6 +13,7 @@ import { resolve } from 'path';
 })
 export default class UserStore extends VuexModule {
   user: User = new User();
+  users: User[] = [new User()];
 
   @Mutation
   UPDATE_USER(user: IUser) {
@@ -71,7 +72,7 @@ export default class UserStore extends VuexModule {
     );
   }
   @Action({ rawError: true })
-  upsertTeacher(payload: IUser): Promise<any> {
+  createTeacher(payload: IUser): Promise<any> {
     return new Promise(
       (resolve, reject): Promise<any> => {
         return Vue.prototype.$axios
@@ -84,6 +85,11 @@ export default class UserStore extends VuexModule {
           });
       }
     );
+  }
+
+  @Action({ rawError: true })
+  deleteTeacher(apply_id: number): Promise<AxiosResponse | AxiosError> {
+    return Vue.prototype.$axios.delete(`${env.BACK_URI}/user/teacher/${apply_id}`);
   }
 
   @Action({ rawError: true })

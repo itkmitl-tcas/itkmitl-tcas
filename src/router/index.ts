@@ -118,9 +118,9 @@ const routes: Array<RouteConfig> = [
                 }
               },
               {
-                path: 'assessment',
-                name: 'TAssessment',
-                component: () => import('@views/teacher/Assessment.vue'),
+                path: 'audit',
+                name: 'TAudit',
+                component: () => import('@views/teacher/Audit.vue'),
                 meta: {
                   title: 'ประเมินผลงาน'
                 }

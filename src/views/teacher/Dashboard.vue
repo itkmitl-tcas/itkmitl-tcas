@@ -4,7 +4,7 @@
       <THeader />
       <div>
         <transition name="fade" mode="out-in">
-          <router-view key="steps" class="px-2 px-sm-3 mt-md-4" />
+          <router-view key="steps" class="px-0 px-md-3 mt-md-4" />
         </transition>
       </div>
     </div>

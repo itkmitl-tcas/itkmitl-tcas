@@ -12,7 +12,13 @@
           </div>
         </div>
         <div v-if="DATA_USER.pay" class="flex-grow-1 text-right">
-          <div class="title" style="color: #d9d9d9">{{ DATA_FULL_NAME }} ({{ DATA_USER.apply_id }})</div>
+          <div class="title" style="color: #d9d9d9">
+            {{ DATA_FULL_NAME }} {{ DATA_USER.apply_id }}
+            <router-link v-if="DATA_USER.permission >= 2" :to="{ name: 'TMain' }">
+              <span class="text-primary">({{ mapPermission(DATA_USER.permission) }})</span>
+            </router-link>
+            <span v-else class="text-primary">({{ mapPermission(DATA_USER.permission) }})</span>
+          </div>
           <div class="link title text-white-50 font-weight-light" @click="signOut(DATA_USER.permission)">
             ออกจากระบบ
           </div>
@@ -24,8 +30,7 @@
 
 <script>
 import axios from 'axios';
-import env from '@/environment';
-import Store, { userStore } from '@/store';
+import { userStore } from '@/store';
 
 export default {
   name: 'Header',
@@ -52,6 +57,15 @@ export default {
           }
         });
       });
+    },
+    mapPermission(permission) {
+      if (permission == 1) {
+        return 'นักศึกษา';
+      } else if (permission == 2) {
+        return 'อาจารย์';
+      } else if (permission == 3) {
+        return 'ผู้ดูแล';
+      }
     }
   }
 };

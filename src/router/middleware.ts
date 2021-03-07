@@ -94,7 +94,7 @@ export function authMiddleware(router: any) {
         // verify successed
         .then((resp: AxiosResponse) => {
           const step = resp.data.DATA.step; // redicrec to dashboard step N
-          next({ name: `TMember` });
+          next({ name: `TMain` });
         })
         .catch((err) => err);
     }
