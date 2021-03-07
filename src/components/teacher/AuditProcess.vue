@@ -135,15 +135,30 @@ export default class AuditProcess extends AuditSelect {
   }
 
   onSubmit() {
-    auditStore
-      .submitAudit({ student_id: this.selectedStudent.apply_id, score: this.portScore + this.gradeScore })
-      .then((resp) =>
-        this.fetchMapping(userStore.DATA_USER.apply_id).then((resp) => {
-          if (!resp.length) return this.$emit('mode', 'select');
-          this.loadingMapping = false;
-          this.$refs.viewTable2.selectRow(0);
-        })
-      );
+    this.$swal({
+      confirmButtonColor: '#28A745',
+      confirmButtonText: `ประเมิน`,
+      cancelButtonText: 'ยกเลิก',
+      showCancelButton: true,
+      focusCancel: true,
+      icon: 'warning',
+      title: 'ยืนยันผลการประเมิน',
+      html: `เมื่อยืนยันผลการประเมินแล้วจะไม่สามารถแก้ไขคะแนนที่ประเมินได้ <hr/> คะแนนรวม: <b class="text-success">${this
+        .portScore + this.gradeScore}</b>`
+    }).then(async (result) => {
+      if (result.isConfirmed) {
+        auditStore
+          .submitAudit({ student_id: this.selectedStudent.apply_id, score: this.portScore + this.gradeScore })
+          .then((resp) =>
+            this.fetchMapping(userStore.DATA_USER.apply_id).then((resp) => {
+              if (!resp.length) return this.$emit('mode', 'select');
+              this.$swal('บันทึกผลการประเมิน', '', 'success');
+              this.loadingMapping = false;
+              this.$refs.viewTable2.selectRow(0);
+            })
+          );
+      }
+    });
   }
 }
 </script>
