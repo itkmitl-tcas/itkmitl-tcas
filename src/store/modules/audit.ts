@@ -71,4 +71,14 @@ export default class AuditStore extends VuexModule {
         .catch((err) => reject(err));
     });
   }
+
+  @Action({ rawError: true })
+  async exportAudit() {
+    return new Promise((resolve, reject) => {
+      Vue.prototype.$axios
+        .get(`${env.BACK_URI}/audit/export`)
+        .then((resp) => resolve(resp))
+        .catch((err) => reject(err));
+    });
+  }
 }

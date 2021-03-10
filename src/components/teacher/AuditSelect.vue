@@ -147,10 +147,13 @@
           <span id="audit-btn">
             <b-btn variant="success" :disabled="auditDisable" @click="startAudit()">เริ่มประเมิน</b-btn>
           </span>
-          <b-tooltip target="mapping-btn" placement="top">จับคู่ระหว่างนักศึกษาและอาจารย์</b-tooltip>
           <b-tooltip target="audit-btn" placement="top"
             >ทำการประเมินผลงานนักศึกษาจากรายการที่ท่านจับคู่ไว้ (จำเป็นต้องจับคู่ก่อน)</b-tooltip
           >
+          <span id="export-btn">
+            <b-btn variant="primary" @click="exportAudit()">Export</b-btn>
+          </span>
+          <b-tooltip target="export-btn" placement="top">Export ไฟล์ excel จากผลการประเมินทั้งหมด</b-tooltip>
         </div>
       </div>
       <div class="col-6"></div>
@@ -163,7 +166,7 @@ import { Watch, Vue, Prop } from 'vue-property-decorator';
 import Component from 'vue-class-component';
 import { auditStore, userStore } from '@/store';
 import { User } from '@/type/index';
-import { Method } from 'axios';
+import env from '@/environment';
 
 /**
  * Audit process
@@ -284,6 +287,10 @@ export default class AuditSelect extends Vue {
     this.$emit('mode', 'process');
   }
 
+  exportAudit() {
+    window.open(`${env.BACK_URI}/audit/export`);
+  }
+
   private async fetchStudents() {
     return new Promise<User[]>((resolve, reject) => {
       userStore
@@ -344,7 +351,7 @@ export default class AuditSelect extends Vue {
         .getMapping(teacher_id)
         .then((resp: any) => {
           // map student from mapping data
-          this.mappingData = resp.data.DATA.map((map) => map.user);
+          this.mappingData = resp.data.DATA.map((map) => map.audit_student);
 
           // inject fullname
           this.mappingData = this.mappingData.map((item) => {
